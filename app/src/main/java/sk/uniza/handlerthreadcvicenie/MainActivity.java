@@ -49,6 +49,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onImageDownloaded(ImageView imageView, Bitmap bitmap) {
-
+        // Otestovanie či ImageView bol vytvorený v rovnakom kontexte. V
+        // prípade reštatovania aplikácie, može ImageView pochádzať z už
+        // zaniknutej inštancie Aplikácie.
+        if (imageView.getContext() == this)
+            imageView.setImageBitmap(bitmap);
     }
 }
