@@ -10,13 +10,17 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.collection.LruCache;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class MyHandlerThread extends HandlerThread {
+public class MyHandlerThread extends HandlerThread implements
+        LifecycleObserver {
 
     // Referencia na vytvorenú štanciu MyHandlerThread
     private static MyHandlerThread instance = null;
@@ -56,7 +60,8 @@ public class MyHandlerThread extends HandlerThread {
     }
 
     public static MyHandlerThread getInstance(@NonNull Handler responseHandler,
-                                              @NonNull Callback callback) {
+                                              @NonNull Callback callback,
+                                              @NonNull Lifecycle lifecycle) {
 
         if (instance == null || !instance.isAlive()) {
             instance = new MyHandlerThread();
@@ -64,6 +69,9 @@ public class MyHandlerThread extends HandlerThread {
         synchronized (instance.syncObj) {
             instance.mResponseHandler = responseHandler;
             instance.mCallback = callback;
+            // Zaregistrovanie LifeCycleObserver, ktorým je táto trieda
+            // pripojená na životný cyklus nadradenej aktivity
+            lifecycle.addObserver(instance);
         }
         return instance;
     }
@@ -100,7 +108,9 @@ public class MyHandlerThread extends HandlerThread {
 
     /**
      * Pomocná metóda, ktorá má byť spustená keď dôjde k reštartu aktivity
+     * Táto metóda je teraz pripojená na životný cyklus nadradenej aktivity
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void onDestroy() {
         // Odstránenie všetkých ešte nestiahnutých url adries so zásobníka
         mWorkerHandler.removeMessages(ImageUrl.WHAT);

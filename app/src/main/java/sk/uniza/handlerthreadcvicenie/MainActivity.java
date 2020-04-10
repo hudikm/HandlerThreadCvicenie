@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageContainer = findViewById(R.id.imageContainer);
-        myHandlerThread = MyHandlerThread.getInstance(new Handler(), this);
+        myHandlerThread = MyHandlerThread
+                .getInstance(new Handler(), this, getLifecycle());
 
         if (!myHandlerThread.isAlive()) {
             // Iba pri prvom spustení musí prebehnúť inicializácia
@@ -59,10 +60,4 @@ public class MainActivity extends AppCompatActivity
             imageView.setImageBitmap(bitmap);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        myHandlerThread.onDestroy();
-
-    }
 }
