@@ -32,6 +32,8 @@ public class MyHandlerThread extends HandlerThread {
     private Handler mResponseHandler;
     // Referencia na Callback rozhranie
     private Callback mCallback;
+    // Objekt určený na zabezpečenie bezpečného prístupu pri využití vláken
+    private Object syncObj = new Object();
 
     // Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok
     public interface Callback {
@@ -50,10 +52,10 @@ public class MyHandlerThread extends HandlerThread {
         if (instance == null || !instance.isAlive()) {
             instance = new MyHandlerThread();
         }
-
-        instance.mResponseHandler = responseHandler;
-        instance.mCallback = callback;
-
+        synchronized (instance.syncObj) {
+            instance.mResponseHandler = responseHandler;
+            instance.mCallback = callback;
+        }
         return instance;
     }
 
@@ -93,6 +95,11 @@ public class MyHandlerThread extends HandlerThread {
     public void onDestroy() {
         // Odstránenie všetkých ešte nestiahnutých url adries so zásobníka
         mWorkerHandler.removeMessages(ImageUrl.WHAT);
+        // Bezpečné vynulovanie referencie na Handler, ktorý pri reštarte
+        // aktivity bude po dobu reštartu neplatná
+        synchronized (syncObj) {
+            mResponseHandler = null;
+        }
     }
 
     /*
@@ -122,16 +129,20 @@ public class MyHandlerThread extends HandlerThread {
                 Stiahnutý obrázok sa odovzdá s pomocu Handler triedy UI
                 vláknu, ktoré zavolá callback metódu
              */
-            if (bitmap != null) {
-                mResponseHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Spustené na UI vlákne
-                        mCallback.onImageDownloaded(
-                                imageUrl.uiToShowImage.get(),
-                                bitmap);
-                    }
-                });
+            // Bezpečný prístup z pracovného vlákna
+            synchronized (syncObj) {
+                // Overenie, že referencia na Handler je platná
+                if (mResponseHandler != null && bitmap != null) {
+                    mResponseHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Spustené na UI vlákne
+                            mCallback.onImageDownloaded(
+                                    imageUrl.uiToShowImage.get(),
+                                    bitmap);
+                        }
+                    });
+                }
             }
 
         } catch (IOException e) {
