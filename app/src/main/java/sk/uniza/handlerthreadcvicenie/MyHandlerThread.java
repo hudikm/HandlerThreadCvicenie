@@ -64,6 +64,16 @@ public class MyHandlerThread extends HandlerThread {
         };
     }
 
+    /**
+     * Pomocná metóda na posunutie správy pracovnému HandlerThread vláknu
+     *
+     * @param imageUrl - obrázok, ktorý sa má stiahnuť
+     */
+    public void queueTask(ImageUrl imageUrl) {
+        mWorkerHandler.obtainMessage(imageUrl.WHAT, imageUrl)
+                .sendToTarget();
+    }
+
     /*
         Metóda na stiahnutie obrázku z internetu, Táto metóda je je spustená
         na pracovnom vlákne!
