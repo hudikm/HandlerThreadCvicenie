@@ -87,6 +87,14 @@ public class MyHandlerThread extends HandlerThread {
                 .sendToTarget();
     }
 
+    /**
+     * Pomocná metóda, ktorá má byť spustená keď dôjde k reštartu aktivity
+     */
+    public void onDestroy() {
+        // Odstránenie všetkých ešte nestiahnutých url adries so zásobníka
+        mWorkerHandler.removeMessages(ImageUrl.WHAT);
+    }
+
     /*
         Metóda na stiahnutie obrázku z internetu, Táto metóda je je spustená
         na pracovnom vlákne!
