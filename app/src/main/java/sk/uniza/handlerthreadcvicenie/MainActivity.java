@@ -23,10 +23,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageContainer = findViewById(R.id.imageContainer);
-        myHandlerThread = new MyHandlerThread(new Handler(), this);
+        myHandlerThread = MyHandlerThread.getInstance(new Handler(), this);
 
-        myHandlerThread.start();
-        myHandlerThread.prepareHandler();
+        if (!myHandlerThread.isAlive()) {
+            // Iba pri prvom spustení musí prebehnúť inicializácia
+            // HandlerThread triedy
+            myHandlerThread.start();
+            myHandlerThread.prepareHandler();
+        }
     }
 
     @Override
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        myHandlerThread.quit();
+
+
     }
 }

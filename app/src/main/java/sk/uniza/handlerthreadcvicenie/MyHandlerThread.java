@@ -18,6 +18,9 @@ import java.net.URL;
 
 public class MyHandlerThread extends HandlerThread {
 
+    // Referencia na vytvorenú štanciu MyHandlerThread
+    private static MyHandlerThread instance = null;
+
     // Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie
     private static final String TAG = MyHandlerThread.class.getSimpleName();
 
@@ -35,13 +38,23 @@ public class MyHandlerThread extends HandlerThread {
         public void onImageDownloaded(ImageView imageView, Bitmap bitmap);
     }
 
-    public MyHandlerThread(Handler responseHandler,
-                           Callback callback) {
+    public MyHandlerThread() {
         super(TAG);
         setPriority(Process.THREAD_PRIORITY_BACKGROUND); //Nastavenie
         // priority pracovnému vláknu
-        mResponseHandler = responseHandler;
-        mCallback = callback;
+    }
+
+    public static MyHandlerThread getInstance(@NonNull Handler responseHandler,
+                                              @NonNull Callback callback) {
+
+        if (instance == null || !instance.isAlive()) {
+            instance = new MyHandlerThread();
+        }
+
+        instance.mResponseHandler = responseHandler;
+        instance.mCallback = callback;
+
+        return instance;
     }
 
     /**
