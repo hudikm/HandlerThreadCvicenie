@@ -1,4 +1,3 @@
-
 package sk.uniza.handlerthreadcvicenie;
 
 import android.graphics.Bitmap;
@@ -54,5 +53,11 @@ public class MainActivity extends AppCompatActivity
         // zaniknutej inštancie Aplikácie.
         if (imageView.getContext() == this)
             imageView.setImageBitmap(bitmap);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myHandlerThread.quit();
     }
 }
