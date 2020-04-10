@@ -6,10 +6,10 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.os.Process;
-import android.os.Trace;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.collection.LruCache;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,6 +39,15 @@ public class MyHandlerThread extends HandlerThread {
     public interface Callback {
         public void onImageDownloaded(ImageView imageView, Bitmap bitmap);
     }
+
+    // Cache na uloženie sťahovaných obrázkov
+    final int cacheSize = 4 * 1024 * 1024; // 4MiB
+    LruCache<String, Bitmap> bitmapCache =
+            new LruCache<String, Bitmap>(cacheSize) {
+                protected int sizeOf(String key, Bitmap value) {
+                    return value.getByteCount();
+                }
+            };
 
     public MyHandlerThread() {
         super(TAG);
@@ -111,20 +120,25 @@ public class MyHandlerThread extends HandlerThread {
         try {
             final Bitmap bitmap;
 
-            Trace.beginSection("HTTP download");
-            HttpURLConnection connection =
-                    (HttpURLConnection) new URL(imageUrl.urlOfImage)
-                            .openConnection();
-            connection.setRequestMethod("GET");
-            bitmap = BitmapFactory
-                    .decodeStream((InputStream) connection.getContent());
-
-            try {
-                this.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            // Načítanie obrázku z cache(klúč je url adresa obrázku), ak nebol
+            // nájdený metóda vráti null hodnotu
+            Bitmap bitmapTmp = bitmapCache.get(imageUrl.urlOfImage);
+            if (bitmapTmp == null) {
+                HttpURLConnection connection =
+                        (HttpURLConnection) new URL(imageUrl.urlOfImage)
+                                .openConnection();
+                connection.setRequestMethod("GET");
+                bitmap = BitmapFactory
+                        .decodeStream((InputStream) connection.getContent());
+                bitmapCache.put(imageUrl.urlOfImage, bitmap);
+                try {
+                    this.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                bitmap = bitmapTmp;
             }
-
             /*
                 Stiahnutý obrázok sa odovzdá s pomocu Handler triedy UI
                 vláknu, ktoré zavolá callback metódu
