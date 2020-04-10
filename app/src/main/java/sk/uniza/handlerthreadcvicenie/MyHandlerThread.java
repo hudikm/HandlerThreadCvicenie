@@ -56,7 +56,10 @@ public class MyHandlerThread extends HandlerThread {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 // Spracovanie prijatej správy
-
+                // Stiahnutie obrázkov z internetu
+                if (msg.obj != null && msg.obj instanceof ImageUrl) {
+                    handleRequest((ImageUrl) msg.obj);
+                }
             }
         };
     }
