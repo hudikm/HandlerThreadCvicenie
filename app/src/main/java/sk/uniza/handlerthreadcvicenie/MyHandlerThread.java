@@ -5,9 +5,9 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.os.Process;
 import android.os.Trace;
 import android.widget.ImageView;
-import android.os.Process;
 
 import androidx.annotation.NonNull;
 
@@ -25,16 +25,23 @@ public class MyHandlerThread extends HandlerThread {
     // pridelenú prácu
     private Handler mWorkerHandler;
 
+    // Referencia na Handler, ktorý je spätý s UI vláknom
+    private Handler mResponseHandler;
+    // Referencia na Callback rozhranie
+    private Callback mCallback;
+
     // Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok
     public interface Callback {
         public void onImageDownloaded(ImageView imageView, Bitmap bitmap);
     }
 
-    public MyHandlerThread() {
+    public MyHandlerThread(Handler responseHandler,
+                           Callback callback) {
         super(TAG);
         setPriority(Process.THREAD_PRIORITY_BACKGROUND); //Nastavenie
         // priority pracovnému vláknu
-
+        mResponseHandler = responseHandler;
+        mCallback = callback;
     }
 
     /**
