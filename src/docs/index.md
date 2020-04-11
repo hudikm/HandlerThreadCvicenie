@@ -1,8 +1,24 @@
 # Cvičenie
-<!--tgen file='/home/martin/AndroidStudioProjects/HandlerThreadCvicenie/out.patch' lang=java prefix="Krok č. " tabs t_new="Nové" t_old="Pred úpravou" -->
+
+<!--tgen file='/home/martin/AndroidStudioProjects/HandlerThreadCvicenie/out.patch' lang=java tabs t_new="Nové" t_old="Pred úpravou" -->
+Úlohou cvičenia je oboznámiť sa s použitím HandlerThread ako pracovné vlákno, ktoré odbremení hlavné 'UI' vlákno od náročných úloh.   
+
+Vytváraná aplikácia  má za úlohu stiahnuť obrázky z internetu  a po stiahnutí ich zobrazí v pripravenom Layoute. Požiadavky na aplikáciu:
+
+- Obrázky sťahovať na pracovnom vlákne.
+
+- Aplikácia sa musí prispôsobiť životnému cyklu aktivity:
+
+    -  pri reštarte aplikácie sa pracovné vlákno musí ukončiť, alebo sa opätovne využije pri reštarte aktivity.
+    - Použiť singleton návrhový vzor
+    - Využiť cache pamäť na uloženie stiahnutých obrázkov.
+
+- Využiť `LifeCycle` na integrovanie životného cyklu hlavnej aktivity do pracovného vlákna
+
+  
 
 <!--tgen step=1.0 template="files_list.jinja"  -->
-####Krok č. 1.0 Úprava layout-u aplikácie [:link:](/commit/af6bb53a561bb7a67eae5ed20c12c8eefad867f5/)
+####1.0 Úprava layout-u aplikácie [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/af6bb53a561bb7a67eae5ed20c12c8eefad867f5/)
 ```
  .
  └─ app
@@ -21,13 +37,12 @@
 
 
 <!--end-->
-
-<!--tgen step=1.0-3.0  -->
-####Krok č. 1.0 Úprava layout-u aplikácie [:link:](/commit/af6bb53a561bb7a67eae5ed20c12c8eefad867f5/)
->  **[🖹](/blob/af6bb53a561bb7a67eae5ed20c12c8eefad867f5/app/src/main/res/layout/activity_main.xml) app/src/main/res/layout/activity_main.xml**
+<!--tgen lang=xml step=1.0 nohighlight  -->
+####1.0 Úprava layout-u aplikácie [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/af6bb53a561bb7a67eae5ed20c12c8eefad867f5/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/af6bb53a561bb7a67eae5ed20c12c8eefad867f5/app/src/main/res/layout/activity_main.xml) app/src/main/res/layout/activity_main.xml**
              
 
-``` java tab="Nové" hl_lines="2 6 9 12 14 15 16 17 18 19 20 21 22"
+``` xml  
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -52,33 +67,15 @@
 </LinearLayout>
 
 ```
-         
-``` java tab="Pred úpravou" hl_lines="2 3 9 12 13 14 15 16 18"
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-```
-####Krok č. 1.1 Vytvorenie MyHandlerThread triedy [:link:](/commit/5b60840ed884ad84f626b5ee98352693cabac7e6/)
->  **[🖹](/blob/5b60840ed884ad84f626b5ee98352693cabac7e6/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
+<!--end-->
+<!--tgen step=1.1 nohighlight -->
+####1.1 Vytvorenie MyHandlerThread triedy [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/5b60840ed884ad84f626b5ee98352693cabac7e6/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/5b60840ed884ad84f626b5ee98352693cabac7e6/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
                  
 
-``` java tab="Nové" hl_lines="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17"
+``` java  
 package sk.uniza.handlerthreadcvicenie;
 
 import android.os.HandlerThread;
@@ -99,11 +96,49 @@ public class MyHandlerThread extends HandlerThread {
 
 ```
 
-####Krok č. 1.2 Vytvorenie rozhrania, ktoré sa použije na odovzdanie stiahnutého obrázku [:link:](/commit/e1f221b75852b5cba4f9c547aac72675b5c5b5b7/)
->  **[🖹](/blob/e1f221b75852b5cba4f9c547aac72675b5c5b5b7/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
-         
 
-``` java tab="Nové" hl_lines="3 5 9 10 17 18 19 20 21"
+<!--end-->
+<!--tgen step=1.2.a  -->
+####1.2.a Vytvorenie rozhrania, ktoré sa použije na odovzdanie stiahnutého obrázku [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/4b4a0f9a37a5ecbbc6197dbf6b74cbef1080fd07/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/4b4a0f9a37a5ecbbc6197dbf6b74cbef1080fd07/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
+        
+
+``` java  hl_lines="3 6 13 14 15 16 17 24"
+package sk.uniza.handlerthreadcvicenie;
+
+import android.graphics.Bitmap;
+import android.os.HandlerThread;
+import android.os.Process;
+import android.widget.ImageView;
+
+public class MyHandlerThread extends HandlerThread {
+
+    // Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie
+    private static final String TAG = MyHandlerThread.class.getSimpleName();
+
+    // Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok
+    public interface Callback {
+        public void onImageDownloaded(ImageView imageView, Bitmap bitmap);
+    }
+
+    public MyHandlerThread() {
+        super(TAG);
+        setPriority(Process.THREAD_PRIORITY_BACKGROUND); //Nastavenie
+        // priority pracovnému vláknu
+
+    }
+}
+
+```
+
+
+<!--end-->
+<!--tgen step=1.2.b  -->
+####1.2.b Použitie rozhrania MyHandlerThread.Callback [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/f512c91c96472a26879f73d17e06ad4d1c0e8b94/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/f512c91c96472a26879f73d17e06ad4d1c0e8b94/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
+          
+
+``` java  hl_lines="3 5 9 10 17 18 19 20 21 22"
 package sk.uniza.handlerthreadcvicenie;
 
 import android.graphics.Bitmap;
@@ -128,81 +163,15 @@ public class MainActivity extends AppCompatActivity
 }
 
 ```
- 
-``` java tab="Pred úpravou" hl_lines="7"
-package sk.uniza.handlerthreadcvicenie;
 
-import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
+<!--end-->
+<!--tgen step=1.3  -->
+####1.3 Vytvorenie pomocnej metódy prepareHandler [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/2607e74637e807bdd1111482f54696dc050a11fe/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/2607e74637e807bdd1111482f54696dc050a11fe/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
+         
 
-public class MainActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
-}
-
-```
-
->  **[🖹](/blob/e1f221b75852b5cba4f9c547aac72675b5c5b5b7/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
-  
-
-``` java tab="Nové" hl_lines="3 5"
-package sk.uniza.handlerthreadcvicenie;
-
-import android.graphics.Bitmap;
-import android.os.HandlerThread;
-import android.widget.ImageView;
-import android.os.Process;
-
-public class MyHandlerThread extends HandlerThread {
-
-```
-
-``` java tab="Pred úpravou" 
-package sk.uniza.handlerthreadcvicenie;
-
-import android.os.HandlerThread;
-import android.os.Process;
-
-public class MyHandlerThread extends HandlerThread {
-
-```
-     
- > public class MyHandlerThread extends HandlerThread {
-
-``` java tab="Nové" hl_lines="4 5 6 7 8"
-    // Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie
-    private static final String TAG = MyHandlerThread.class.getSimpleName();
-
-    // Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok
-    public interface Callback {
-        public void onImageDownloaded(ImageView imageView, Bitmap bitmap);
-    }
-
-    public MyHandlerThread() {
-        super(TAG);
-        setPriority(Process.THREAD_PRIORITY_BACKGROUND); //Nastavenie
-
-```
-
-``` java tab="Pred úpravou" 
-    // Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie
-    private static final String TAG = MyHandlerThread.class.getSimpleName();
-
-    public MyHandlerThread() {
-        super(TAG);
-        setPriority(Process.THREAD_PRIORITY_BACKGROUND); //Nastavenie
-
-```
-####Krok č. 1.3 Vytvorenie pomocnej metódy prepareHandler [:link:](/commit/e2dce6e195ffcba734aff8a75c4123ea4065b52b/)
->  **[🖹](/blob/e2dce6e195ffcba734aff8a75c4123ea4065b52b/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
-        
-
-``` java tab="Nové" hl_lines="4 6 10 11 17 18 19 20"
+``` java  hl_lines="4 6 8 9 10 17 18 19 20"
 package sk.uniza.handlerthreadcvicenie;
 
 import android.graphics.Bitmap;
@@ -229,28 +198,10 @@ public class MyHandlerThread extends HandlerThread {
 
 ```
 
-``` java tab="Pred úpravou" 
-package sk.uniza.handlerthreadcvicenie;
-
-import android.graphics.Bitmap;
-import android.os.HandlerThread;
-import android.widget.ImageView;
-import android.os.Process;
-
-public class MyHandlerThread extends HandlerThread {
-
-    // Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie
-    private static final String TAG = MyHandlerThread.class.getSimpleName();
-
-    // Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok
-    public interface Callback {
-        public void onImageDownloaded(ImageView imageView, Bitmap bitmap);
-
-```
-                 
+                  
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
+``` java  hl_lines="4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21"
         // priority pracovnému vláknu
 
     }
@@ -275,18 +226,14 @@ public class MyHandlerThread extends HandlerThread {
 
 ```
 
-``` java tab="Pred úpravou" 
-        // priority pracovnému vláknu
 
-    }
-}
-
-```
-####Krok č. 1.4 Vytvorenie pomocnej triedy ImageUrl [:link:](/commit/50fe6348f677a68489bd5d9cf88f9cb6be8728d2/)
->  **[🖹](/blob/50fe6348f677a68489bd5d9cf88f9cb6be8728d2/app/src/main/java/sk/uniza/handlerthreadcvicenie/ImageUrl.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/ImageUrl.java**
+<!--end-->
+<!--tgen step=1.4  -->
+####1.4 Vytvorenie pomocnej triedy ImageUrl [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/4982e6a93cac3633248e615b11d54e87ae8fa4bd/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/4982e6a93cac3633248e615b11d54e87ae8fa4bd/app/src/main/java/sk/uniza/handlerthreadcvicenie/ImageUrl.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/ImageUrl.java**
                         
 
-``` java tab="Nové" hl_lines="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24"
+``` java  hl_lines="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24"
 package sk.uniza.handlerthreadcvicenie;
 
 import android.widget.ImageView;
@@ -315,11 +262,11 @@ public class ImageUrl {
 ```
 
 
->  **[🖹](/blob/50fe6348f677a68489bd5d9cf88f9cb6be8728d2/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/4982e6a93cac3633248e615b11d54e87ae8fa4bd/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
  
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4"
+``` java  hl_lines="4"
         };
     }
 
@@ -328,18 +275,14 @@ public class ImageUrl {
 
 ```
 
-``` java tab="Pred úpravou" 
-        };
-    }
 
-}
-
-```
-####Krok č. 1.5 Vytvorenie metódy handleRequest určenej na stiahnutie obrázku z internetu na pracovnom vlákne [:link:](/commit/f49851732dcc449a8696ab73cf7dcee7c5f3b305/)
->  **[🖹](/blob/f49851732dcc449a8696ab73cf7dcee7c5f3b305/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
+<!--end-->
+<!--tgen step=1.5  -->
+####1.5 Vytvorenie metódy handleRequest určenej na stiahnutie obrázku z internetu na pracovnom vlákne [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/bbf884bc75f66ed597f98c2985c5f1fc5b7dc525/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/bbf884bc75f66ed597f98c2985c5f1fc5b7dc525/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
        
 
-``` java tab="Nové" hl_lines="4 8 14 15 16 17 18"
+``` java  hl_lines="4 8 14 15 16 17 18"
 package sk.uniza.handlerthreadcvicenie;
 
 import android.graphics.Bitmap;
@@ -364,27 +307,10 @@ public class MyHandlerThread extends HandlerThread {
 
 ```
 
-``` java tab="Pred úpravou" 
-package sk.uniza.handlerthreadcvicenie;
-
-import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Message;
-import android.widget.ImageView;
-import android.os.Process;
-
-import androidx.annotation.NonNull;
-
-public class MyHandlerThread extends HandlerThread {
-
-    // Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie
-
-```
                                             
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51"
+``` java  hl_lines="4 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51"
             @Override
             public void handleMessage(@NonNull Message msg) {
                 // Spracovanie prijatej správy
@@ -441,24 +367,15 @@ public class MyHandlerThread extends HandlerThread {
 
 ```
 
-``` java tab="Pred úpravou" 
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                // Spracovanie prijatej správy
-            }
-        };
-    }
 
-
-}
-
-```
-####Krok č. 1.6 Úprava konštruktora MyHandlerThread [:link:](/commit/fd7ae37e023502c138e2dd10fac2802a11e67c87/)
->  **[🖹](/blob/fd7ae37e023502c138e2dd10fac2802a11e67c87/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
+<!--end-->
+<!--tgen step=1.6  -->
+####1.6 Úprava konštruktora MyHandlerThread [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/5e4d1ca0b3101bd41f536fc4ffe8cfac3cf1d92c/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/5e4d1ca0b3101bd41f536fc4ffe8cfac3cf1d92c/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
  
  > import android.graphics.BitmapFactory;
 
-``` java tab="Nové" hl_lines="4"
+``` java  hl_lines="4"
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -470,23 +387,11 @@ import androidx.annotation.NonNull;
 
 
 ```
- 
-``` java tab="Pred úpravou" hl_lines="6"
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Message;
-import android.os.Trace;
-import android.widget.ImageView;
-import android.os.Process;
 
-import androidx.annotation.NonNull;
-
-
-```
          
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 5 6 7 8 14 15 19 20"
+``` java  hl_lines="4 5 6 7 8 14 15 19 20"
     // pridelenú prácu
     private Handler mWorkerHandler;
 
@@ -512,32 +417,16 @@ import androidx.annotation.NonNull;
     /**
 
 ```
-  
-``` java tab="Pred úpravou" hl_lines="9 13"
-    // pridelenú prácu
-    private Handler mWorkerHandler;
 
-    // Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok
-    public interface Callback {
-        public void onImageDownloaded(ImageView imageView, Bitmap bitmap);
-    }
 
-    public MyHandlerThread() {
-        super(TAG);
-        setPriority(Process.THREAD_PRIORITY_BACKGROUND); //Nastavenie
-        // priority pracovnému vláknu
-
-    }
-
-    /**
-
-```
-####Krok č. 1.7 Spracovanie prijatej správy v handleMessage metóde [:link:](/commit/d73bdc2bcf888894977519095e7470aac55416fa/)
->  **[🖹](/blob/d73bdc2bcf888894977519095e7470aac55416fa/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
+<!--end-->
+<!--tgen step=1.7  -->
+####1.7 Spracovanie prijatej správy v handleMessage metóde [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/0f5f82e1cafb524c64576b7722c7aede10b0389f/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/0f5f82e1cafb524c64576b7722c7aede10b0389f/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
     
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 5 6 7"
+``` java  hl_lines="4 5 6 7"
             @Override
             public void handleMessage(@NonNull Message msg) {
                 // Spracovanie prijatej správy
@@ -550,23 +439,16 @@ import androidx.annotation.NonNull;
     }
 
 ```
- 
-``` java tab="Pred úpravou" hl_lines="4"
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                // Spracovanie prijatej správy
 
-            }
-        };
-    }
 
-```
-####Krok č. 1.8 Vytvorenie a inicializovanie novej inštancie MyHandlerThread [:link:](/commit/c1d31f53283ebc7bc2221f67fb9f0a7ea26928f1/)
->  **[🖹](/blob/c1d31f53283ebc7bc2221f67fb9f0a7ea26928f1/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
+<!--end-->
+<!--tgen step=1.8  -->
+####1.8 Vytvorenie a inicializovanie novej inštancie MyHandlerThread [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/a98f5e44094b567d9ee8996bb09f7157b0ffa5b5/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/a98f5e44094b567d9ee8996bb09f7157b0ffa5b5/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
          
  > package sk.uniza.handlerthreadcvicenie;
 
-``` java tab="Nové" hl_lines="3 5 12 13 14 19 20 21 22"
+``` java  hl_lines="3 5 12 13 14 19 20 21 22"
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -595,31 +477,15 @@ public class MainActivity extends AppCompatActivity
 
 ```
 
-``` java tab="Pred úpravou" 
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MainActivity extends AppCompatActivity
-        implements MyHandlerThread.Callback {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
-
-    @Override
-
-```
-####Krok č. 1.9 Vytvorenie a odoslanie zoznamu obrázkov na stiahnutie [:link:](/commit/b5c9a3968fc2e4d7bdc27f6db24807dad43186dd/)
->  **[🖹](/blob/b5c9a3968fc2e4d7bdc27f6db24807dad43186dd/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
+<!--end-->
+<!--tgen step=1.9  -->
+####1.9 Vytvorenie a odoslanie zoznamu obrázkov na stiahnutie [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/412fc748b292794093459f67fd144249df372e37/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/412fc748b292794093459f67fd144249df372e37/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
     
  > import androidx.appcompat.app.AppCompatActivity;
 
-``` java tab="Nové" hl_lines="4 5 6 7"
+``` java  hl_lines="4 5 6 7"
 public class MainActivity extends AppCompatActivity
         implements MyHandlerThread.Callback {
 
@@ -633,19 +499,10 @@ public class MainActivity extends AppCompatActivity
 
 ```
 
-``` java tab="Pred úpravou" 
-public class MainActivity extends AppCompatActivity
-        implements MyHandlerThread.Callback {
-
-    private LinearLayout imageContainer;
-    private MyHandlerThread myHandlerThread;
-
-
-```
                   
  > public class MainActivity extends AppCompatActivity
 
-``` java tab="Nové" hl_lines="4 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27"
+``` java  hl_lines="4 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27"
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -679,27 +536,12 @@ public class MainActivity extends AppCompatActivity
 
 ```
 
-``` java tab="Pred úpravou" 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        myHandlerThread = new MyHandlerThread(new Handler(), this);
 
-        myHandlerThread.start();
-        myHandlerThread.prepareHandler();
-    }
-
-    @Override
-    public void onImageDownloaded(ImageView imageView, Bitmap bitmap) {
-
-
-```
-
->  **[🖹](/blob/b5c9a3968fc2e4d7bdc27f6db24807dad43186dd/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/412fc748b292794093459f67fd144249df372e37/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
           
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 5 6 7 8 9 10 11 12 13"
+``` java  hl_lines="4 5 6 7 8 9 10 11 12 13"
         };
     }
 
@@ -719,21 +561,15 @@ public class MainActivity extends AppCompatActivity
 
 ```
 
-``` java tab="Pred úpravou" 
-        };
-    }
 
-    /*
-        Metóda na stiahnutie obrázku z internetu, Táto metóda je je spustená
-        na pracovnom vlákne!
-
-```
-####Krok č. 1.10 Zobrazenie stiahnutého obrázku [:link:](/commit/8e3254b6d2b12324d823f840129113c5e7eae83f/)
->  **[🖹](/blob/8e3254b6d2b12324d823f840129113c5e7eae83f/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
+<!--end-->
+<!--tgen step=1.10  -->
+####1.10 Zobrazenie stiahnutého obrázku [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/450569817c45620198677de4a805febb0ff35c6d/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/450569817c45620198677de4a805febb0ff35c6d/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
      
  > public class MainActivity extends AppCompatActivity
 
-``` java tab="Nové" hl_lines="3 4 5 6 7"
+``` java  hl_lines="3 4 5 6 7"
     @Override
     public void onImageDownloaded(ImageView imageView, Bitmap bitmap) {
         // Otestovanie či ImageView bol vytvorený v rovnakom kontexte. V
@@ -745,20 +581,15 @@ public class MainActivity extends AppCompatActivity
 }
 
 ```
- 
-``` java tab="Pred úpravou" hl_lines="3"
-    @Override
-    public void onImageDownloaded(ImageView imageView, Bitmap bitmap) {
 
-    }
-}
 
-```
-####Krok č. 1.11 Pridanie povolenia pre prístup na internet [:link:](/commit/b9d330af0d1088636cce3e2c3405dc84a2d98515/)
->  **[🖹](/blob/b9d330af0d1088636cce3e2c3405dc84a2d98515/app/src/main/AndroidManifest.xml) app/src/main/AndroidManifest.xml**
+<!--end-->
+<!--tgen step=1.11  -->
+####1.11 Pridanie povolenia pre prístup na internet [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/54ef73ef68705d93477a23159fa354c3fde99707/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/54ef73ef68705d93477a23159fa354c3fde99707/app/src/main/AndroidManifest.xml) app/src/main/AndroidManifest.xml**
  
 
-``` java tab="Nové" hl_lines="4"
+``` java  hl_lines="4"
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sk.uniza.handlerthreadcvicenie">
 
@@ -769,21 +600,24 @@ public class MainActivity extends AppCompatActivity
 
 ```
 
-``` java tab="Pred úpravou" 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="sk.uniza.handlerthreadcvicenie">
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+<!--end-->
+<!--tgen step=1.12  -->
+####1.12 Reštart aplikácie vplyvom konfiguračnej zmeny. Minimálne riešenie [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/86fd759c56640a5864e2627749d51c258b763619/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/86fd759c56640a5864e2627749d51c258b763619/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
+
+
+``` java  
+package sk.uniza.handlerthreadcvicenie;
+
+import android.graphics.Bitmap;
 
 ```
-####Krok č. 1.12 Reštart aplikácie vplyvom konfiguračnej zmeny. Minimálne riešenie [:link:](/commit/6dfcd7ef344b62d1b4bef63821fd86bc721d6f02/)
->  **[🖹](/blob/6dfcd7ef344b62d1b4bef63821fd86bc721d6f02/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
-      
+
+       
  > public class MainActivity extends AppCompatActivity
 
-``` java tab="Nové" hl_lines="4 5 6 7 8 9"
+``` java  hl_lines="4 5 6 7 8 9 10"
         if (imageView.getContext() == this)
             imageView.setImageBitmap(bitmap);
     }
@@ -797,19 +631,15 @@ public class MainActivity extends AppCompatActivity
 
 ```
 
-``` java tab="Pred úpravou" 
-        if (imageView.getContext() == this)
-            imageView.setImageBitmap(bitmap);
-    }
-}
 
-```
-####Krok č. 2.0 Využitie Singleton návrhového vzoru [:link:](/commit/ce66f77a589451c6e7ce32680c701b730ee7a372/)
->  **[🖹](/blob/ce66f77a589451c6e7ce32680c701b730ee7a372/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
+<!--end-->
+<!--tgen step=2.0  -->
+####2.0 Využitie Singleton návrhového vzoru [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/bc1afda979d5a98775fd6d3d8838f89ffcf871ed/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/bc1afda979d5a98775fd6d3d8838f89ffcf871ed/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
        
  > public class MainActivity extends AppCompatActivity
 
-``` java tab="Nové" hl_lines="4 6 7 8 9 10 11"
+``` java  hl_lines="4 6 7 8 9 10 11"
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageContainer = findViewById(R.id.imageContainer);
@@ -826,24 +656,11 @@ public class MainActivity extends AppCompatActivity
     @Override
 
 ```
-   
-``` java tab="Pred úpravou" hl_lines="4 6 7"
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        imageContainer = findViewById(R.id.imageContainer);
-        myHandlerThread = new MyHandlerThread(new Handler(), this);
 
-        myHandlerThread.start();
-        myHandlerThread.prepareHandler();
-    }
-
-    @Override
-
-```
   
  > public class MainActivity extends AppCompatActivity
 
-``` java tab="Nové" hl_lines="4 5"
+``` java  hl_lines="4 5"
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -853,22 +670,13 @@ public class MainActivity extends AppCompatActivity
 }
 
 ```
- 
-``` java tab="Pred úpravou" hl_lines="4"
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        myHandlerThread.quit();
-    }
-}
 
-```
 
->  **[🖹](/blob/ce66f77a589451c6e7ce32680c701b730ee7a372/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/bc1afda979d5a98775fd6d3d8838f89ffcf871ed/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
    
  > import java.net.URL;
 
-``` java tab="Nové" hl_lines="3 4 5"
+``` java  hl_lines="3 4 5"
 public class MyHandlerThread extends HandlerThread {
 
     // Referencia na vytvorenú štanciu MyHandlerThread
@@ -880,18 +688,10 @@ public class MyHandlerThread extends HandlerThread {
 
 ```
 
-``` java tab="Pred úpravou" 
-public class MyHandlerThread extends HandlerThread {
-
-    // Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie
-    private static final String TAG = MyHandlerThread.class.getSimpleName();
-
-
-```
               
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 8 9 10 11 12 13 14 15 16 17 18 19 20"
+``` java  hl_lines="4 8 9 10 11 12 13 14 15 16 17 18 19 20"
         public void onImageDownloaded(ImageView imageView, Bitmap bitmap);
     }
 
@@ -917,29 +717,16 @@ public class MyHandlerThread extends HandlerThread {
     /**
 
 ```
-    
-``` java tab="Pred úpravou" hl_lines="4 5 9 10"
-        public void onImageDownloaded(ImageView imageView, Bitmap bitmap);
-    }
 
-    public MyHandlerThread(Handler responseHandler,
-                           Callback callback) {
-        super(TAG);
-        setPriority(Process.THREAD_PRIORITY_BACKGROUND); //Nastavenie
-        // priority pracovnému vláknu
-        mResponseHandler = responseHandler;
-        mCallback = callback;
-    }
 
-    /**
-
-```
-####Krok č. 2.1 Optimalizácia s pohladu reštartovania aktivity [:link:](/commit/21516f8a7dedc8d805214d5a2262832315c8e881/)
->  **[🖹](/blob/21516f8a7dedc8d805214d5a2262832315c8e881/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
+<!--end-->
+<!--tgen step=2.1  -->
+####2.1 Optimalizácia s pohladu reštartovania aktivity [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/50622b7e7ace7e8daa4fa48456de70fa20a19ca5/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/50622b7e7ace7e8daa4fa48456de70fa20a19ca5/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
  
  > public class MainActivity extends AppCompatActivity
 
-``` java tab="Nové" hl_lines="4"
+``` java  hl_lines="4"
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -949,23 +736,13 @@ public class MyHandlerThread extends HandlerThread {
 }
 
 ```
- 
-``` java tab="Pred úpravou" hl_lines="4"
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
 
 
-    }
-}
-
-```
-
->  **[🖹](/blob/21516f8a7dedc8d805214d5a2262832315c8e881/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/50622b7e7ace7e8daa4fa48456de70fa20a19ca5/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
         
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 5 6 7 8 9 10 11"
+``` java  hl_lines="4 5 6 7 8 9 10 11"
                 .sendToTarget();
     }
 
@@ -983,21 +760,15 @@ public class MyHandlerThread extends HandlerThread {
 
 ```
 
-``` java tab="Pred úpravou" 
-                .sendToTarget();
-    }
 
-    /*
-        Metóda na stiahnutie obrázku z internetu, Táto metóda je je spustená
-        na pracovnom vlákne!
-
-```
-####Krok č. 2.2 Bezpečný prístupu k zdieľaným premenným z viacerých vláken [:link:](/commit/14afdd154be446ee907a342bac25db418cc26b4f/)
->  **[🖹](/blob/14afdd154be446ee907a342bac25db418cc26b4f/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
+<!--end-->
+<!--tgen step=2.2  -->
+####2.2 Bezpečný prístupu k zdieľaným premenným z viacerých vláken [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/5640d902328f7dd0b5cd5f5f998ad11f8ea71744/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/5640d902328f7dd0b5cd5f5f998ad11f8ea71744/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
   
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 5"
+``` java  hl_lines="4 5"
     private Handler mResponseHandler;
     // Referencia na Callback rozhranie
     private Callback mCallback;
@@ -1009,19 +780,10 @@ public class MyHandlerThread extends HandlerThread {
 
 ```
 
-``` java tab="Pred úpravou" 
-    private Handler mResponseHandler;
-    // Referencia na Callback rozhranie
-    private Callback mCallback;
-
-    // Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok
-    public interface Callback {
-
-```
     
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 5 6 7"
+``` java  hl_lines="4 5 6 7"
         if (instance == null || !instance.isAlive()) {
             instance = new MyHandlerThread();
         }
@@ -1034,24 +796,11 @@ public class MyHandlerThread extends HandlerThread {
 
 
 ```
-    
-``` java tab="Pred úpravou" hl_lines="4 5 6 7"
-        if (instance == null || !instance.isAlive()) {
-            instance = new MyHandlerThread();
-        }
 
-        instance.mResponseHandler = responseHandler;
-        instance.mCallback = callback;
-
-        return instance;
-    }
-
-
-```
      
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 5 6 7 8"
+``` java  hl_lines="4 5 6 7 8"
     public void onDestroy() {
         // Odstránenie všetkých ešte nestiahnutých url adries so zásobníka
         mWorkerHandler.removeMessages(ImageUrl.WHAT);
@@ -1066,19 +815,10 @@ public class MyHandlerThread extends HandlerThread {
 
 ```
 
-``` java tab="Pred úpravou" 
-    public void onDestroy() {
-        // Odstránenie všetkých ešte nestiahnutých url adries so zásobníka
-        mWorkerHandler.removeMessages(ImageUrl.WHAT);
-    }
-
-    /*
-
-```
               
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 5 6 7 8 9 10 11 12 13 14 15 16 17"
+``` java  hl_lines="4 5 6 7 8 9 10 11 12 13 14 15 16 17"
                 Stiahnutý obrázok sa odovzdá s pomocu Handler triedy UI
                 vláknu, ktoré zavolá callback metódu
              */
@@ -1101,32 +841,16 @@ public class MyHandlerThread extends HandlerThread {
         } catch (IOException e) {
 
 ```
-          
-``` java tab="Pred úpravou" hl_lines="4 5 6 7 8 9 10 11 12 13"
-                Stiahnutý obrázok sa odovzdá s pomocu Handler triedy UI
-                vláknu, ktoré zavolá callback metódu
-             */
-            if (bitmap != null) {
-                mResponseHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Spustené na UI vlákne
-                        mCallback.onImageDownloaded(
-                                imageUrl.uiToShowImage.get(),
-                                bitmap);
-                    }
-                });
-            }
 
-        } catch (IOException e) {
 
-```
-####Krok č. 2.3 Aplikovanie Cache na rýchle načítanie už stiahnutých obrázkov [:link:](/commit/598937e7d9a24dd25956596161eadcb87b693538/)
->  **[🖹](/blob/598937e7d9a24dd25956596161eadcb87b693538/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
+<!--end-->
+<!--tgen step=2.3  -->
+####2.3 Aplikovanie Cache na rýchle načítanie už stiahnutých obrázkov [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/9e00659e63e8d9b85a3e694b561fb1764bfdf114/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/9e00659e63e8d9b85a3e694b561fb1764bfdf114/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
  
  > import android.os.Handler;
 
-``` java tab="Nové" hl_lines="7"
+``` java  hl_lines="7"
 import android.os.HandlerThread;
 import android.os.Message;
 import android.os.Process;
@@ -1139,24 +863,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 ```
- 
-``` java tab="Pred úpravou" hl_lines="4"
-import android.os.HandlerThread;
-import android.os.Message;
-import android.os.Process;
-import android.os.Trace;
-import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-```
          
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 5 6 7 8 9 10 11 12"
+``` java  hl_lines="4 5 6 7 8 9 10 11 12"
         public void onImageDownloaded(ImageView imageView, Bitmap bitmap);
     }
 
@@ -1175,19 +886,10 @@ import java.io.InputStream;
 
 ```
 
-``` java tab="Pred úpravou" 
-        public void onImageDownloaded(ImageView imageView, Bitmap bitmap);
-    }
-
-    public MyHandlerThread() {
-        super(TAG);
-        setPriority(Process.THREAD_PRIORITY_BACKGROUND); //Nastavenie
-
-```
                   
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21"
+``` java  hl_lines="4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21"
         try {
             final Bitmap bitmap;
 
@@ -1215,36 +917,16 @@ import java.io.InputStream;
                 vláknu, ktoré zavolá callback metódu
 
 ```
-             
-``` java tab="Pred úpravou" hl_lines="4 5 6 7 8 9 10 11 12 13 14 15 17"
-        try {
-            final Bitmap bitmap;
 
-            Trace.beginSection("HTTP download");
-            HttpURLConnection connection =
-                    (HttpURLConnection) new URL(imageUrl.urlOfImage)
-                            .openConnection();
-            connection.setRequestMethod("GET");
-            bitmap = BitmapFactory
-                    .decodeStream((InputStream) connection.getContent());
 
-            try {
-                this.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            /*
-                Stiahnutý obrázok sa odovzdá s pomocu Handler triedy UI
-                vláknu, ktoré zavolá callback metódu
-
-```
-####Krok č. 3.0 Implementovanie LifeCycle AndroidX komponentu [:link:](/commit/eddf187baad520199a103b95ca164b0bfbbf03ae/)
->  **[🖹](/blob/eddf187baad520199a103b95ca164b0bfbbf03ae/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
+<!--end-->
+<!--tgen step=3.0  -->
+####3.0 Implementovanie LifeCycle AndroidX komponentu [:link:](https://github.com/hudikm/HandlerThreadCvicenie/commit/194619708e3bd14f62d08a6436d4907e3f9b450b/)
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/194619708e3bd14f62d08a6436d4907e3f9b450b/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java**
   
  > public class MainActivity extends AppCompatActivity
 
-``` java tab="Nové" hl_lines="4 5"
+``` java  hl_lines="4 5"
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageContainer = findViewById(R.id.imageContainer);
@@ -1255,47 +937,24 @@ import java.io.InputStream;
             // Iba pri prvom spustení musí prebehnúť inicializácia
 
 ```
- 
-``` java tab="Pred úpravou" hl_lines="4"
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        imageContainer = findViewById(R.id.imageContainer);
-        myHandlerThread = MyHandlerThread.getInstance(new Handler(), this);
 
-        if (!myHandlerThread.isAlive()) {
-            // Iba pri prvom spustení musí prebehnúť inicializácia
-
-```
 
  > public class MainActivity extends AppCompatActivity
 
-``` java tab="Nové" 
+``` java  
             imageView.setImageBitmap(bitmap);
     }
 
 }
 
 ```
-      
-``` java tab="Pred úpravou" hl_lines="4 5 6 7 8 9"
-            imageView.setImageBitmap(bitmap);
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        myHandlerThread.onDestroy();
 
-    }
-}
-
-```
-
->  **[🖹](/blob/eddf187baad520199a103b95ca164b0bfbbf03ae/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
+>  **[🖹](https://github.com/hudikm/HandlerThreadCvicenie/blob/194619708e3bd14f62d08a6436d4907e3f9b450b/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java) app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java**
      
  > import android.widget.ImageView;
 
-``` java tab="Nové" hl_lines="3 4 5 12 13"
+``` java  hl_lines="3 4 5 12 13"
 import androidx.annotation.NonNull;
 import androidx.collection.LruCache;
 import androidx.lifecycle.Lifecycle;
@@ -1314,26 +973,11 @@ public class MyHandlerThread extends HandlerThread implements
     private static MyHandlerThread instance = null;
 
 ```
- 
-``` java tab="Pred úpravou" hl_lines="9"
-import androidx.annotation.NonNull;
-import androidx.collection.LruCache;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-public class MyHandlerThread extends HandlerThread {
-
-    // Referencia na vytvorenú štanciu MyHandlerThread
-    private static MyHandlerThread instance = null;
-
-```
   
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 5"
+``` java  hl_lines="4 5"
     }
 
     public static MyHandlerThread getInstance(@NonNull Handler responseHandler,
@@ -1344,21 +988,11 @@ public class MyHandlerThread extends HandlerThread {
             instance = new MyHandlerThread();
 
 ```
- 
-``` java tab="Pred úpravou" hl_lines="4"
-    }
 
-    public static MyHandlerThread getInstance(@NonNull Handler responseHandler,
-                                              @NonNull Callback callback) {
-
-        if (instance == null || !instance.isAlive()) {
-            instance = new MyHandlerThread();
-
-```
    
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="4 5 6"
+``` java  hl_lines="4 5 6"
         synchronized (instance.syncObj) {
             instance.mResponseHandler = responseHandler;
             instance.mCallback = callback;
@@ -1371,19 +1005,10 @@ public class MyHandlerThread extends HandlerThread {
 
 ```
 
-``` java tab="Pred úpravou" 
-        synchronized (instance.syncObj) {
-            instance.mResponseHandler = responseHandler;
-            instance.mCallback = callback;
-        }
-        return instance;
-    }
-
-```
   
  > public class MyHandlerThread extends HandlerThread {
 
-``` java tab="Nové" hl_lines="3 5"
+``` java  hl_lines="3 5"
     /**
      * Pomocná metóda, ktorá má byť spustená keď dôjde k reštartu aktivity
      * Táto metóda je teraz pripojená na životný cyklus nadradenej aktivity
@@ -1395,14 +1020,12 @@ public class MyHandlerThread extends HandlerThread {
 
 ```
 
-``` java tab="Pred úpravou" 
-    /**
-     * Pomocná metóda, ktorá má byť spustená keď dôjde k reštartu aktivity
-     */
-    public void onDestroy() {
-        // Odstránenie všetkých ešte nestiahnutých url adries so zásobníka
-        mWorkerHandler.removeMessages(ImageUrl.WHAT);
-
-```
 
 <!--end-->
+
+
+
+
+
+
+
