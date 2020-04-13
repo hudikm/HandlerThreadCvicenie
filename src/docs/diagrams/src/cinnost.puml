@@ -1,0 +1,54 @@
+@startuml
+!include ../include/themes/light.puml 
+box "Hlavné vlákno"
+participant "MainActivity" as UI << (C,#ADD1B2) AppCompatActivity >> order 2
+create "Handler pre hlavné vlákno" as HAN1 << (C,#ADD1B2) Handler >> order 1
+end box
+UI->HAN1: new Handler() 
+UI<-->HAN1 ++: looper
+box "Pracovné vlákno"
+create "MyHandlerThread" as HT << (C,#ADD1B2) HandlerThread >> order 4
+UI->HT: new 
+create "Handler pre pracovné vlákno" as HAN2 << (C,#ADD1B2) Handler >> order 3
+UI->HAN2: new Handler() 
+end box
+HT->HAN2 ++: getLooper()
+
+UI->HAN2:post("ImageUrl 1")
+hnote over HAN2: ImageUrl 1
+UI->HAN2:post("ImageUrl 2")
+hnote over HAN2: ImageUrl 1\nImageUrl 2
+UI->HAN2:post("ImageUrl 3")
+hnote over HAN2: ImageUrl 1\nImageUrl 2\nImageUrl 3
+HAN2->HT++:handleMessage(ImageUrl 1)
+hnote over HAN2: ImageUrl 2\nImageUrl 3
+HT->HT:Download ImageUrl 1
+UI->HAN2:post("ImageUrl 4")
+hnote over HAN2: ImageUrl 2\nImageUrl 3\nImageUrl 4
+HT->HAN1--:post(Runnable)
+hnote over HAN1: Image 1
+HAN1->UI++: onImageDownloaded(Image 1)
+HAN2->HT++:handleMessage(ImageUrl 2)
+hnote over HAN2: ImageUrl 3\nImageUrl 4
+HT->HT:Download ImageUrl 2
+UI -> UI--:ShowImage 
+HT->HAN1--:post(Runnable)
+hnote over HAN1: Image 2
+HAN1->UI++: onImageDownloaded(Image 2)
+HAN2->HT++:handleMessage(ImageUrl 3)
+hnote over HAN2: ImageUrl 4
+HT->HT:Download ImageUrl 3
+UI -> UI--:ShowImage 
+HT->HAN1--:post(Runnable)
+hnote over HAN1: Image 3
+HAN1->UI++: onImageDownloaded(Image 3)
+HAN2->HT++:handleMessage(ImageUrl 4)
+HT->HT:Download ImageUrl 4
+UI -> UI--:ShowImage 
+
+HT->HAN1--:post(Runnable)
+hnote over HAN1: Image 4
+HAN1->UI++: onImageDownloaded(Image 4)
+UI -> UI--:ShowImage 
+
+@enduml

@@ -38,10 +38,24 @@ theme:
 
 # Plugins
 plugins:
-  - search
-  - minify:
-      minify_html: true
+    - search
+    - minify:
+        minify_html: true
+    - build_plantuml:
+        render: "server"
+        server: "http://www.plantuml.com/plantuml"
+        output_format: "svg" # or "png"
+        diagram_root: "docs/diagrams" # should reside under docs_dir
+        output_folder: "out"
+        input_folder: "src"
+        theme_enabled: true
+        theme_folder: "include/themes"
+        theme_light: "light.puml"
+        theme_dark: "dark.puml"
 
+extra_css:
+    - 'stylesheets/extra.css'
+      
 # Customization
 extra:
   social:

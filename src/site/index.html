@@ -1,0 +1,963 @@
+<!doctype html><html lang=sk class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Cvičenie k predmetu VAMZ, téma multithreading s využitím HandlerThread"><link href=https://squidfunk.github.io/mkdocs-material/ rel=canonical><meta name=author content="Martin Húdik"><link rel="shortcut icon" href=assets/favicon.png><meta name=generator content="mkdocs-1.1, mkdocs-material-5.0.2"><title>Cvičenie k predmetu VAMZ</title><link rel=stylesheet href=assets/stylesheets/main.07c9fbf5.min.css><link rel=stylesheet href=assets/stylesheets/palette.ecd4686e.min.css><meta name=theme-color content=#3f51b5><link href=https://fonts.gstatic.com rel=preconnect crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback"><style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style><link rel=stylesheet href=stylesheets/extra.css></head> <body dir data-md-color-primary=indigo data-md-color-accent=indigo> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#cvicenie-multithreading class=md-skip> Preskočiť na obsah </a> </div> <div data-md-component=announce> </div> <header class=md-header data-md-component=header> <nav class="md-header-nav md-grid" aria-label> <a href=https://squidfunk.github.io/mkdocs-material/ title="Cvičenie k predmetu VAMZ" class="md-header-nav__button md-logo" aria-label="Cvičenie k predmetu VAMZ"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 89 89"> <path d=M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z /> <path d=M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z style="fill-opacity: 0.5"/> <path d=M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z /> <path d=M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z style="fill-opacity: 0.25"/> </svg> </a> <label class="md-header-nav__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z /></svg> </label> <div class=md-header-nav__title data-md-component=header-title> <div class=md-header-nav__ellipsis> <span class="md-header-nav__topic md-ellipsis"> Cvičenie k predmetu VAMZ </span> <span class="md-header-nav__topic md-ellipsis"> Home </span> </div> </div> <label class="md-header-nav__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=Hľadať placeholder=Hľadať autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query data-md-state=active> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z /></svg> </label> <button type=reset class="md-search__icon md-icon" aria-label data-md-component=search-reset tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z /></svg> </button> </form> <div class=md-search__output> <div class=md-search__scrollwrap data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Pre vyhľadávanie začni písať </div> <ol class=md-search-result__list></ol> </div> </div> </div> </div> </div> </nav> </header> <div class=md-container data-md-component=container> <nav class=md-tabs aria-label data-md-component=tabs> <div class="md-tabs__inner md-grid"> <ul class=md-tabs__list> <li class=md-tabs__item> <a href=. class="md-tabs__link md-tabs__link--active"> Home </a> </li> </ul> </div> </nav> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary" aria-label data-md-level=0> <label class=md-nav__title for=__drawer> <a href=https://squidfunk.github.io/mkdocs-material/ title="Cvičenie k predmetu VAMZ" class="md-nav__button md-logo" aria-label="Cvičenie k predmetu VAMZ"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 89 89"> <path d=M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z /> <path d=M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z style="fill-opacity: 0.5"/> <path d=M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z /> <path d=M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z style="fill-opacity: 0.25"/> </svg> </a> Cvičenie k predmetu VAMZ </label> <ul class=md-nav__list data-md-scrollfix> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" data-md-toggle=toc type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> Home <span class="md-nav__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z /></svg> </span> </label> <a href=. title=Home class="md-nav__link md-nav__link--active"> Home </a> <nav class="md-nav md-nav--secondary" aria-label=Obsah> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z /></svg> </span> Obsah </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=#postup-prace class=md-nav__link> Postup práce </a> <nav class=md-nav aria-label="Postup práce"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#adresarova-struktura-startovacieho-projektu class=md-nav__link> Adresárová štruktúra štartovacieho projektu </a> </li> <li class=md-nav__item> <a href=#10-uprava-layout-u-aplikacie class=md-nav__link> 1.0 Úprava layout-u aplikácie </a> </li> <li class=md-nav__item> <a href=#11-vytvorenie-myhandlerthread-triedy class=md-nav__link> 1.1 Vytvorenie MyHandlerThread triedy </a> </li> <li class=md-nav__item> <a href=#12a-vytvorenie-rozhrania-ktore-sa-pouzije-na-odovzdanie-stiahnuteho-obrazku class=md-nav__link> 1.2.a Vytvorenie rozhrania, ktoré sa použije na odovzdanie stiahnutého obrázku </a> </li> <li class=md-nav__item> <a href=#12b-pouzitie-rozhrania-myhandlerthreadcallback class=md-nav__link> 1.2.b Použitie rozhrania MyHandlerThread.Callback </a> </li> <li class=md-nav__item> <a href=#13-vytvorenie-pomocnej-metody-preparehandler class=md-nav__link> 1.3 Vytvorenie pomocnej metódy prepareHandler </a> </li> <li class=md-nav__item> <a href=#14-vytvorenie-pomocnej-triedy-imageurl class=md-nav__link> 1.4 Vytvorenie pomocnej triedy ImageUrl </a> </li> <li class=md-nav__item> <a href=#15-vytvorenie-metody-handlerequest-urcenej-na-stiahnutie-obrazku-z-internetu-na-pracovnom-vlakne class=md-nav__link> 1.5 Vytvorenie metódy handleRequest určenej na stiahnutie obrázku z internetu na pracovnom vlákne </a> </li> <li class=md-nav__item> <a href=#16-uprava-konstruktora-myhandlerthread class=md-nav__link> 1.6 Úprava konštruktora MyHandlerThread </a> </li> <li class=md-nav__item> <a href=#17-spracovanie-prijatej-spravy-v-handlemessage-metode class=md-nav__link> 1.7 Spracovanie prijatej správy v handleMessage metóde </a> </li> <li class=md-nav__item> <a href=#18-vytvorenie-a-inicializovanie-novej-instancie-myhandlerthread class=md-nav__link> 1.8 Vytvorenie a inicializovanie novej inštancie MyHandlerThread </a> </li> <li class=md-nav__item> <a href=#19-vytvorenie-a-odoslanie-zoznamu-obrazkov-na-stiahnutie class=md-nav__link> 1.9 Vytvorenie a odoslanie zoznamu obrázkov na stiahnutie </a> </li> <li class=md-nav__item> <a href=#110-zobrazenie-stiahnuteho-obrazku class=md-nav__link> 1.10 Zobrazenie stiahnutého obrázku </a> </li> <li class=md-nav__item> <a href=#111-pridanie-povolenia-pre-pristup-na-internet class=md-nav__link> 1.11 Pridanie povolenia pre prístup na internet </a> </li> <li class=md-nav__item> <a href=#112-restart-aplikacie-vplyvom-konfiguracnej-zmeny-minimalne-riesenie class=md-nav__link> 1.12 Reštart aplikácie vplyvom konfiguračnej zmeny. Minimálne riešenie </a> </li> <li class=md-nav__item> <a href=#20-vyuzitie-singleton-jedinacik-navrhoveho-vzoru class=md-nav__link> 2.0 Využitie Singleton (jedináčik) návrhového vzoru </a> </li> <li class=md-nav__item> <a href=#21-optimalizacia-s-pohladu-restartovania-aktivity class=md-nav__link> 2.1 Optimalizácia s pohladu reštartovania aktivity </a> </li> <li class=md-nav__item> <a href=#22-bezpecny-pristupu-k-zdielanym-premennym-z-viacerych-vlaken class=md-nav__link> 2.2 Bezpečný prístupu k zdieľaným premenným z viacerých vláken </a> </li> <li class=md-nav__item> <a href=#23-aplikovanie-cache-na-rychle-nacitanie-uz-stiahnutych-obrazkov class=md-nav__link> 2.3 Aplikovanie Cache na rýchle načítanie už stiahnutých obrázkov </a> </li> <li class=md-nav__item> <a href=#30-implementovanie-lifecycle-androidx-komponentu class=md-nav__link> 3.0 Implementovanie LifeCycle AndroidX komponentu </a> </li> </ul> </nav> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label=Obsah> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z /></svg> </span> Obsah </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=#postup-prace class=md-nav__link> Postup práce </a> <nav class=md-nav aria-label="Postup práce"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#adresarova-struktura-startovacieho-projektu class=md-nav__link> Adresárová štruktúra štartovacieho projektu </a> </li> <li class=md-nav__item> <a href=#10-uprava-layout-u-aplikacie class=md-nav__link> 1.0 Úprava layout-u aplikácie </a> </li> <li class=md-nav__item> <a href=#11-vytvorenie-myhandlerthread-triedy class=md-nav__link> 1.1 Vytvorenie MyHandlerThread triedy </a> </li> <li class=md-nav__item> <a href=#12a-vytvorenie-rozhrania-ktore-sa-pouzije-na-odovzdanie-stiahnuteho-obrazku class=md-nav__link> 1.2.a Vytvorenie rozhrania, ktoré sa použije na odovzdanie stiahnutého obrázku </a> </li> <li class=md-nav__item> <a href=#12b-pouzitie-rozhrania-myhandlerthreadcallback class=md-nav__link> 1.2.b Použitie rozhrania MyHandlerThread.Callback </a> </li> <li class=md-nav__item> <a href=#13-vytvorenie-pomocnej-metody-preparehandler class=md-nav__link> 1.3 Vytvorenie pomocnej metódy prepareHandler </a> </li> <li class=md-nav__item> <a href=#14-vytvorenie-pomocnej-triedy-imageurl class=md-nav__link> 1.4 Vytvorenie pomocnej triedy ImageUrl </a> </li> <li class=md-nav__item> <a href=#15-vytvorenie-metody-handlerequest-urcenej-na-stiahnutie-obrazku-z-internetu-na-pracovnom-vlakne class=md-nav__link> 1.5 Vytvorenie metódy handleRequest určenej na stiahnutie obrázku z internetu na pracovnom vlákne </a> </li> <li class=md-nav__item> <a href=#16-uprava-konstruktora-myhandlerthread class=md-nav__link> 1.6 Úprava konštruktora MyHandlerThread </a> </li> <li class=md-nav__item> <a href=#17-spracovanie-prijatej-spravy-v-handlemessage-metode class=md-nav__link> 1.7 Spracovanie prijatej správy v handleMessage metóde </a> </li> <li class=md-nav__item> <a href=#18-vytvorenie-a-inicializovanie-novej-instancie-myhandlerthread class=md-nav__link> 1.8 Vytvorenie a inicializovanie novej inštancie MyHandlerThread </a> </li> <li class=md-nav__item> <a href=#19-vytvorenie-a-odoslanie-zoznamu-obrazkov-na-stiahnutie class=md-nav__link> 1.9 Vytvorenie a odoslanie zoznamu obrázkov na stiahnutie </a> </li> <li class=md-nav__item> <a href=#110-zobrazenie-stiahnuteho-obrazku class=md-nav__link> 1.10 Zobrazenie stiahnutého obrázku </a> </li> <li class=md-nav__item> <a href=#111-pridanie-povolenia-pre-pristup-na-internet class=md-nav__link> 1.11 Pridanie povolenia pre prístup na internet </a> </li> <li class=md-nav__item> <a href=#112-restart-aplikacie-vplyvom-konfiguracnej-zmeny-minimalne-riesenie class=md-nav__link> 1.12 Reštart aplikácie vplyvom konfiguračnej zmeny. Minimálne riešenie </a> </li> <li class=md-nav__item> <a href=#20-vyuzitie-singleton-jedinacik-navrhoveho-vzoru class=md-nav__link> 2.0 Využitie Singleton (jedináčik) návrhového vzoru </a> </li> <li class=md-nav__item> <a href=#21-optimalizacia-s-pohladu-restartovania-aktivity class=md-nav__link> 2.1 Optimalizácia s pohladu reštartovania aktivity </a> </li> <li class=md-nav__item> <a href=#22-bezpecny-pristupu-k-zdielanym-premennym-z-viacerych-vlaken class=md-nav__link> 2.2 Bezpečný prístupu k zdieľaným premenným z viacerých vláken </a> </li> <li class=md-nav__item> <a href=#23-aplikovanie-cache-na-rychle-nacitanie-uz-stiahnutych-obrazkov class=md-nav__link> 2.3 Aplikovanie Cache na rýchle načítanie už stiahnutých obrázkov </a> </li> <li class=md-nav__item> <a href=#30-implementovanie-lifecycle-androidx-komponentu class=md-nav__link> 3.0 Implementovanie LifeCycle AndroidX komponentu </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class=md-content> <article class="md-content__inner md-typeset"> <h1 id=cvicenie-multithreading>Cvičenie - Multithreading<a class=headerlink href=#cvicenie-multithreading title="Permanent link">&para;</a></h1> <p><strong>Zadanie:</strong></p> <!--tgen file='/home/martin/AndroidStudioProjects/Docs/out.patch' lang=java tabs t_new="Nové" t_old="Pred úpravou" --> <p>Úlohou cvičenia je oboznámiť sa s použitím triedy <code>HandlerThread</code>. Táto trieda bude tvoriť pracovné vlákno, ktoré odbremení hlavné 'UI' vlákno od náročných úloh. </p> <p>Vytváraná aplikácia má za úlohu stiahnuť obrázky z internetu a po stiahnutí ich zobrazí v pripravenom Layoute. Požiadavky na aplikáciu:</p> <ul> <li> <p>Obrázky sťahovať na pracovnom vlákne.</p> </li> <li> <p>Aplikácia sa musí prispôsobiť životnému cyklu aktivity:</p> <ul> <li>pri reštarte aplikácie sa pracovné vlákno musí ukončiť alebo sa opätovne využije pri reštarte aktivity.</li> <li>Použiť singleton (jedináčik) návrhový vzor.</li> <li>Využiť cache pamäť na uloženie stiahnutých obrázkov.</li> </ul> </li> <li> <p>Využiť <code>LifeCycle</code> na integrovanie životného cyklu hlavnej aktivity do pracovného vlákna</p> </li> </ul> <blockquote> <p>Ukážka spolupráce hlavného a pracovného vlákna <img alt src=diagrams/out/cinnost.svg#center></p> <p>Ukážka výslednej aplikácie</p> <p><img alt src=images/ezgif-4-51d5fa2581b2.gif#75size#center></p> </blockquote> <!--tgen step=1.0 template="files_list.jinja" noupdate --> <h3 id=postup-prace>Postup práce<a class=headerlink href=#postup-prace title="Permanent link">&para;</a></h3> <p><strong>Štartovací projekt naklonujte pomocou príkazu:</strong></p> <p><code>git clone https://github.com/hudikm/HandlerThreadCvicenie.git --branch Start_cvicenia --single-branch</code></p> <h4 id=adresarova-struktura-startovacieho-projektu>Adresárová štruktúra štartovacieho projektu <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/af6bb53a561bb7a67eae5ed20c12c8eefad867f5/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#adresarova-struktura-startovacieho-projektu title="Permanent link">&para;</a></h4> <div class=highlight><pre><span></span><code> .
+ └─ app
+    └─ src
+       └─ main
+          ├─ res
+          │  └─ layout
+          │     └─ activity_main.xml
+          ├─ java
+          │  └─ sk
+          │     └─ uniza
+          │        └─ handlerthreadcvicenie
+          │           └─ MainActivity.java
+          └─ AndroidManifest.xml
+</code></pre></div> <!--end--> <!--tgen lang=xml step=1.0 nohighlight tabs=false noupdate  --> <h4 id=10-uprava-layout-u-aplikacie>1.0 Úprava layout-u aplikácie <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/af6bb53a561bb7a67eae5ed20c12c8eefad867f5/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#10-uprava-layout-u-aplikacie title="Permanent link">&para;</a></h4> <p>Pre jednoduchosť použijeme <code>LinearLayout</code> , ktorý je vložený do <code>ScrollView</code> ako kontajner na zobrazenie stiahnutých obrázkov. </p> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/af6bb53a561bb7a67eae5ed20c12c8eefad867f5/app/src/main/res/layout/activity_main.xml>🖹</a> app/src/main/res/layout/activity_main.xml</strong></p> </blockquote> <div class=highlight><pre><span></span><code><span class=cp>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class=nt>&lt;LinearLayout</span> <span class=na>xmlns:android=</span><span class=s>&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class=na>xmlns:tools=</span><span class=s>&quot;http://schemas.android.com/tools&quot;</span>
+    <span class=na>android:layout_width=</span><span class=s>&quot;match_parent&quot;</span>
+    <span class=na>android:layout_height=</span><span class=s>&quot;match_parent&quot;</span>
+    <span class=na>android:orientation=</span><span class=s>&quot;vertical&quot;</span>
+    <span class=na>tools:context=</span><span class=s>&quot;.MainActivity&quot;</span><span class=nt>&gt;</span>
+
+    <span class=nt>&lt;ScrollView</span>
+        <span class=na>android:layout_width=</span><span class=s>&quot;wrap_content&quot;</span>
+        <span class=na>android:layout_height=</span><span class=s>&quot;wrap_content&quot;</span>
+        <span class=na>android:layout_gravity=</span><span class=s>&quot;center_horizontal&quot;</span><span class=nt>&gt;</span>
+
+        <span class=nt>&lt;LinearLayout</span>
+            <span class=na>android:id=</span><span class=s>&quot;@+id/imageContainer&quot;</span>
+            <span class=na>android:layout_width=</span><span class=s>&quot;wrap_content&quot;</span>
+            <span class=na>android:layout_height=</span><span class=s>&quot;wrap_content&quot;</span>
+            <span class=na>android:orientation=</span><span class=s>&quot;vertical&quot;</span><span class=nt>&gt;</span>
+
+        <span class=nt>&lt;/LinearLayout&gt;</span>
+    <span class=nt>&lt;/ScrollView&gt;</span>
+<span class=nt>&lt;/LinearLayout&gt;</span>
+</code></pre></div> <!--end--> <h4 id=11-vytvorenie-myhandlerthread-triedy>1.1 Vytvorenie MyHandlerThread triedy <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/5b60840ed884ad84f626b5ee98352693cabac7e6/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#11-vytvorenie-myhandlerthread-triedy title="Permanent link">&para;</a></h4> <p><img alt src=images/Screenshot_20200408_200625.png#center></p> <p>Vždy, keď je vytvorené nové vlákno je vhodné zavolať <code>setThreadPriority()</code> a nastaviť vláknu vhodnú prioritu tak aby plánovač vybalancoval vytaženie CPU. Pre jednoduchšie zvolenie správnej priority existujú pomocné konštanty cez ktoré môžete zvoliť správnu prioritu viď. <a href=https://developer.android.com/reference/android/os/Process>Process</a>. Napríklad <code>THREAD_PRIORITY_DEFAULT</code> predstavuje predvolenú hodnotu pre vlákno. Aplikácia by mala nastaviť prioritu <code>THREAD_PRIORITY_BACKGROUND</code> pre vlákna, ktoré vykonávajú menej naliehavú prácu.</p> <!--tgen step=1.1 nohighlight --> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/5b60840ed884ad84f626b5ee98352693cabac7e6/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java</strong></p> </blockquote> <div class=tabbed-set data-tabs=1:1> <input name=__tabbed_1 type=radio id=__tabbed_1_1 checked=checked><label for=__tabbed_1_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>package</span> <span class=nn>sk.uniza.handlerthreadcvicenie</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>android.os.HandlerThread</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Process</span><span class=p>;</span>
+
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>MyHandlerThread</span> <span class=kd>extends</span> <span class=n>HandlerThread</span> <span class=p>{</span>
+
+    <span class=c1>// Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>TAG</span> <span class=o>=</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>class</span><span class=p>.</span><span class=na>getSimpleName</span><span class=p>();</span>
+
+    <span class=kd>public</span> <span class=nf>MyHandlerThread</span><span class=p>()</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>(</span><span class=n>TAG</span><span class=p>);</span>
+        <span class=n>setPriority</span><span class=p>(</span><span class=n>Process</span><span class=p>.</span><span class=na>THREAD_PRIORITY_BACKGROUND</span><span class=p>);</span> <span class=c1>//Nastavenie</span>
+        <span class=c1>// priority pracovnému vláknu</span>
+
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div></div> </div> <!--end--> <h4 id=12a-vytvorenie-rozhrania-ktore-sa-pouzije-na-odovzdanie-stiahnuteho-obrazku>1.2.a Vytvorenie rozhrania, ktoré sa použije na odovzdanie stiahnutého obrázku <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/4b4a0f9a37a5ecbbc6197dbf6b74cbef1080fd07/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#12a-vytvorenie-rozhrania-ktore-sa-pouzije-na-odovzdanie-stiahnuteho-obrazku title="Permanent link">&para;</a></h4> <p><img alt=file src=diagrams/out/handlerthreadcvicenie.svg></p> <!--tgen step=1.2.a  noupdate --> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/4b4a0f9a37a5ecbbc6197dbf6b74cbef1080fd07/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java</strong></p> </blockquote> <div class=tabbed-set data-tabs=2:2> <input name=__tabbed_2 type=radio id=__tabbed_2_1 checked=checked><label for=__tabbed_2_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>package</span> <span class=nn>sk.uniza.handlerthreadcvicenie</span><span class=p>;</span>
+
+<span class=hll><span class=kn>import</span> <span class=nn>android.graphics.Bitmap</span><span class=p>;</span>
+</span><span class=kn>import</span> <span class=nn>android.os.HandlerThread</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Process</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>android.widget.ImageView</span><span class=p>;</span>
+</span>
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>MyHandlerThread</span> <span class=kd>extends</span> <span class=n>HandlerThread</span> <span class=p>{</span>
+
+    <span class=c1>// Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>TAG</span> <span class=o>=</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>class</span><span class=p>.</span><span class=na>getSimpleName</span><span class=p>();</span>
+
+<span class=hll>    <span class=c1>// Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok</span>
+</span><span class=hll>    <span class=kd>public</span> <span class=kd>interface</span> <span class=nc>Callback</span> <span class=p>{</span>
+</span><span class=hll>        <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>);</span>
+</span><span class=hll>    <span class=p>}</span>
+</span><span class=hll>
+</span>    <span class=kd>public</span> <span class=nf>MyHandlerThread</span><span class=p>()</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>(</span><span class=n>TAG</span><span class=p>);</span>
+        <span class=n>setPriority</span><span class=p>(</span><span class=n>Process</span><span class=p>.</span><span class=na>THREAD_PRIORITY_BACKGROUND</span><span class=p>);</span> <span class=c1>//Nastavenie</span>
+        <span class=c1>// priority pracovnému vláknu</span>
+
+    <span class=p>}</span>
+<span class=hll><span class=p>}</span>
+</span></code></pre></div></div> <input name=__tabbed_2 type=radio id=__tabbed_2_2><label for=__tabbed_2_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>package</span> <span class=nn>sk.uniza.handlerthreadcvicenie</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>android.os.HandlerThread</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Process</span><span class=p>;</span>
+
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>MyHandlerThread</span> <span class=kd>extends</span> <span class=n>HandlerThread</span> <span class=p>{</span>
+
+    <span class=c1>// Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>TAG</span> <span class=o>=</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>class</span><span class=p>.</span><span class=na>getSimpleName</span><span class=p>();</span>
+
+    <span class=kd>public</span> <span class=nf>MyHandlerThread</span><span class=p>()</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>(</span><span class=n>TAG</span><span class=p>);</span>
+        <span class=n>setPriority</span><span class=p>(</span><span class=n>Process</span><span class=p>.</span><span class=na>THREAD_PRIORITY_BACKGROUND</span><span class=p>);</span> <span class=c1>//Nastavenie</span>
+        <span class=c1>// priority pracovnému vláknu</span>
+
+    <span class=p>}</span>
+<span class=hll><span class=p>}</span>
+</span></code></pre></div></div> </div> <!--end--> <!--tgen step=1.2.b  --> <h4 id=12b-pouzitie-rozhrania-myhandlerthreadcallback>1.2.b Použitie rozhrania MyHandlerThread.Callback <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/f512c91c96472a26879f73d17e06ad4d1c0e8b94/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#12b-pouzitie-rozhrania-myhandlerthreadcallback title="Permanent link">&para;</a></h4> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/f512c91c96472a26879f73d17e06ad4d1c0e8b94/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java</strong></p> </blockquote> <div class=tabbed-set data-tabs=3:2> <input name=__tabbed_3 type=radio id=__tabbed_3_1 checked=checked><label for=__tabbed_3_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>package</span> <span class=nn>sk.uniza.handlerthreadcvicenie</span><span class=p>;</span>
+
+<span class=hll><span class=kn>import</span> <span class=nn>android.graphics.Bitmap</span><span class=p>;</span>
+</span><span class=kn>import</span> <span class=nn>android.os.Bundle</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>android.widget.ImageView</span><span class=p>;</span>
+</span>
+<span class=kn>import</span> <span class=nn>androidx.appcompat.app.AppCompatActivity</span><span class=p>;</span>
+
+<span class=hll><span class=kd>public</span> <span class=kd>class</span> <span class=nc>MainActivity</span> <span class=kd>extends</span> <span class=n>AppCompatActivity</span>
+</span><span class=hll>        <span class=kd>implements</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>Callback</span> <span class=p>{</span>
+</span>
+    <span class=nd>@Override</span>
+    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onCreate</span><span class=p>(</span><span class=n>Bundle</span> <span class=n>savedInstanceState</span><span class=p>)</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>.</span><span class=na>onCreate</span><span class=p>(</span><span class=n>savedInstanceState</span><span class=p>);</span>
+        <span class=n>setContentView</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>layout</span><span class=p>.</span><span class=na>activity_main</span><span class=p>);</span>
+    <span class=p>}</span>
+<span class=hll>
+</span><span class=hll>    <span class=nd>@Override</span>
+</span><span class=hll>    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>
+</span><span class=hll>    <span class=p>}</span>
+</span><span class=hll><span class=p>}</span>
+</span></code></pre></div></div> <input name=__tabbed_3 type=radio id=__tabbed_3_2><label for=__tabbed_3_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>package</span> <span class=nn>sk.uniza.handlerthreadcvicenie</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>android.os.Bundle</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>androidx.appcompat.app.AppCompatActivity</span><span class=p>;</span>
+
+<span class=hll><span class=kd>public</span> <span class=kd>class</span> <span class=nc>MainActivity</span> <span class=kd>extends</span> <span class=n>AppCompatActivity</span> <span class=p>{</span>
+</span>
+    <span class=nd>@Override</span>
+    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onCreate</span><span class=p>(</span><span class=n>Bundle</span> <span class=n>savedInstanceState</span><span class=p>)</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>.</span><span class=na>onCreate</span><span class=p>(</span><span class=n>savedInstanceState</span><span class=p>);</span>
+        <span class=n>setContentView</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>layout</span><span class=p>.</span><span class=na>activity_main</span><span class=p>);</span>
+    <span class=p>}</span>
+<span class=hll><span class=p>}</span>
+</span></code></pre></div></div> </div> <!--end--> <h4 id=13-vytvorenie-pomocnej-metody-preparehandler>1.3 Vytvorenie pomocnej metódy <code>prepareHandler</code> <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/2607e74637e807bdd1111482f54696dc050a11fe/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#13-vytvorenie-pomocnej-metody-preparehandler title="Permanent link">&para;</a></h4> <p>V tomto kroku najprv pripravíme privátny atribút typu<a href=https://developer.android.com/reference/android/os/Handler><code>Handler</code></a>, ktorý predstavuje referenciu na pracovný handler. Tento <code>Handler</code> bude prijímať a spracovávať pridelené pracovné úlohy z hlavného vlákna vo forme správ v callback metóde <code>handleMessage(@NonNull Message msg)</code> . Objekt <a href=https://developer.android.com/reference/android/os/Message><code>Message</code></a> definuje správu obsahujúcu popis a ľubovoľný dátový objekt, ktorý je možné poslať obsluhe <code>Handler</code>. Tento objekt obsahuje dve ďalšie int polia a jedno pole extra objektu. Najlepším spôsobom, ako získať inštanciu objektu, je zavolať metódu <code>Message.obtain()</code> alebo jednu z metód <code>Handler.obtainMessage()</code>, ktorá ich vytiahne zo skupiny recyklovaných objektov.</p> <div class="admonition note"> <p class=admonition-title>Prepojenie vytvorenej triedy <code>Handler</code> s triedou <code>HandlerThread</code></p> <p>Trieda <code>HandlerThread</code> obsahuje tzv. <code>Looper</code>, ktorý treba prepojiť s vytvorenou triedou <code>Handler</code>. Looper získame cez <code>getLooper()</code> a referenciu odovzdáme cez konštruktor triedy <code>Handler</code>.(<code>new Handler(getLooper())</code>). </p> <div class="admonition warning"> <p class=admonition-title>Warning</p> <p>Ak by sme zavolali prázdny konštruktor, tak tento <code>Handler</code> by si vyžiadal <code>Looper</code> od vlákna na ktorom bol vytvorený objekt <code>Handler</code>. V našom prípade by to bolo hlavné vlákno a teda všetky úlohy by boli vykonané na hlavnom vlákne a nie na pracovnom <code>HandlerThread</code>vlákne.</p> </div> </div> <!--tgen step=1.3  --> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/2607e74637e807bdd1111482f54696dc050a11fe/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java</strong></p> </blockquote> <div class=tabbed-set data-tabs=4:2> <input name=__tabbed_4 type=radio id=__tabbed_4_1 checked=checked><label for=__tabbed_4_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>package</span> <span class=nn>sk.uniza.handlerthreadcvicenie</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>android.graphics.Bitmap</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>android.os.Handler</span><span class=p>;</span>
+</span><span class=kn>import</span> <span class=nn>android.os.HandlerThread</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>android.os.Message</span><span class=p>;</span>
+</span><span class=kn>import</span> <span class=nn>android.widget.ImageView</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>android.os.Process</span><span class=p>;</span>
+</span><span class=hll>
+</span><span class=hll><span class=kn>import</span> <span class=nn>androidx.annotation.NonNull</span><span class=p>;</span>
+</span>
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>MyHandlerThread</span> <span class=kd>extends</span> <span class=n>HandlerThread</span> <span class=p>{</span>
+
+    <span class=c1>// Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>TAG</span> <span class=o>=</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>class</span><span class=p>.</span><span class=na>getSimpleName</span><span class=p>();</span>
+
+<span class=hll>    <span class=c1>// Definovanie pracovného handlera, ktorý z prideleného loopera príjima</span>
+</span><span class=hll>    <span class=c1>// pridelenú prácu</span>
+</span><span class=hll>    <span class=kd>private</span> <span class=n>Handler</span> <span class=n>mWorkerHandler</span><span class=p>;</span>
+</span><span class=hll>
+</span>    <span class=c1>// Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok</span>
+    <span class=kd>public</span> <span class=kd>interface</span> <span class=nc>Callback</span> <span class=p>{</span>
+        <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>);</span>
+</code></pre></div></div> <input name=__tabbed_4 type=radio id=__tabbed_4_2><label for=__tabbed_4_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>package</span> <span class=nn>sk.uniza.handlerthreadcvicenie</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>android.graphics.Bitmap</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.HandlerThread</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>android.os.Process</span><span class=p>;</span>
+</span><span class=kn>import</span> <span class=nn>android.widget.ImageView</span><span class=p>;</span>
+
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>MyHandlerThread</span> <span class=kd>extends</span> <span class=n>HandlerThread</span> <span class=p>{</span>
+
+    <span class=c1>// Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>TAG</span> <span class=o>=</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>class</span><span class=p>.</span><span class=na>getSimpleName</span><span class=p>();</span>
+
+    <span class=c1>// Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok</span>
+    <span class=kd>public</span> <span class=kd>interface</span> <span class=nc>Callback</span> <span class=p>{</span>
+        <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>);</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=5:2> <input name=__tabbed_5 type=radio id=__tabbed_5_1 checked=checked><label for=__tabbed_5_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=c1>// priority pracovnému vláknu</span>
+
+    <span class=p>}</span>
+<span class=hll>
+</span><span class=hll>    <span class=cm>/**</span>
+</span><span class=hll><span class=cm>     * Pomocná metóda na inicializáciu HandlerThread ako pracovného vlákna</span>
+</span><span class=hll><span class=cm>     */</span>
+</span><span class=hll>    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>prepareHandler</span><span class=p>()</span> <span class=p>{</span>
+</span><span class=hll>        <span class=n>mWorkerHandler</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Handler</span><span class=p>(</span><span class=n>getLooper</span><span class=p>())</span> <span class=p>{</span>
+</span><span class=hll>            <span class=cm>/*</span>
+</span><span class=hll><span class=cm>            V handleMessage callback metóde sa spracovávajú prijaté spravy na</span>
+</span><span class=hll><span class=cm>             pracovnom vlákne HandlerThread</span>
+</span><span class=hll><span class=cm>             */</span>
+</span><span class=hll>            <span class=nd>@Override</span>
+</span><span class=hll>            <span class=kd>public</span> <span class=kt>void</span> <span class=nf>handleMessage</span><span class=p>(</span><span class=nd>@NonNull</span> <span class=n>Message</span> <span class=n>msg</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>                <span class=c1>// Spracovanie prijatej správy</span>
+</span><span class=hll>            <span class=p>}</span>
+</span><span class=hll>        <span class=p>};</span>
+</span><span class=hll>    <span class=p>}</span>
+</span><span class=hll>
+</span><span class=hll><span class=p>}</span>
+</span></code></pre></div></div> <input name=__tabbed_5 type=radio id=__tabbed_5_2><label for=__tabbed_5_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=c1>// priority pracovnému vláknu</span>
+
+    <span class=p>}</span>
+<span class=hll><span class=p>}</span>
+</span></code></pre></div></div> </div> <!--end--> <h4 id=14-vytvorenie-pomocnej-triedy-imageurl>1.4 Vytvorenie pomocnej triedy ImageUrl <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/4982e6a93cac3633248e615b11d54e87ae8fa4bd/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#14-vytvorenie-pomocnej-triedy-imageurl title="Permanent link">&para;</a></h4> <p>Táto pomocná trieda má za úlohu definovať typ správy pomocou konštanty <code>WHAT</code> ďalej držať url adresu obrázku, ktorý sa má stiahnúť a držať referenciu na ImageView, v ktorom sa zobrazí sťiahnutý obrázok.</p> <div class="admonition note"> <p class=admonition-title>Note</p> <p>Referencia na ImageView v ktorom sa zobrazí stiahnutý obrázok je vo forme <a href="https://developer.android.com/reference/java/lang/ref/WeakReference?hl=en"><code>WeakReference</code></a>, ktorá má zabezpečiť aby nedochádzalo k memory leaku v prípade re-štartovania aplikácie.</p> </div> <!--tgen step=1.4  nohighlight--> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/4982e6a93cac3633248e615b11d54e87ae8fa4bd/app/src/main/java/sk/uniza/handlerthreadcvicenie/ImageUrl.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/ImageUrl.java</strong></p> </blockquote> <div class=tabbed-set data-tabs=6:1> <input name=__tabbed_6 type=radio id=__tabbed_6_1 checked=checked><label for=__tabbed_6_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>package</span> <span class=nn>sk.uniza.handlerthreadcvicenie</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>android.widget.ImageView</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>java.lang.ref.WeakReference</span><span class=p>;</span>
+
+<span class=cm>/*</span>
+<span class=cm>  Dátova trieda, ktorá reprezentuje jeden obrázok, ktorý sa bude sťahovať</span>
+<span class=cm> */</span>
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>ImageUrl</span> <span class=p>{</span>
+    <span class=kd>public</span> <span class=kd>static</span> <span class=kd>final</span> <span class=kt>int</span> <span class=n>WHAT</span> <span class=o>=</span> <span class=mi>101</span><span class=p>;</span> <span class=c1>// Identifikátor správy</span>
+    <span class=kd>public</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>urlOfImage</span><span class=p>;</span> <span class=c1>//url adresa obrázku</span>
+    <span class=cm>/*</span>
+<span class=cm>     Referancia na  ImageView v ktorom sa zobrazí stiahnutý obrázok. Táto</span>
+<span class=cm>     referencia je vo forme WeakReference, ktorá má zabezpečiť aby</span>
+<span class=cm>     nedochádzalo k memory leaku v prípade restartovania aplikácie</span>
+<span class=cm>     */</span>
+    <span class=kd>public</span> <span class=kd>final</span> <span class=n>WeakReference</span><span class=o>&lt;</span><span class=n>ImageView</span><span class=o>&gt;</span> <span class=n>uiToShowImage</span><span class=p>;</span>
+
+    <span class=kd>public</span> <span class=nf>ImageUrl</span><span class=p>(</span><span class=n>String</span> <span class=n>urlOfImage</span><span class=p>,</span> <span class=n>ImageView</span> <span class=n>uiToShowImage</span><span class=p>)</span> <span class=p>{</span>
+        <span class=k>this</span><span class=p>.</span><span class=na>urlOfImage</span> <span class=o>=</span> <span class=n>urlOfImage</span><span class=p>;</span>
+        <span class=k>this</span><span class=p>.</span><span class=na>uiToShowImage</span> <span class=o>=</span> <span class=k>new</span> <span class=n>WeakReference</span><span class=o>&lt;&gt;</span><span class=p>(</span><span class=n>uiToShowImage</span><span class=p>);</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div></div> </div> <!--end--> <h4 id=15-vytvorenie-metody-handlerequest-urcenej-na-stiahnutie-obrazku-z-internetu-na-pracovnom-vlakne>1.5 Vytvorenie metódy handleRequest určenej na stiahnutie obrázku z internetu na pracovnom vlákne <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/bbf884bc75f66ed597f98c2985c5f1fc5b7dc525/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#15-vytvorenie-metody-handlerequest-urcenej-na-stiahnutie-obrazku-z-internetu-na-pracovnom-vlakne title="Permanent link">&para;</a></h4> <p>Táto pomocná metóda, ktorá je spustená na pomocnom vlákne ma za úlohu pomocou <code>HttpURLConnection</code> stiahnuť obrázok z internetu a následne ho odovzdať ďalej zavolaním callback metódy <code>mCallback.onImageDownloaded</code>, ktorá je vykonaná na UI vlákne. </p> <div class="admonition note"> <p class=admonition-title>Odovzdanie <code>Runnable</code> objektu na hlavné UI vlákno</p> <p>Aby sa callback metóda vykonala na hlavnom UI vlákne, je potrebné ju odovzdať vo forme pracovného objektu <code>Runnable</code> cez objekt <code>Handler</code>, ktorý je pripojený k hlavnému vláknu (<code>mResponseHandler</code> inicializácia je znázornená v nasledujúcom kroku). <div class=highlight><pre><span></span><code>   <span class=n>mResponseHandler</span><span class=p>.</span><span class=na>post</span><span class=p>(</span><span class=k>new</span> <span class=n>Runnable</span><span class=p>()</span> <span class=p>{</span>
+                <span class=nd>@Override</span>
+                <span class=kd>public</span> <span class=kt>void</span> <span class=nf>run</span><span class=p>()</span> <span class=p>{</span>
+                    <span class=c1>// Spustené na UI vlákne</span>
+                    <span class=n>mCallback</span><span class=p>.</span><span class=na>onImageDownloaded</span><span class=p>(</span>
+                            <span class=n>imageUrl</span><span class=p>.</span><span class=na>uiToShowImage</span><span class=p>.</span><span class=na>get</span><span class=p>(),</span>
+                            <span class=n>bitmap</span><span class=p>);</span>
+                <span class=p>}</span>
+            <span class=p>});</span>
+        <span class=p>}</span>
+</code></pre></div></p> </div> <div class="admonition note"> <p class=admonition-title>Note</p> <p><code>this.sleep(500)</code> simuluje pomalé pripojenie na internet.</p> </div> <!--tgen step=1.5  --> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/bbf884bc75f66ed597f98c2985c5f1fc5b7dc525/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java</strong></p> <div class=tabbed-set data-tabs=7:2> <input name=__tabbed_7 type=radio id=__tabbed_7_1 checked=checked><label for=__tabbed_7_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>package</span> <span class=nn>sk.uniza.handlerthreadcvicenie</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>android.graphics.Bitmap</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>android.graphics.BitmapFactory</span><span class=p>;</span>
+</span><span class=kn>import</span> <span class=nn>android.os.Handler</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.HandlerThread</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Message</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>android.os.Trace</span><span class=p>;</span>
+</span><span class=kn>import</span> <span class=nn>android.widget.ImageView</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Process</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>androidx.annotation.NonNull</span><span class=p>;</span>
+
+<span class=hll><span class=kn>import</span> <span class=nn>java.io.IOException</span><span class=p>;</span>
+</span><span class=hll><span class=kn>import</span> <span class=nn>java.io.InputStream</span><span class=p>;</span>
+</span><span class=hll><span class=kn>import</span> <span class=nn>java.net.HttpURLConnection</span><span class=p>;</span>
+</span><span class=hll><span class=kn>import</span> <span class=nn>java.net.URL</span><span class=p>;</span>
+</span><span class=hll>
+</span><span class=kd>public</span> <span class=kd>class</span> <span class=nc>MyHandlerThread</span> <span class=kd>extends</span> <span class=n>HandlerThread</span> <span class=p>{</span>
+
+    <span class=c1>// Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie</span>
+</code></pre></div></div> <input name=__tabbed_7 type=radio id=__tabbed_7_2><label for=__tabbed_7_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>package</span> <span class=nn>sk.uniza.handlerthreadcvicenie</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>android.graphics.Bitmap</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Handler</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.HandlerThread</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Message</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.widget.ImageView</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Process</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>androidx.annotation.NonNull</span><span class=p>;</span>
+
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>MyHandlerThread</span> <span class=kd>extends</span> <span class=n>HandlerThread</span> <span class=p>{</span>
+
+    <span class=c1>// Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=8:2> <input name=__tabbed_8 type=radio id=__tabbed_8_1 checked=checked><label for=__tabbed_8_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>            <span class=nd>@Override</span>
+            <span class=kd>public</span> <span class=kt>void</span> <span class=nf>handleMessage</span><span class=p>(</span><span class=nd>@NonNull</span> <span class=n>Message</span> <span class=n>msg</span><span class=p>)</span> <span class=p>{</span>
+                <span class=c1>// Spracovanie prijatej správy</span>
+<span class=hll>
+</span>            <span class=p>}</span>
+        <span class=p>};</span>
+    <span class=p>}</span>
+
+<span class=hll>    <span class=cm>/*</span>
+</span><span class=hll><span class=cm>        Metóda na stiahnutie obrázku z internetu, Táto metóda je je spustená</span>
+</span><span class=hll><span class=cm>        na pracovnom vlákne!</span>
+</span><span class=hll><span class=cm>     */</span>
+</span><span class=hll>    <span class=kd>private</span> <span class=kt>void</span> <span class=nf>handleRequest</span><span class=p>(</span><span class=kd>final</span> <span class=n>ImageUrl</span> <span class=n>imageUrl</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>
+</span><span class=hll>        <span class=k>try</span> <span class=p>{</span>
+</span><span class=hll>            <span class=kd>final</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>;</span>
+</span><span class=hll>
+</span><span class=hll>            <span class=n>Trace</span><span class=p>.</span><span class=na>beginSection</span><span class=p>(</span><span class=s>&quot;HTTP download&quot;</span><span class=p>);</span>
+</span><span class=hll>            <span class=n>HttpURLConnection</span> <span class=n>connection</span> <span class=o>=</span>
+</span><span class=hll>                    <span class=p>(</span><span class=n>HttpURLConnection</span><span class=p>)</span> <span class=k>new</span> <span class=n>URL</span><span class=p>(</span><span class=n>imageUrl</span><span class=p>.</span><span class=na>urlOfImage</span><span class=p>)</span>
+</span><span class=hll>                            <span class=p>.</span><span class=na>openConnection</span><span class=p>();</span>
+</span><span class=hll>            <span class=n>connection</span><span class=p>.</span><span class=na>setRequestMethod</span><span class=p>(</span><span class=s>&quot;GET&quot;</span><span class=p>);</span>
+</span><span class=hll>            <span class=n>bitmap</span> <span class=o>=</span> <span class=n>BitmapFactory</span>
+</span><span class=hll>                    <span class=p>.</span><span class=na>decodeStream</span><span class=p>((</span><span class=n>InputStream</span><span class=p>)</span> <span class=n>connection</span><span class=p>.</span><span class=na>getContent</span><span class=p>());</span>
+</span><span class=hll>
+</span><span class=hll>            <span class=k>try</span> <span class=p>{</span>
+</span><span class=hll>                <span class=k>this</span><span class=p>.</span><span class=na>sleep</span><span class=p>(</span><span class=mi>500</span><span class=p>);</span>
+</span><span class=hll>            <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>                <span class=n>e</span><span class=p>.</span><span class=na>printStackTrace</span><span class=p>();</span>
+</span><span class=hll>            <span class=p>}</span>
+</span><span class=hll>
+</span><span class=hll>            <span class=cm>/*</span>
+</span><span class=hll><span class=cm>                Stiahnutý obrázok sa odovzdá s pomocu Handler triedy UI</span>
+</span><span class=hll><span class=cm>                vláknu, ktoré zavolá callback metódu</span>
+</span><span class=hll><span class=cm>             */</span>
+</span><span class=hll>            <span class=k>if</span> <span class=p>(</span><span class=n>bitmap</span> <span class=o>!=</span> <span class=kc>null</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>                <span class=n>mResponseHandler</span><span class=p>.</span><span class=na>post</span><span class=p>(</span><span class=k>new</span> <span class=n>Runnable</span><span class=p>()</span> <span class=p>{</span>
+</span><span class=hll>                    <span class=nd>@Override</span>
+</span><span class=hll>                    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>run</span><span class=p>()</span> <span class=p>{</span>
+</span><span class=hll>                        <span class=c1>// Spustené na UI vlákne</span>
+</span><span class=hll>                        <span class=n>mCallback</span><span class=p>.</span><span class=na>onImageDownloaded</span><span class=p>(</span>
+</span><span class=hll>                                <span class=n>imageUrl</span><span class=p>.</span><span class=na>uiToShowImage</span><span class=p>.</span><span class=na>get</span><span class=p>(),</span>
+</span><span class=hll>                                <span class=n>bitmap</span><span class=p>);</span>
+</span><span class=hll>                    <span class=p>}</span>
+</span><span class=hll>                <span class=p>});</span>
+</span><span class=hll>            <span class=p>}</span>
+</span><span class=hll>
+</span><span class=hll>        <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=n>IOException</span> <span class=n>e</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>            <span class=n>e</span><span class=p>.</span><span class=na>printStackTrace</span><span class=p>();</span>
+</span><span class=hll>        <span class=p>}</span>
+</span><span class=hll>    <span class=p>}</span>
+</span>
+<span class=p>}</span>
+</code></pre></div></div> <input name=__tabbed_8 type=radio id=__tabbed_8_2><label for=__tabbed_8_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>            <span class=nd>@Override</span>
+            <span class=kd>public</span> <span class=kt>void</span> <span class=nf>handleMessage</span><span class=p>(</span><span class=nd>@NonNull</span> <span class=n>Message</span> <span class=n>msg</span><span class=p>)</span> <span class=p>{</span>
+                <span class=c1>// Spracovanie prijatej správy</span>
+            <span class=p>}</span>
+        <span class=p>};</span>
+    <span class=p>}</span>
+
+
+<span class=p>}</span>
+</code></pre></div></div> </div> <!--end--> <h4 id=16-uprava-konstruktora-myhandlerthread>1.6 Úprava konštruktora MyHandlerThread <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/5e4d1ca0b3101bd41f536fc4ffe8cfac3cf1d92c/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#16-uprava-konstruktora-myhandlerthread title="Permanent link">&para;</a></h4> <p>V tomto kroku upravíme konštruktor tak aby sme získali referenciou na <code>Handler</code> objekt, ktorý je spätý s hlavným vláknom a referenciu na implementované rozhranie <code>Callback</code></p> <!--tgen step=1.6  --> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/5e4d1ca0b3101bd41f536fc4ffe8cfac3cf1d92c/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java</strong></p> <blockquote> <p>import android.graphics.BitmapFactory;</p> </blockquote> <div class=tabbed-set data-tabs=9:2> <input name=__tabbed_9 type=radio id=__tabbed_9_1 checked=checked><label for=__tabbed_9_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>import</span> <span class=nn>android.os.Handler</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.HandlerThread</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Message</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>android.os.Process</span><span class=p>;</span>
+</span><span class=kn>import</span> <span class=nn>android.os.Trace</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.widget.ImageView</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>androidx.annotation.NonNull</span><span class=p>;</span>
+</code></pre></div></div> <input name=__tabbed_9 type=radio id=__tabbed_9_2><label for=__tabbed_9_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>import</span> <span class=nn>android.os.Handler</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.HandlerThread</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Message</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Trace</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.widget.ImageView</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>android.os.Process</span><span class=p>;</span>
+</span>
+<span class=kn>import</span> <span class=nn>androidx.annotation.NonNull</span><span class=p>;</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=10:2> <input name=__tabbed_10 type=radio id=__tabbed_10_1 checked=checked><label for=__tabbed_10_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=c1>// pridelenú prácu</span>
+    <span class=kd>private</span> <span class=n>Handler</span> <span class=n>mWorkerHandler</span><span class=p>;</span>
+
+<span class=hll>    <span class=c1>// Referencia na Handler, ktorý je spätý s UI vláknom</span>
+</span><span class=hll>    <span class=kd>private</span> <span class=n>Handler</span> <span class=n>mResponseHandler</span><span class=p>;</span>
+</span><span class=hll>    <span class=c1>// Referencia na Callback rozhranie</span>
+</span><span class=hll>    <span class=kd>private</span> <span class=n>Callback</span> <span class=n>mCallback</span><span class=p>;</span>
+</span><span class=hll>
+</span>    <span class=c1>// Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok</span>
+    <span class=kd>public</span> <span class=kd>interface</span> <span class=nc>Callback</span> <span class=p>{</span>
+        <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>);</span>
+    <span class=p>}</span>
+
+<span class=hll>    <span class=kd>public</span> <span class=nf>MyHandlerThread</span><span class=p>(</span><span class=n>Handler</span> <span class=n>responseHandler</span><span class=p>,</span>
+</span><span class=hll>                           <span class=n>Callback</span> <span class=n>callback</span><span class=p>)</span> <span class=p>{</span>
+</span>        <span class=kd>super</span><span class=p>(</span><span class=n>TAG</span><span class=p>);</span>
+        <span class=n>setPriority</span><span class=p>(</span><span class=n>Process</span><span class=p>.</span><span class=na>THREAD_PRIORITY_BACKGROUND</span><span class=p>);</span> <span class=c1>//Nastavenie</span>
+        <span class=c1>// priority pracovnému vláknu</span>
+<span class=hll>        <span class=n>mResponseHandler</span> <span class=o>=</span> <span class=n>responseHandler</span><span class=p>;</span>
+</span><span class=hll>        <span class=n>mCallback</span> <span class=o>=</span> <span class=n>callback</span><span class=p>;</span>
+</span>    <span class=p>}</span>
+
+    <span class=o>/**</span>
+</code></pre></div></div> <input name=__tabbed_10 type=radio id=__tabbed_10_2><label for=__tabbed_10_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=c1>// pridelenú prácu</span>
+    <span class=kd>private</span> <span class=n>Handler</span> <span class=n>mWorkerHandler</span><span class=p>;</span>
+
+    <span class=c1>// Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok</span>
+    <span class=kd>public</span> <span class=kd>interface</span> <span class=nc>Callback</span> <span class=p>{</span>
+        <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>);</span>
+    <span class=p>}</span>
+
+<span class=hll>    <span class=kd>public</span> <span class=nf>MyHandlerThread</span><span class=p>()</span> <span class=p>{</span>
+</span>        <span class=kd>super</span><span class=p>(</span><span class=n>TAG</span><span class=p>);</span>
+        <span class=n>setPriority</span><span class=p>(</span><span class=n>Process</span><span class=p>.</span><span class=na>THREAD_PRIORITY_BACKGROUND</span><span class=p>);</span> <span class=c1>//Nastavenie</span>
+        <span class=c1>// priority pracovnému vláknu</span>
+<span class=hll>
+</span>    <span class=p>}</span>
+
+    <span class=o>/**</span>
+</code></pre></div></div> </div> <!--end--> <h4 id=17-spracovanie-prijatej-spravy-v-handlemessage-metode>1.7 Spracovanie prijatej správy v <code>handleMessage</code> metóde <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/0f5f82e1cafb524c64576b7722c7aede10b0389f/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#17-spracovanie-prijatej-spravy-v-handlemessage-metode title="Permanent link">&para;</a></h4> <p>Ak prijatá správa obsahuje objekt, ktorý je typu <code>ImageUrl</code> tak ho odošleme na spracovanie do metódy <code>handleRequest</code>, ktorá daný obrázok stiahne z internetu.</p> <!--tgen step=1.7  --> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/0f5f82e1cafb524c64576b7722c7aede10b0389f/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java</strong></p> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=11:2> <input name=__tabbed_11 type=radio id=__tabbed_11_1 checked=checked><label for=__tabbed_11_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>            <span class=nd>@Override</span>
+            <span class=kd>public</span> <span class=kt>void</span> <span class=nf>handleMessage</span><span class=p>(</span><span class=nd>@NonNull</span> <span class=n>Message</span> <span class=n>msg</span><span class=p>)</span> <span class=p>{</span>
+                <span class=c1>// Spracovanie prijatej správy</span>
+<span class=hll>                <span class=c1>// Stiahnutie obrázkov z internetu</span>
+</span><span class=hll>                <span class=k>if</span> <span class=p>(</span><span class=n>msg</span><span class=p>.</span><span class=na>obj</span> <span class=o>!=</span> <span class=kc>null</span> <span class=o>&amp;&amp;</span> <span class=n>msg</span><span class=p>.</span><span class=na>obj</span> <span class=k>instanceof</span> <span class=n>ImageUrl</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>                    <span class=n>handleRequest</span><span class=p>((</span><span class=n>ImageUrl</span><span class=p>)</span> <span class=n>msg</span><span class=p>.</span><span class=na>obj</span><span class=p>);</span>
+</span><span class=hll>                <span class=p>}</span>
+</span>            <span class=p>}</span>
+        <span class=p>};</span>
+    <span class=p>}</span>
+</code></pre></div></div> <input name=__tabbed_11 type=radio id=__tabbed_11_2><label for=__tabbed_11_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>            <span class=nd>@Override</span>
+            <span class=kd>public</span> <span class=kt>void</span> <span class=nf>handleMessage</span><span class=p>(</span><span class=nd>@NonNull</span> <span class=n>Message</span> <span class=n>msg</span><span class=p>)</span> <span class=p>{</span>
+                <span class=c1>// Spracovanie prijatej správy</span>
+<span class=hll>
+</span>            <span class=p>}</span>
+        <span class=p>};</span>
+    <span class=p>}</span>
+</code></pre></div></div> </div> <!--end--> <h4 id=18-vytvorenie-a-inicializovanie-novej-instancie-myhandlerthread>1.8 Vytvorenie a inicializovanie novej inštancie MyHandlerThread <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/a98f5e44094b567d9ee8996bb09f7157b0ffa5b5/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#18-vytvorenie-a-inicializovanie-novej-instancie-myhandlerthread title="Permanent link">&para;</a></h4> <p>V predchádzajúcom kroku sme si upravili konštruktor triedy <code>MyHandlerThread</code> a teraz si pomocou neho vytvoríme novú inštanciu tejto triedy. </p> <div class="admonition note"> <p class=admonition-title>Note</p> <p>V kroku 1.4 sme triedu <code>Handler</code> museli prepojiť manuálne s Looperom pomocou metódy <code>getLooper</code>. V tomto prípade prázdny konštuktor automaticky pripojí <code>Looper</code> hlavného vlákna s triedou <code>Handler</code>. </p> </div> <!--tgen step=1.8  --> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/a98f5e44094b567d9ee8996bb09f7157b0ffa5b5/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java</strong></p> <blockquote> <p>package sk.uniza.handlerthreadcvicenie;</p> </blockquote> <div class=tabbed-set data-tabs=12:2> <input name=__tabbed_12 type=radio id=__tabbed_12_1 checked=checked><label for=__tabbed_12_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>import</span> <span class=nn>android.graphics.Bitmap</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Bundle</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>android.os.Handler</span><span class=p>;</span>
+</span><span class=kn>import</span> <span class=nn>android.widget.ImageView</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>android.widget.LinearLayout</span><span class=p>;</span>
+</span>
+<span class=kn>import</span> <span class=nn>androidx.appcompat.app.AppCompatActivity</span><span class=p>;</span>
+
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>MainActivity</span> <span class=kd>extends</span> <span class=n>AppCompatActivity</span>
+        <span class=kd>implements</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>Callback</span> <span class=p>{</span>
+
+<span class=hll>    <span class=kd>private</span> <span class=n>LinearLayout</span> <span class=n>imageContainer</span><span class=p>;</span>
+</span><span class=hll>    <span class=kd>private</span> <span class=n>MyHandlerThread</span> <span class=n>myHandlerThread</span><span class=p>;</span>
+</span><span class=hll>
+</span>    <span class=nd>@Override</span>
+    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onCreate</span><span class=p>(</span><span class=n>Bundle</span> <span class=n>savedInstanceState</span><span class=p>)</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>.</span><span class=na>onCreate</span><span class=p>(</span><span class=n>savedInstanceState</span><span class=p>);</span>
+        <span class=n>setContentView</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>layout</span><span class=p>.</span><span class=na>activity_main</span><span class=p>);</span>
+<span class=hll>        <span class=n>myHandlerThread</span> <span class=o>=</span> <span class=k>new</span> <span class=n>MyHandlerThread</span><span class=p>(</span><span class=k>new</span> <span class=n>Handler</span><span class=p>(),</span> <span class=k>this</span><span class=p>);</span>
+</span><span class=hll>
+</span><span class=hll>        <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>start</span><span class=p>();</span>
+</span><span class=hll>        <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>prepareHandler</span><span class=p>();</span>
+</span>    <span class=p>}</span>
+
+    <span class=nd>@Override</span>
+</code></pre></div></div> <input name=__tabbed_12 type=radio id=__tabbed_12_2><label for=__tabbed_12_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>import</span> <span class=nn>android.graphics.Bitmap</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Bundle</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.widget.ImageView</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>androidx.appcompat.app.AppCompatActivity</span><span class=p>;</span>
+
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>MainActivity</span> <span class=kd>extends</span> <span class=n>AppCompatActivity</span>
+        <span class=kd>implements</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>Callback</span> <span class=p>{</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onCreate</span><span class=p>(</span><span class=n>Bundle</span> <span class=n>savedInstanceState</span><span class=p>)</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>.</span><span class=na>onCreate</span><span class=p>(</span><span class=n>savedInstanceState</span><span class=p>);</span>
+        <span class=n>setContentView</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>layout</span><span class=p>.</span><span class=na>activity_main</span><span class=p>);</span>
+    <span class=p>}</span>
+
+    <span class=nd>@Override</span>
+</code></pre></div></div> </div> <!--end--> <!--tgen step=1.9 noupdate --> <h4 id=19-vytvorenie-a-odoslanie-zoznamu-obrazkov-na-stiahnutie>1.9 Vytvorenie a odoslanie zoznamu obrázkov na stiahnutie <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/412fc748b292794093459f67fd144249df372e37/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#19-vytvorenie-a-odoslanie-zoznamu-obrazkov-na-stiahnutie title="Permanent link">&para;</a></h4> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/412fc748b292794093459f67fd144249df372e37/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java</strong></p> <p>import androidx.appcompat.app.AppCompatActivity;</p> </blockquote> <div class=tabbed-set data-tabs=13:2> <input name=__tabbed_13 type=radio id=__tabbed_13_1 checked=checked><label for=__tabbed_13_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kd>public</span> <span class=kd>class</span> <span class=nc>MainActivity</span> <span class=kd>extends</span> <span class=n>AppCompatActivity</span>
+        <span class=kd>implements</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>Callback</span> <span class=p>{</span>
+
+<span class=hll>    <span class=c1>// Url online služby, ktorá generuje obrázky s textom</span>
+</span><span class=hll>    <span class=kd>private</span> <span class=n>String</span> <span class=n>imageUrlLink</span> <span class=o>=</span> <span class=s>&quot;https://dummyimage.com/300/09f/fff&quot;</span> <span class=o>+</span>
+</span><span class=hll>            <span class=s>&quot;.png&amp;text=&quot;</span><span class=p>;</span>
+</span><span class=hll>
+</span>    <span class=kd>private</span> <span class=n>LinearLayout</span> <span class=n>imageContainer</span><span class=p>;</span>
+    <span class=kd>private</span> <span class=n>MyHandlerThread</span> <span class=n>myHandlerThread</span><span class=p>;</span>
+</code></pre></div></div> <input name=__tabbed_13 type=radio id=__tabbed_13_2><label for=__tabbed_13_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kd>public</span> <span class=kd>class</span> <span class=nc>MainActivity</span> <span class=kd>extends</span> <span class=n>AppCompatActivity</span>
+        <span class=kd>implements</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>Callback</span> <span class=p>{</span>
+
+    <span class=kd>private</span> <span class=n>LinearLayout</span> <span class=n>imageContainer</span><span class=p>;</span>
+    <span class=kd>private</span> <span class=n>MyHandlerThread</span> <span class=n>myHandlerThread</span><span class=p>;</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MainActivity extends AppCompatActivity</p> </blockquote> <div class=tabbed-set data-tabs=14:2> <input name=__tabbed_14 type=radio id=__tabbed_14_1 checked=checked><label for=__tabbed_14_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onCreate</span><span class=p>(</span><span class=n>Bundle</span> <span class=n>savedInstanceState</span><span class=p>)</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>.</span><span class=na>onCreate</span><span class=p>(</span><span class=n>savedInstanceState</span><span class=p>);</span>
+        <span class=n>setContentView</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>layout</span><span class=p>.</span><span class=na>activity_main</span><span class=p>);</span>
+<span class=hll>        <span class=n>imageContainer</span> <span class=o>=</span> <span class=n>findViewById</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>id</span><span class=p>.</span><span class=na>imageContainer</span><span class=p>);</span>
+</span>        <span class=n>myHandlerThread</span> <span class=o>=</span> <span class=k>new</span> <span class=n>MyHandlerThread</span><span class=p>(</span><span class=k>new</span> <span class=n>Handler</span><span class=p>(),</span> <span class=k>this</span><span class=p>);</span>
+
+        <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>start</span><span class=p>();</span>
+        <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>prepareHandler</span><span class=p>();</span>
+    <span class=p>}</span>
+
+<span class=hll>    <span class=nd>@Override</span>
+</span><span class=hll>    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onStart</span><span class=p>()</span> <span class=p>{</span>
+</span><span class=hll>        <span class=kd>super</span><span class=p>.</span><span class=na>onStart</span><span class=p>();</span>
+</span><span class=hll>        <span class=k>for</span> <span class=p>(</span><span class=n>Integer</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=mi>10</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>            <span class=n>ImageView</span> <span class=n>imageView</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ImageView</span><span class=p>(</span><span class=k>this</span><span class=p>);</span>
+</span><span class=hll>            <span class=c1>// Informačný obrázok, že prebieha štahovanie</span>
+</span><span class=hll>            <span class=n>imageView</span><span class=p>.</span><span class=na>setImageResource</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>drawable</span><span class=p>.</span><span class=na>loading</span><span class=p>);</span>
+</span><span class=hll>            <span class=n>imageContainer</span><span class=p>.</span><span class=na>addView</span><span class=p>(</span><span class=n>imageView</span><span class=p>);</span>
+</span><span class=hll>
+</span><span class=hll>            <span class=c1>// Zavolanie pomocnej metódy na uloženie správy do zásobíka.</span>
+</span><span class=hll>            <span class=c1>// Správy zo zásobníka sú spracované na pracovnom vlákne</span>
+</span><span class=hll>            <span class=n>myHandlerThread</span>
+</span><span class=hll>                    <span class=p>.</span><span class=na>queueTask</span><span class=p>(</span><span class=k>new</span> <span class=n>ImageUrl</span><span class=p>(</span><span class=n>imageUrlLink</span><span class=p>.</span><span class=na>concat</span><span class=p>(</span><span class=s>&quot;img+&quot;</span> <span class=o>+</span> <span class=n>i</span><span class=p>),</span>
+</span><span class=hll>                            <span class=n>imageView</span><span class=p>));</span>
+</span><span class=hll>        <span class=p>}</span>
+</span><span class=hll>    <span class=p>}</span>
+</span><span class=hll>
+</span>    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>)</span> <span class=p>{</span>
+</code></pre></div></div> <input name=__tabbed_14 type=radio id=__tabbed_14_2><label for=__tabbed_14_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onCreate</span><span class=p>(</span><span class=n>Bundle</span> <span class=n>savedInstanceState</span><span class=p>)</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>.</span><span class=na>onCreate</span><span class=p>(</span><span class=n>savedInstanceState</span><span class=p>);</span>
+        <span class=n>setContentView</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>layout</span><span class=p>.</span><span class=na>activity_main</span><span class=p>);</span>
+        <span class=n>myHandlerThread</span> <span class=o>=</span> <span class=k>new</span> <span class=n>MyHandlerThread</span><span class=p>(</span><span class=k>new</span> <span class=n>Handler</span><span class=p>(),</span> <span class=k>this</span><span class=p>);</span>
+
+        <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>start</span><span class=p>();</span>
+        <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>prepareHandler</span><span class=p>();</span>
+    <span class=p>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>)</span> <span class=p>{</span>
+</code></pre></div></div> </div> <hr> <p><strong>Vytvorenie pomocnej metódy na posunutie správy pracovnému <code>HandlerThread</code> vláknu.</strong></p> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/412fc748b292794093459f67fd144249df372e37/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java</strong></p> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=15:2> <input name=__tabbed_15 type=radio id=__tabbed_15_1 checked=checked><label for=__tabbed_15_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=p>};</span>
+    <span class=p>}</span>
+
+<span class=hll>    <span class=cm>/**</span>
+</span><span class=hll><span class=cm>     * Pomocná metóda na posunutie správy pracovnému HandlerThread vláknu</span>
+</span><span class=hll><span class=cm>     *</span>
+</span><span class=hll><span class=cm>     * @param imageUrl - obrázok, ktorý sa má stiahnuť</span>
+</span><span class=hll><span class=cm>     */</span>
+</span><span class=hll>    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>queueTask</span><span class=p>(</span><span class=n>ImageUrl</span> <span class=n>imageUrl</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>        <span class=n>mWorkerHandler</span><span class=p>.</span><span class=na>obtainMessage</span><span class=p>(</span><span class=n>imageUrl</span><span class=p>.</span><span class=na>WHAT</span><span class=p>,</span> <span class=n>imageUrl</span><span class=p>)</span>
+</span><span class=hll>                <span class=p>.</span><span class=na>sendToTarget</span><span class=p>();</span>
+</span><span class=hll>    <span class=p>}</span>
+</span><span class=hll>
+</span>    <span class=o>/*</span>
+        <span class=n>Metóda</span> <span class=n>na</span> <span class=n>stiahnutie</span> <span class=n>obrázku</span> <span class=n>z</span> <span class=n>internetu</span><span class=p>,</span> <span class=n>Táto</span> <span class=n>metóda</span> <span class=n>je</span> <span class=n>je</span> <span class=n>spustená</span>
+        <span class=n>na</span> <span class=n>pracovnom</span> <span class=n>vlákne</span><span class=o>!</span>
+</code></pre></div></div> <input name=__tabbed_15 type=radio id=__tabbed_15_2><label for=__tabbed_15_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=p>};</span>
+    <span class=p>}</span>
+
+    <span class=o>/*</span>
+        <span class=n>Metóda</span> <span class=n>na</span> <span class=n>stiahnutie</span> <span class=n>obrázku</span> <span class=n>z</span> <span class=n>internetu</span><span class=p>,</span> <span class=n>Táto</span> <span class=n>metóda</span> <span class=n>je</span> <span class=n>je</span> <span class=n>spustená</span>
+        <span class=n>na</span> <span class=n>pracovnom</span> <span class=n>vlákne</span><span class=o>!</span>
+</code></pre></div></div> </div> <!--end--> <!--tgen step=1.10  --> <h4 id=110-zobrazenie-stiahnuteho-obrazku>1.10 Zobrazenie stiahnutého obrázku <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/450569817c45620198677de4a805febb0ff35c6d/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#110-zobrazenie-stiahnuteho-obrazku title="Permanent link">&para;</a></h4> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/450569817c45620198677de4a805febb0ff35c6d/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java</strong></p> <p>public class MainActivity extends AppCompatActivity</p> </blockquote> <div class=tabbed-set data-tabs=16:2> <input name=__tabbed_16 type=radio id=__tabbed_16_1 checked=checked><label for=__tabbed_16_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>)</span> <span class=p>{</span>
+<span class=hll>        <span class=c1>// Otestovanie či ImageView bol vytvorený v rovnakom kontexte. V</span>
+</span><span class=hll>        <span class=c1>// prípade reštatovania aplikácie, može ImageView pochádzať z už</span>
+</span><span class=hll>        <span class=c1>// zaniknutej inštancie Aplikácie.</span>
+</span><span class=hll>        <span class=k>if</span> <span class=p>(</span><span class=n>imageView</span><span class=p>.</span><span class=na>getContext</span><span class=p>()</span> <span class=o>==</span> <span class=k>this</span><span class=p>)</span>
+</span><span class=hll>            <span class=n>imageView</span><span class=p>.</span><span class=na>setImageBitmap</span><span class=p>(</span><span class=n>bitmap</span><span class=p>);</span>
+</span>    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div></div> <input name=__tabbed_16 type=radio id=__tabbed_16_2><label for=__tabbed_16_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>)</span> <span class=p>{</span>
+<span class=hll>
+</span>    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div></div> </div> <!--end--> <!--tgen step=1.11  --> <h4 id=111-pridanie-povolenia-pre-pristup-na-internet>1.11 Pridanie povolenia pre prístup na internet <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/54ef73ef68705d93477a23159fa354c3fde99707/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#111-pridanie-povolenia-pre-pristup-na-internet title="Permanent link">&para;</a></h4> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/54ef73ef68705d93477a23159fa354c3fde99707/app/src/main/AndroidManifest.xml>🖹</a> app/src/main/AndroidManifest.xml</strong></p> </blockquote> <div class=tabbed-set data-tabs=17:2> <input name=__tabbed_17 type=radio id=__tabbed_17_1 checked=checked><label for=__tabbed_17_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=o>&lt;</span><span class=n>manifest</span> <span class=n>xmlns</span><span class=p>:</span><span class=n>android</span><span class=o>=</span><span class=s>&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class=n>package</span><span class=o>=</span><span class=s>&quot;sk.uniza.handlerthreadcvicenie&quot;</span><span class=o>&gt;</span>
+
+<span class=hll>    <span class=o>&lt;</span><span class=n>uses</span><span class=o>-</span><span class=n>permission</span> <span class=n>android</span><span class=p>:</span><span class=n>name</span><span class=o>=</span><span class=s>&quot;android.permission.INTERNET&quot;</span> <span class=o>/&gt;</span>
+</span>    <span class=o>&lt;</span><span class=n>application</span>
+        <span class=n>android</span><span class=p>:</span><span class=n>allowBackup</span><span class=o>=</span><span class=s>&quot;true&quot;</span>
+        <span class=n>android</span><span class=p>:</span><span class=n>icon</span><span class=o>=</span><span class=s>&quot;@mipmap/ic_launcher&quot;</span>
+</code></pre></div></div> <input name=__tabbed_17 type=radio id=__tabbed_17_2><label for=__tabbed_17_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=o>&lt;</span><span class=n>manifest</span> <span class=n>xmlns</span><span class=p>:</span><span class=n>android</span><span class=o>=</span><span class=s>&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class=n>package</span><span class=o>=</span><span class=s>&quot;sk.uniza.handlerthreadcvicenie&quot;</span><span class=o>&gt;</span>
+
+    <span class=o>&lt;</span><span class=n>application</span>
+        <span class=n>android</span><span class=p>:</span><span class=n>allowBackup</span><span class=o>=</span><span class=s>&quot;true&quot;</span>
+        <span class=n>android</span><span class=p>:</span><span class=n>icon</span><span class=o>=</span><span class=s>&quot;@mipmap/ic_launcher&quot;</span>
+</code></pre></div></div> </div> <!--end--> <div class="admonition note"> <p class=admonition-title>Note</p> <p>Po tomto kroku by mala byť aplikácia spustiteľná a funkčná. Ale pri reštarte v plyvom konfiguračnej zmeny(napr. rotacia obrazovky) dochádza pri opätovnom spustení k vytvoreniu novej inštancie <code>MyHandlerThreadu</code>. <strong>Ľubovolné pracovné vlákno(<code>Thread</code>,<code>HandlerThread</code> alebo aj vlákno späté s <code>AsyncTask</code>) nie je ovplyvneném životným cyklom aktivity, čo znamená, že bude na pozadí bežať ďalej.</strong> Čím viacej budeme otáčať zariadenia tým viac inštancií nám bude vznikať. viď obrázok s CPU profilera: <img alt src=images/Screenshot_20200410_172846.png#center> Okrem vzniku nových inštancií, každé pracovné vlákno malo frontu pridelených správ a teda všetky vlákna, ktoré ešte nevyprázdnili svoju frontu úloh ďalej sťahovali obrázky aj keď sa už nepoužijú. viď obrázok s CPU profilera: <img alt src=images/Screenshot_20200410_175245.png#center> Jednoduché riešenie toho problému je ukázané v nasledujúcom kroku.</p> </div> <h4 id=112-restart-aplikacie-vplyvom-konfiguracnej-zmeny-minimalne-riesenie>1.12 Reštart aplikácie vplyvom konfiguračnej zmeny. Minimálne riešenie <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/86fd759c56640a5864e2627749d51c258b763619/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#112-restart-aplikacie-vplyvom-konfiguracnej-zmeny-minimalne-riesenie title="Permanent link">&para;</a></h4> <p>Zavolaním v metóde <code>onDestroy</code> metódu z triedy <code>HandlerThread</code> <code>.quit()</code> vymažeme zvyšné úlohy z fronty správ, ktoré ešte neboli spracované. Na aktuálne vykonávanú úlohu to nemá vplyv a teda obrázok sa stiahne. <code>HandlerThread</code> vlákno prejde do 'idle' stavu a časom ho systém odstráni. </p> <!--tgen step=1.12  --> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/86fd759c56640a5864e2627749d51c258b763619/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java</strong></p> <div class=tabbed-set data-tabs=18:2> <input name=__tabbed_18 type=radio id=__tabbed_18_1 checked=checked><label for=__tabbed_18_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>package</span> <span class=nn>sk.uniza.handlerthreadcvicenie</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>android.graphics.Bitmap</span><span class=p>;</span>
+</code></pre></div></div> <input name=__tabbed_18 type=radio id=__tabbed_18_2><label for=__tabbed_18_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>package</span> <span class=nn>sk.uniza.handlerthreadcvicenie</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>android.graphics.Bitmap</span><span class=p>;</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MainActivity extends AppCompatActivity</p> </blockquote> <div class=tabbed-set data-tabs=19:2> <input name=__tabbed_19 type=radio id=__tabbed_19_1 checked=checked><label for=__tabbed_19_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=k>if</span> <span class=p>(</span><span class=n>imageView</span><span class=p>.</span><span class=na>getContext</span><span class=p>()</span> <span class=o>==</span> <span class=k>this</span><span class=p>)</span>
+            <span class=n>imageView</span><span class=p>.</span><span class=na>setImageBitmap</span><span class=p>(</span><span class=n>bitmap</span><span class=p>);</span>
+    <span class=p>}</span>
+<span class=hll>
+</span><span class=hll>    <span class=nd>@Override</span>
+</span><span class=hll>    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onDestroy</span><span class=p>()</span> <span class=p>{</span>
+</span><span class=hll>        <span class=kd>super</span><span class=p>.</span><span class=na>onDestroy</span><span class=p>();</span>
+</span><span class=hll>        <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>quit</span><span class=p>();</span>
+</span><span class=hll>    <span class=p>}</span>
+</span><span class=hll><span class=p>}</span>
+</span></code></pre></div></div> <input name=__tabbed_19 type=radio id=__tabbed_19_2><label for=__tabbed_19_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=k>if</span> <span class=p>(</span><span class=n>imageView</span><span class=p>.</span><span class=na>getContext</span><span class=p>()</span> <span class=o>==</span> <span class=k>this</span><span class=p>)</span>
+            <span class=n>imageView</span><span class=p>.</span><span class=na>setImageBitmap</span><span class=p>(</span><span class=n>bitmap</span><span class=p>);</span>
+    <span class=p>}</span>
+<span class=hll><span class=p>}</span>
+</span></code></pre></div></div> </div> <!--end--> <h4 id=20-vyuzitie-singleton-jedinacik-navrhoveho-vzoru>2.0 Využitie Singleton (jedináčik) návrhového vzoru <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/bc1afda979d5a98775fd6d3d8838f89ffcf871ed/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#20-vyuzitie-singleton-jedinacik-navrhoveho-vzoru title="Permanent link">&para;</a></h4> <p>V predchádzajúcom prípade pri každom reštarte aplikácie nám vzniká nová inštancia triedy <code>MyHandlerThread</code>, čo nieje optimálne riešenie. V tomto kroku prerobíme pôvodné riešenie s využitím návrhového vzoru Singleton, tak aby existovala iba jedna jediná inštancia triedy <code>MyHandlerThread</code>. </p> <div class="admonition note"> <p class=admonition-title>Note</p> <p>Singleton (jednináčik) znamená, že trieda, ktorá implementuje tento návrhový vzor, má iba jednu jedinú inštanciu v celom programe. Táto inštancie je zdieľaná medzi jednotlivými komponentami aplikácie. </p> </div> <!--tgen step=2.0  --> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/bc1afda979d5a98775fd6d3d8838f89ffcf871ed/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java</strong></p> <blockquote> <p>public class MainActivity extends AppCompatActivity</p> </blockquote> <div class=tabbed-set data-tabs=20:2> <input name=__tabbed_20 type=radio id=__tabbed_20_1 checked=checked><label for=__tabbed_20_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=kd>super</span><span class=p>.</span><span class=na>onCreate</span><span class=p>(</span><span class=n>savedInstanceState</span><span class=p>);</span>
+        <span class=n>setContentView</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>layout</span><span class=p>.</span><span class=na>activity_main</span><span class=p>);</span>
+        <span class=n>imageContainer</span> <span class=o>=</span> <span class=n>findViewById</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>id</span><span class=p>.</span><span class=na>imageContainer</span><span class=p>);</span>
+<span class=hll>        <span class=n>myHandlerThread</span> <span class=o>=</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>getInstance</span><span class=p>(</span><span class=k>new</span> <span class=n>Handler</span><span class=p>(),</span> <span class=k>this</span><span class=p>);</span>
+</span>
+<span class=hll>        <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>myHandlerThread</span><span class=p>.</span><span class=na>isAlive</span><span class=p>())</span> <span class=p>{</span>
+</span><span class=hll>            <span class=c1>// Iba pri prvom spustení musí prebehnúť inicializácia</span>
+</span><span class=hll>            <span class=c1>// HandlerThread triedy</span>
+</span><span class=hll>            <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>start</span><span class=p>();</span>
+</span><span class=hll>            <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>prepareHandler</span><span class=p>();</span>
+</span><span class=hll>        <span class=p>}</span>
+</span>    <span class=p>}</span>
+
+    <span class=nd>@Override</span>
+</code></pre></div></div> <input name=__tabbed_20 type=radio id=__tabbed_20_2><label for=__tabbed_20_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=kd>super</span><span class=p>.</span><span class=na>onCreate</span><span class=p>(</span><span class=n>savedInstanceState</span><span class=p>);</span>
+        <span class=n>setContentView</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>layout</span><span class=p>.</span><span class=na>activity_main</span><span class=p>);</span>
+        <span class=n>imageContainer</span> <span class=o>=</span> <span class=n>findViewById</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>id</span><span class=p>.</span><span class=na>imageContainer</span><span class=p>);</span>
+<span class=hll>        <span class=n>myHandlerThread</span> <span class=o>=</span> <span class=k>new</span> <span class=n>MyHandlerThread</span><span class=p>(</span><span class=k>new</span> <span class=n>Handler</span><span class=p>(),</span> <span class=k>this</span><span class=p>);</span>
+</span>
+<span class=hll>        <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>start</span><span class=p>();</span>
+</span><span class=hll>        <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>prepareHandler</span><span class=p>();</span>
+</span>    <span class=p>}</span>
+
+    <span class=nd>@Override</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MainActivity extends AppCompatActivity</p> </blockquote> <div class=tabbed-set data-tabs=21:2> <input name=__tabbed_21 type=radio id=__tabbed_21_1 checked=checked><label for=__tabbed_21_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=nd>@Override</span>
+    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onDestroy</span><span class=p>()</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>.</span><span class=na>onDestroy</span><span class=p>();</span>
+<span class=hll>
+</span><span class=hll>
+</span>    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div></div> <input name=__tabbed_21 type=radio id=__tabbed_21_2><label for=__tabbed_21_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=nd>@Override</span>
+    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onDestroy</span><span class=p>()</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>.</span><span class=na>onDestroy</span><span class=p>();</span>
+<span class=hll>        <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>quit</span><span class=p>();</span>
+</span>    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div></div> </div> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/bc1afda979d5a98775fd6d3d8838f89ffcf871ed/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java</strong></p> <p>import java.net.URL;</p> </blockquote> <div class=tabbed-set data-tabs=22:2> <input name=__tabbed_22 type=radio id=__tabbed_22_1 checked=checked><label for=__tabbed_22_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kd>public</span> <span class=kd>class</span> <span class=nc>MyHandlerThread</span> <span class=kd>extends</span> <span class=n>HandlerThread</span> <span class=p>{</span>
+
+<span class=hll>    <span class=c1>// Referencia na vytvorenú štanciu MyHandlerThread</span>
+</span><span class=hll>    <span class=kd>private</span> <span class=kd>static</span> <span class=n>MyHandlerThread</span> <span class=n>instance</span> <span class=o>=</span> <span class=kc>null</span><span class=p>;</span>
+</span><span class=hll>
+</span>    <span class=c1>// Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>TAG</span> <span class=o>=</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>class</span><span class=p>.</span><span class=na>getSimpleName</span><span class=p>();</span>
+</code></pre></div></div> <input name=__tabbed_22 type=radio id=__tabbed_22_2><label for=__tabbed_22_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kd>public</span> <span class=kd>class</span> <span class=nc>MyHandlerThread</span> <span class=kd>extends</span> <span class=n>HandlerThread</span> <span class=p>{</span>
+
+    <span class=c1>// Názov vlákna, ktorý je zobrazený pri debugovaní aplikácie</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>TAG</span> <span class=o>=</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>class</span><span class=p>.</span><span class=na>getSimpleName</span><span class=p>();</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=23:2> <input name=__tabbed_23 type=radio id=__tabbed_23_1 checked=checked><label for=__tabbed_23_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>);</span>
+    <span class=p>}</span>
+
+<span class=hll>    <span class=kd>public</span> <span class=nf>MyHandlerThread</span><span class=p>()</span> <span class=p>{</span>
+</span>        <span class=kd>super</span><span class=p>(</span><span class=n>TAG</span><span class=p>);</span>
+        <span class=n>setPriority</span><span class=p>(</span><span class=n>Process</span><span class=p>.</span><span class=na>THREAD_PRIORITY_BACKGROUND</span><span class=p>);</span> <span class=c1>//Nastavenie</span>
+        <span class=c1>// priority pracovnému vláknu</span>
+<span class=hll>    <span class=p>}</span>
+</span><span class=hll>
+</span><span class=hll>    <span class=kd>public</span> <span class=kd>static</span> <span class=n>MyHandlerThread</span> <span class=nf>getInstance</span><span class=p>(</span><span class=nd>@NonNull</span> <span class=n>Handler</span> <span class=n>responseHandler</span><span class=p>,</span>
+</span><span class=hll>                                              <span class=nd>@NonNull</span> <span class=n>Callback</span> <span class=n>callback</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>
+</span><span class=hll>        <span class=k>if</span> <span class=p>(</span><span class=n>instance</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>||</span> <span class=o>!</span><span class=n>instance</span><span class=p>.</span><span class=na>isAlive</span><span class=p>())</span> <span class=p>{</span>
+</span><span class=hll>            <span class=n>instance</span> <span class=o>=</span> <span class=k>new</span> <span class=n>MyHandlerThread</span><span class=p>();</span>
+</span><span class=hll>        <span class=p>}</span>
+</span><span class=hll>
+</span><span class=hll>        <span class=n>instance</span><span class=p>.</span><span class=na>mResponseHandler</span> <span class=o>=</span> <span class=n>responseHandler</span><span class=p>;</span>
+</span><span class=hll>        <span class=n>instance</span><span class=p>.</span><span class=na>mCallback</span> <span class=o>=</span> <span class=n>callback</span><span class=p>;</span>
+</span><span class=hll>
+</span><span class=hll>        <span class=k>return</span> <span class=n>instance</span><span class=p>;</span>
+</span>    <span class=p>}</span>
+
+    <span class=o>/**</span>
+</code></pre></div></div> <input name=__tabbed_23 type=radio id=__tabbed_23_2><label for=__tabbed_23_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>);</span>
+    <span class=p>}</span>
+
+<span class=hll>    <span class=kd>public</span> <span class=nf>MyHandlerThread</span><span class=p>(</span><span class=n>Handler</span> <span class=n>responseHandler</span><span class=p>,</span>
+</span><span class=hll>                           <span class=n>Callback</span> <span class=n>callback</span><span class=p>)</span> <span class=p>{</span>
+</span>        <span class=kd>super</span><span class=p>(</span><span class=n>TAG</span><span class=p>);</span>
+        <span class=n>setPriority</span><span class=p>(</span><span class=n>Process</span><span class=p>.</span><span class=na>THREAD_PRIORITY_BACKGROUND</span><span class=p>);</span> <span class=c1>//Nastavenie</span>
+        <span class=c1>// priority pracovnému vláknu</span>
+<span class=hll>        <span class=n>mResponseHandler</span> <span class=o>=</span> <span class=n>responseHandler</span><span class=p>;</span>
+</span><span class=hll>        <span class=n>mCallback</span> <span class=o>=</span> <span class=n>callback</span><span class=p>;</span>
+</span>    <span class=p>}</span>
+
+    <span class=o>/**</span>
+</code></pre></div></div> </div> <!--end--> <!--tgen step=2.1  --> <h4 id=21-optimalizacia-s-pohladu-restartovania-aktivity>2.1 Optimalizácia s pohladu reštartovania aktivity <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/50622b7e7ace7e8daa4fa48456de70fa20a19ca5/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#21-optimalizacia-s-pohladu-restartovania-aktivity title="Permanent link">&para;</a></h4> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/50622b7e7ace7e8daa4fa48456de70fa20a19ca5/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java</strong></p> <p>public class MainActivity extends AppCompatActivity</p> </blockquote> <div class=tabbed-set data-tabs=24:2> <input name=__tabbed_24 type=radio id=__tabbed_24_1 checked=checked><label for=__tabbed_24_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=nd>@Override</span>
+    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onDestroy</span><span class=p>()</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>.</span><span class=na>onDestroy</span><span class=p>();</span>
+<span class=hll>        <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>onDestroy</span><span class=p>();</span>
+</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div></div> <input name=__tabbed_24 type=radio id=__tabbed_24_2><label for=__tabbed_24_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=nd>@Override</span>
+    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onDestroy</span><span class=p>()</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>.</span><span class=na>onDestroy</span><span class=p>();</span>
+<span class=hll>
+</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div></div> </div> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/50622b7e7ace7e8daa4fa48456de70fa20a19ca5/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java</strong></p> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=25:2> <input name=__tabbed_25 type=radio id=__tabbed_25_1 checked=checked><label for=__tabbed_25_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>                <span class=p>.</span><span class=na>sendToTarget</span><span class=p>();</span>
+    <span class=p>}</span>
+
+<span class=hll>    <span class=cm>/**</span>
+</span><span class=hll><span class=cm>     * Pomocná metóda, ktorá má byť spustená keď dôjde k reštartu aktivity</span>
+</span><span class=hll><span class=cm>     */</span>
+</span><span class=hll>    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onDestroy</span><span class=p>()</span> <span class=p>{</span>
+</span><span class=hll>        <span class=c1>// Odstránenie všetkých ešte nestiahnutých url adries so zásobníka</span>
+</span><span class=hll>        <span class=n>mWorkerHandler</span><span class=p>.</span><span class=na>removeMessages</span><span class=p>(</span><span class=n>ImageUrl</span><span class=p>.</span><span class=na>WHAT</span><span class=p>);</span>
+</span><span class=hll>    <span class=p>}</span>
+</span><span class=hll>
+</span>    <span class=o>/*</span>
+        <span class=n>Metóda</span> <span class=n>na</span> <span class=n>stiahnutie</span> <span class=n>obrázku</span> <span class=n>z</span> <span class=n>internetu</span><span class=p>,</span> <span class=n>Táto</span> <span class=n>metóda</span> <span class=n>je</span> <span class=n>je</span> <span class=n>spustená</span>
+        <span class=n>na</span> <span class=n>pracovnom</span> <span class=n>vlákne</span><span class=o>!</span>
+</code></pre></div></div> <input name=__tabbed_25 type=radio id=__tabbed_25_2><label for=__tabbed_25_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>                <span class=p>.</span><span class=na>sendToTarget</span><span class=p>();</span>
+    <span class=p>}</span>
+
+    <span class=o>/*</span>
+        <span class=n>Metóda</span> <span class=n>na</span> <span class=n>stiahnutie</span> <span class=n>obrázku</span> <span class=n>z</span> <span class=n>internetu</span><span class=p>,</span> <span class=n>Táto</span> <span class=n>metóda</span> <span class=n>je</span> <span class=n>je</span> <span class=n>spustená</span>
+        <span class=n>na</span> <span class=n>pracovnom</span> <span class=n>vlákne</span><span class=o>!</span>
+</code></pre></div></div> </div> <!--end--> <h4 id=22-bezpecny-pristupu-k-zdielanym-premennym-z-viacerych-vlaken>2.2 Bezpečný prístupu k zdieľaným premenným z viacerých vláken <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/5640d902328f7dd0b5cd5f5f998ad11f8ea71744/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#22-bezpecny-pristupu-k-zdielanym-premennym-z-viacerych-vlaken title="Permanent link">&para;</a></h4> <p>V prípade, kedy k zdieľaným premenným pristupuje viacero vláken, je nutné zabezpečiť tento prístup <code>synchronization</code> blokom do ktoré ma prístup v čase iba jediné vlákno. Táto problematika je rozsiahla, ale je nutné jej porozumieť aby nám aplikácia fungovala za všetkých okolností. <a href=https://proandroiddev.com/synchronization-and-thread-safety-techniques-in-java-and-kotlin-f63506370e6d><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a></p> <!--tgen step=2.2  --> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/5640d902328f7dd0b5cd5f5f998ad11f8ea71744/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java</strong></p> <blockquote> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=26:2> <input name=__tabbed_26 type=radio id=__tabbed_26_1 checked=checked><label for=__tabbed_26_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=kd>private</span> <span class=kd>volatile</span> <span class=n>Handler</span> <span class=n>mResponseHandler</span><span class=p>;</span>
+    <span class=c1>// Referencia na Callback rozhranie</span>
+    <span class=kd>private</span> <span class=n>Callback</span> <span class=n>mCallback</span><span class=p>;</span>
+<span class=hll>    <span class=c1>// Objekt určený na zabezpečenie bezpečného prístupu pri využití vláken</span>
+</span><span class=hll>    <span class=kd>private</span> <span class=kd>volatile</span> <span class=n>Object</span> <span class=n>syncObj</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Object</span><span class=p>();</span>
+</span>
+    <span class=c1>// Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok</span>
+    <span class=kd>public</span> <span class=kd>interface</span> <span class=nc>Callback</span> <span class=p>{</span>
+</code></pre></div></div> <input name=__tabbed_26 type=radio id=__tabbed_26_2><label for=__tabbed_26_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=kd>private</span> <span class=n>Handler</span> <span class=n>mResponseHandler</span><span class=p>;</span>
+    <span class=c1>// Referencia na Callback rozhranie</span>
+    <span class=kd>private</span> <span class=n>Callback</span> <span class=n>mCallback</span><span class=p>;</span>
+
+    <span class=c1>// Rozhranie pomocou ktorého sa odovzdá stiahnutý obrázok</span>
+    <span class=kd>public</span> <span class=kd>interface</span> <span class=nc>Callback</span> <span class=p>{</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=27:2> <input name=__tabbed_27 type=radio id=__tabbed_27_1 checked=checked><label for=__tabbed_27_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=k>if</span> <span class=p>(</span><span class=n>instance</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>||</span> <span class=o>!</span><span class=n>instance</span><span class=p>.</span><span class=na>isAlive</span><span class=p>())</span> <span class=p>{</span>
+            <span class=n>instance</span> <span class=o>=</span> <span class=k>new</span> <span class=n>MyHandlerThread</span><span class=p>();</span>
+        <span class=p>}</span>
+<span class=hll>        <span class=kd>synchronized</span> <span class=p>(</span><span class=n>instance</span><span class=p>.</span><span class=na>syncObj</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>            <span class=n>instance</span><span class=p>.</span><span class=na>mResponseHandler</span> <span class=o>=</span> <span class=n>responseHandler</span><span class=p>;</span>
+</span><span class=hll>            <span class=n>instance</span><span class=p>.</span><span class=na>mCallback</span> <span class=o>=</span> <span class=n>callback</span><span class=p>;</span>
+</span><span class=hll>        <span class=p>}</span>
+</span>        <span class=k>return</span> <span class=n>instance</span><span class=p>;</span>
+    <span class=p>}</span>
+</code></pre></div></div> <input name=__tabbed_27 type=radio id=__tabbed_27_2><label for=__tabbed_27_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=k>if</span> <span class=p>(</span><span class=n>instance</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>||</span> <span class=o>!</span><span class=n>instance</span><span class=p>.</span><span class=na>isAlive</span><span class=p>())</span> <span class=p>{</span>
+            <span class=n>instance</span> <span class=o>=</span> <span class=k>new</span> <span class=n>MyHandlerThread</span><span class=p>();</span>
+        <span class=p>}</span>
+<span class=hll>
+</span><span class=hll>        <span class=n>instance</span><span class=p>.</span><span class=na>mResponseHandler</span> <span class=o>=</span> <span class=n>responseHandler</span><span class=p>;</span>
+</span><span class=hll>        <span class=n>instance</span><span class=p>.</span><span class=na>mCallback</span> <span class=o>=</span> <span class=n>callback</span><span class=p>;</span>
+</span><span class=hll>
+</span>        <span class=k>return</span> <span class=n>instance</span><span class=p>;</span>
+    <span class=p>}</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=28:2> <input name=__tabbed_28 type=radio id=__tabbed_28_1 checked=checked><label for=__tabbed_28_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onDestroy</span><span class=p>()</span> <span class=p>{</span>
+        <span class=c1>// Odstránenie všetkých ešte nestiahnutých url adries so zásobníka</span>
+        <span class=n>mWorkerHandler</span><span class=p>.</span><span class=na>removeMessages</span><span class=p>(</span><span class=n>ImageUrl</span><span class=p>.</span><span class=na>WHAT</span><span class=p>);</span>
+<span class=hll>        <span class=c1>// Bezpečné vynulovanie referencie na Handler, ktorý pri reštarte</span>
+</span><span class=hll>        <span class=c1>// aktivity bude po dobu reštartu neplatná</span>
+</span><span class=hll>        <span class=kd>synchronized</span> <span class=p>(</span><span class=n>syncObj</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>            <span class=n>mResponseHandler</span> <span class=o>=</span> <span class=kc>null</span><span class=p>;</span>
+</span><span class=hll>        <span class=p>}</span>
+</span>    <span class=p>}</span>
+
+    <span class=o>/*</span>
+</code></pre></div></div> <input name=__tabbed_28 type=radio id=__tabbed_28_2><label for=__tabbed_28_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onDestroy</span><span class=p>()</span> <span class=p>{</span>
+        <span class=c1>// Odstránenie všetkých ešte nestiahnutých url adries so zásobníka</span>
+        <span class=n>mWorkerHandler</span><span class=p>.</span><span class=na>removeMessages</span><span class=p>(</span><span class=n>ImageUrl</span><span class=p>.</span><span class=na>WHAT</span><span class=p>);</span>
+    <span class=p>}</span>
+
+    <span class=o>/*</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=29:2> <input name=__tabbed_29 type=radio id=__tabbed_29_1 checked=checked><label for=__tabbed_29_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>                <span class=n>Stiahnutý</span> <span class=n>obrázok</span> <span class=n>sa</span> <span class=n>odovzdá</span> <span class=n>s</span> <span class=n>pomocu</span> <span class=n>Handler</span> <span class=n>triedy</span> <span class=n>UI</span>
+                <span class=n>vláknu</span><span class=p>,</span> <span class=n>ktoré</span> <span class=n>zavolá</span> <span class=n>callback</span> <span class=n>metódu</span>
+             <span class=o>*/</span>
+<span class=hll>            <span class=c1>// Bezpečný prístup z pracovného vlákna</span>
+</span><span class=hll>            <span class=kd>synchronized</span> <span class=p>(</span><span class=n>syncObj</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>                <span class=c1>// Overenie, že referencia na Handler je platná</span>
+</span><span class=hll>                <span class=k>if</span> <span class=p>(</span><span class=n>mResponseHandler</span> <span class=o>!=</span> <span class=kc>null</span> <span class=o>&amp;&amp;</span> <span class=n>bitmap</span> <span class=o>!=</span> <span class=kc>null</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>                    <span class=n>mResponseHandler</span><span class=p>.</span><span class=na>post</span><span class=p>(</span><span class=k>new</span> <span class=n>Runnable</span><span class=p>()</span> <span class=p>{</span>
+</span><span class=hll>                        <span class=nd>@Override</span>
+</span><span class=hll>                        <span class=kd>public</span> <span class=kt>void</span> <span class=nf>run</span><span class=p>()</span> <span class=p>{</span>
+</span><span class=hll>                            <span class=c1>// Spustené na UI vlákne</span>
+</span><span class=hll>                            <span class=n>mCallback</span><span class=p>.</span><span class=na>onImageDownloaded</span><span class=p>(</span>
+</span><span class=hll>                                    <span class=n>imageUrl</span><span class=p>.</span><span class=na>uiToShowImage</span><span class=p>.</span><span class=na>get</span><span class=p>(),</span>
+</span><span class=hll>                                    <span class=n>bitmap</span><span class=p>);</span>
+</span><span class=hll>                        <span class=p>}</span>
+</span><span class=hll>                    <span class=p>});</span>
+</span><span class=hll>                <span class=p>}</span>
+</span>            <span class=p>}</span>
+
+        <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=n>IOException</span> <span class=n>e</span><span class=p>)</span> <span class=p>{</span>
+</code></pre></div></div> <input name=__tabbed_29 type=radio id=__tabbed_29_2><label for=__tabbed_29_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>                <span class=n>Stiahnutý</span> <span class=n>obrázok</span> <span class=n>sa</span> <span class=n>odovzdá</span> <span class=n>s</span> <span class=n>pomocu</span> <span class=n>Handler</span> <span class=n>triedy</span> <span class=n>UI</span>
+                <span class=n>vláknu</span><span class=p>,</span> <span class=n>ktoré</span> <span class=n>zavolá</span> <span class=n>callback</span> <span class=n>metódu</span>
+             <span class=o>*/</span>
+<span class=hll>            <span class=k>if</span> <span class=p>(</span><span class=n>bitmap</span> <span class=o>!=</span> <span class=kc>null</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>                <span class=n>mResponseHandler</span><span class=p>.</span><span class=na>post</span><span class=p>(</span><span class=k>new</span> <span class=n>Runnable</span><span class=p>()</span> <span class=p>{</span>
+</span><span class=hll>                    <span class=nd>@Override</span>
+</span><span class=hll>                    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>run</span><span class=p>()</span> <span class=p>{</span>
+</span><span class=hll>                        <span class=c1>// Spustené na UI vlákne</span>
+</span><span class=hll>                        <span class=n>mCallback</span><span class=p>.</span><span class=na>onImageDownloaded</span><span class=p>(</span>
+</span><span class=hll>                                <span class=n>imageUrl</span><span class=p>.</span><span class=na>uiToShowImage</span><span class=p>.</span><span class=na>get</span><span class=p>(),</span>
+</span><span class=hll>                                <span class=n>bitmap</span><span class=p>);</span>
+</span><span class=hll>                    <span class=p>}</span>
+</span><span class=hll>                <span class=p>});</span>
+</span>            <span class=p>}</span>
+
+        <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=n>IOException</span> <span class=n>e</span><span class=p>)</span> <span class=p>{</span>
+</code></pre></div></div> </div> <!--end--> <h4 id=23-aplikovanie-cache-na-rychle-nacitanie-uz-stiahnutych-obrazkov>2.3 Aplikovanie Cache na rýchle načítanie už stiahnutých obrázkov <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/9e00659e63e8d9b85a3e694b561fb1764bfdf114/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#23-aplikovanie-cache-na-rychle-nacitanie-uz-stiahnutych-obrazkov title="Permanent link">&para;</a></h4> <p>Pre zamedzenie opätovného sťahovania implementujeme LRU cache do ktorej budeme zapisovať stiahnuté obrázky a pri reštarte sa obrázky miesto internetu načítajú z tejto cache. </p> <!--tgen step=2.3  --> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/9e00659e63e8d9b85a3e694b561fb1764bfdf114/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java</strong></p> <p>import android.os.Handler;</p> </blockquote> <div class=tabbed-set data-tabs=30:2> <input name=__tabbed_30 type=radio id=__tabbed_30_1 checked=checked><label for=__tabbed_30_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>import</span> <span class=nn>android.os.HandlerThread</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Message</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Process</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.widget.ImageView</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>androidx.annotation.NonNull</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>androidx.collection.LruCache</span><span class=p>;</span>
+</span>
+<span class=kn>import</span> <span class=nn>java.io.IOException</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>java.io.InputStream</span><span class=p>;</span>
+</code></pre></div></div> <input name=__tabbed_30 type=radio id=__tabbed_30_2><label for=__tabbed_30_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>import</span> <span class=nn>android.os.HandlerThread</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Message</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>android.os.Process</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>android.os.Trace</span><span class=p>;</span>
+</span><span class=kn>import</span> <span class=nn>android.widget.ImageView</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>androidx.annotation.NonNull</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>java.io.IOException</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>java.io.InputStream</span><span class=p>;</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=31:2> <input name=__tabbed_31 type=radio id=__tabbed_31_1 checked=checked><label for=__tabbed_31_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>);</span>
+    <span class=p>}</span>
+
+<span class=hll>    <span class=c1>// Cache na uloženie sťahovaných obrázkov</span>
+</span><span class=hll>    <span class=kd>final</span> <span class=kt>int</span> <span class=n>cacheSize</span> <span class=o>=</span> <span class=mi>4</span> <span class=o>*</span> <span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>;</span> <span class=c1>// 4MiB</span>
+</span><span class=hll>    <span class=n>LruCache</span><span class=o>&lt;</span><span class=n>String</span><span class=p>,</span> <span class=n>Bitmap</span><span class=o>&gt;</span> <span class=n>bitmapCache</span> <span class=o>=</span>
+</span><span class=hll>            <span class=k>new</span> <span class=n>LruCache</span><span class=o>&lt;</span><span class=n>String</span><span class=p>,</span> <span class=n>Bitmap</span><span class=o>&gt;</span><span class=p>(</span><span class=n>cacheSize</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>                <span class=kd>protected</span> <span class=kt>int</span> <span class=nf>sizeOf</span><span class=p>(</span><span class=n>String</span> <span class=n>key</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>value</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>                    <span class=k>return</span> <span class=n>value</span><span class=p>.</span><span class=na>getByteCount</span><span class=p>();</span>
+</span><span class=hll>                <span class=p>}</span>
+</span><span class=hll>            <span class=p>};</span>
+</span><span class=hll>
+</span>    <span class=kd>public</span> <span class=nf>MyHandlerThread</span><span class=p>()</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>(</span><span class=n>TAG</span><span class=p>);</span>
+        <span class=n>setPriority</span><span class=p>(</span><span class=n>Process</span><span class=p>.</span><span class=na>THREAD_PRIORITY_BACKGROUND</span><span class=p>);</span> <span class=c1>//Nastavenie</span>
+</code></pre></div></div> <input name=__tabbed_31 type=radio id=__tabbed_31_2><label for=__tabbed_31_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onImageDownloaded</span><span class=p>(</span><span class=n>ImageView</span> <span class=n>imageView</span><span class=p>,</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>);</span>
+    <span class=p>}</span>
+
+    <span class=kd>public</span> <span class=nf>MyHandlerThread</span><span class=p>()</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>(</span><span class=n>TAG</span><span class=p>);</span>
+        <span class=n>setPriority</span><span class=p>(</span><span class=n>Process</span><span class=p>.</span><span class=na>THREAD_PRIORITY_BACKGROUND</span><span class=p>);</span> <span class=c1>//Nastavenie</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=32:2> <input name=__tabbed_32 type=radio id=__tabbed_32_1 checked=checked><label for=__tabbed_32_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=k>try</span> <span class=p>{</span>
+            <span class=kd>final</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>;</span>
+
+<span class=hll>            <span class=c1>// Načítanie obrázku z cache(klúč je url adresa obrázku), ak nebol</span>
+</span><span class=hll>            <span class=c1>// nájdený metóda vráti null hodnotu</span>
+</span><span class=hll>            <span class=n>Bitmap</span> <span class=n>bitmapTmp</span> <span class=o>=</span> <span class=n>bitmapCache</span><span class=p>.</span><span class=na>get</span><span class=p>(</span><span class=n>imageUrl</span><span class=p>.</span><span class=na>urlOfImage</span><span class=p>);</span>
+</span><span class=hll>            <span class=k>if</span> <span class=p>(</span><span class=n>bitmapTmp</span> <span class=o>==</span> <span class=kc>null</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>                <span class=n>HttpURLConnection</span> <span class=n>connection</span> <span class=o>=</span>
+</span><span class=hll>                        <span class=p>(</span><span class=n>HttpURLConnection</span><span class=p>)</span> <span class=k>new</span> <span class=n>URL</span><span class=p>(</span><span class=n>imageUrl</span><span class=p>.</span><span class=na>urlOfImage</span><span class=p>)</span>
+</span><span class=hll>                                <span class=p>.</span><span class=na>openConnection</span><span class=p>();</span>
+</span><span class=hll>                <span class=n>connection</span><span class=p>.</span><span class=na>setRequestMethod</span><span class=p>(</span><span class=s>&quot;GET&quot;</span><span class=p>);</span>
+</span><span class=hll>                <span class=n>bitmap</span> <span class=o>=</span> <span class=n>BitmapFactory</span>
+</span><span class=hll>                        <span class=p>.</span><span class=na>decodeStream</span><span class=p>((</span><span class=n>InputStream</span><span class=p>)</span> <span class=n>connection</span><span class=p>.</span><span class=na>getContent</span><span class=p>());</span>
+</span><span class=hll>                <span class=n>bitmapCache</span><span class=p>.</span><span class=na>put</span><span class=p>(</span><span class=n>imageUrl</span><span class=p>.</span><span class=na>urlOfImage</span><span class=p>,</span> <span class=n>bitmap</span><span class=p>);</span>
+</span><span class=hll>                <span class=k>try</span> <span class=p>{</span>
+</span><span class=hll>                    <span class=k>this</span><span class=p>.</span><span class=na>sleep</span><span class=p>(</span><span class=mi>500</span><span class=p>);</span>
+</span><span class=hll>                <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>                    <span class=n>e</span><span class=p>.</span><span class=na>printStackTrace</span><span class=p>();</span>
+</span><span class=hll>                <span class=p>}</span>
+</span><span class=hll>            <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span><span class=hll>                <span class=n>bitmap</span> <span class=o>=</span> <span class=n>bitmapTmp</span><span class=p>;</span>
+</span>            <span class=p>}</span>
+            <span class=o>/*</span>
+                <span class=n>Stiahnutý</span> <span class=n>obrázok</span> <span class=n>sa</span> <span class=n>odovzdá</span> <span class=n>s</span> <span class=n>pomocu</span> <span class=n>Handler</span> <span class=n>triedy</span> <span class=n>UI</span>
+                <span class=n>vláknu</span><span class=p>,</span> <span class=n>ktoré</span> <span class=n>zavolá</span> <span class=n>callback</span> <span class=n>metódu</span>
+</code></pre></div></div> <input name=__tabbed_32 type=radio id=__tabbed_32_2><label for=__tabbed_32_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=k>try</span> <span class=p>{</span>
+            <span class=kd>final</span> <span class=n>Bitmap</span> <span class=n>bitmap</span><span class=p>;</span>
+
+<span class=hll>            <span class=n>Trace</span><span class=p>.</span><span class=na>beginSection</span><span class=p>(</span><span class=s>&quot;HTTP download&quot;</span><span class=p>);</span>
+</span><span class=hll>            <span class=n>HttpURLConnection</span> <span class=n>connection</span> <span class=o>=</span>
+</span><span class=hll>                    <span class=p>(</span><span class=n>HttpURLConnection</span><span class=p>)</span> <span class=k>new</span> <span class=n>URL</span><span class=p>(</span><span class=n>imageUrl</span><span class=p>.</span><span class=na>urlOfImage</span><span class=p>)</span>
+</span><span class=hll>                            <span class=p>.</span><span class=na>openConnection</span><span class=p>();</span>
+</span><span class=hll>            <span class=n>connection</span><span class=p>.</span><span class=na>setRequestMethod</span><span class=p>(</span><span class=s>&quot;GET&quot;</span><span class=p>);</span>
+</span><span class=hll>            <span class=n>bitmap</span> <span class=o>=</span> <span class=n>BitmapFactory</span>
+</span><span class=hll>                    <span class=p>.</span><span class=na>decodeStream</span><span class=p>((</span><span class=n>InputStream</span><span class=p>)</span> <span class=n>connection</span><span class=p>.</span><span class=na>getContent</span><span class=p>());</span>
+</span><span class=hll>
+</span><span class=hll>            <span class=k>try</span> <span class=p>{</span>
+</span><span class=hll>                <span class=k>this</span><span class=p>.</span><span class=na>sleep</span><span class=p>(</span><span class=mi>500</span><span class=p>);</span>
+</span><span class=hll>            <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=p>)</span> <span class=p>{</span>
+</span><span class=hll>                <span class=n>e</span><span class=p>.</span><span class=na>printStackTrace</span><span class=p>();</span>
+</span>            <span class=p>}</span>
+<span class=hll>
+</span>            <span class=o>/*</span>
+                <span class=n>Stiahnutý</span> <span class=n>obrázok</span> <span class=n>sa</span> <span class=n>odovzdá</span> <span class=n>s</span> <span class=n>pomocu</span> <span class=n>Handler</span> <span class=n>triedy</span> <span class=n>UI</span>
+                <span class=n>vláknu</span><span class=p>,</span> <span class=n>ktoré</span> <span class=n>zavolá</span> <span class=n>callback</span> <span class=n>metódu</span>
+</code></pre></div></div> </div> <!--end--> <h4 id=30-implementovanie-lifecycle-androidx-komponentu>3.0 Implementovanie <a href=https://developer.android.com/topic/libraries/architecture/lifecycle>LifeCycle AndroidX</a> komponentu <a href=https://github.com/hudikm/HandlerThreadCvicenie/commit/194619708e3bd14f62d08a6436d4907e3f9b450b/ ><img alt=🔗 class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/1f517.svg title=:link:></a><a class=headerlink href=#30-implementovanie-lifecycle-androidx-komponentu title="Permanent link">&para;</a></h4> <p>Komponenty, ktoré vnímajú životný cyklus vykonávajú určité akcie pri zmene stavu životného cyklu iného komponentu, ako sú aktivity a fragmenty. Tieto komponenty vám pomôžu vytvoriť lepšie usporiadaný a často štíhlejší kód, ktorý sa ľahšie udržuje.</p> <p>Bežným vzorcom je implementácia činností závislých komponentov do životného cyklu metód aktivít alebo fragmentov. Tento model však vedie k zlej organizácii kód ak množeniu chýb. Použitím komponentov s využitím <code>LifeCycle</code> životného cyklu môžete presunúť kód závislých komponentov z metód životného cyklu aktivity/fragmentu do samotných komponentov.</p> <p><a href=https://developer.android.com/reference/androidx/lifecycle/package-summary><code>androidx.lifecycle</code></a> Balíček obsahuje triedy a rozhrania, ktoré umožňujú vytvárať komponenty, ktoré sú súčasťou životného cyklu aktivity/fragmentu, ktoré môžu automaticky upraviť svoje správanie v závislosti na aktuálnom stave životného cyklu aktivity alebo fragmentu.</p> <p>Väčšina komponentov aplikácie, ktoré sú definované v platforme Android Framework, je k nim pripojená so životným cyklom. Životné cykly sú spravované operačným systémom alebo Framework kódom bežiacim vo vašom procese. Sú základom fungovania systému Android a vaša aplikácia ich musí rešpektovať. Ak tak neurobíte, môže to spôsobiť memory leak alebo dokonca zlyhanie aplikácie.</p> <!--tgen step=3.0  --> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/194619708e3bd14f62d08a6436d4907e3f9b450b/app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MainActivity.java</strong></p> <p>public class MainActivity extends AppCompatActivity</p> </blockquote> <div class=tabbed-set data-tabs=33:2> <input name=__tabbed_33 type=radio id=__tabbed_33_1 checked=checked><label for=__tabbed_33_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=kd>super</span><span class=p>.</span><span class=na>onCreate</span><span class=p>(</span><span class=n>savedInstanceState</span><span class=p>);</span>
+        <span class=n>setContentView</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>layout</span><span class=p>.</span><span class=na>activity_main</span><span class=p>);</span>
+        <span class=n>imageContainer</span> <span class=o>=</span> <span class=n>findViewById</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>id</span><span class=p>.</span><span class=na>imageContainer</span><span class=p>);</span>
+<span class=hll>        <span class=n>myHandlerThread</span> <span class=o>=</span> <span class=n>MyHandlerThread</span>
+</span><span class=hll>                <span class=p>.</span><span class=na>getInstance</span><span class=p>(</span><span class=k>new</span> <span class=n>Handler</span><span class=p>(),</span> <span class=k>this</span><span class=p>,</span> <span class=n>getLifecycle</span><span class=p>());</span>
+</span>
+        <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>myHandlerThread</span><span class=p>.</span><span class=na>isAlive</span><span class=p>())</span> <span class=p>{</span>
+            <span class=c1>// Iba pri prvom spustení musí prebehnúť inicializácia</span>
+</code></pre></div></div> <input name=__tabbed_33 type=radio id=__tabbed_33_2><label for=__tabbed_33_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=kd>super</span><span class=p>.</span><span class=na>onCreate</span><span class=p>(</span><span class=n>savedInstanceState</span><span class=p>);</span>
+        <span class=n>setContentView</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>layout</span><span class=p>.</span><span class=na>activity_main</span><span class=p>);</span>
+        <span class=n>imageContainer</span> <span class=o>=</span> <span class=n>findViewById</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>id</span><span class=p>.</span><span class=na>imageContainer</span><span class=p>);</span>
+<span class=hll>        <span class=n>myHandlerThread</span> <span class=o>=</span> <span class=n>MyHandlerThread</span><span class=p>.</span><span class=na>getInstance</span><span class=p>(</span><span class=k>new</span> <span class=n>Handler</span><span class=p>(),</span> <span class=k>this</span><span class=p>);</span>
+</span>
+        <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>myHandlerThread</span><span class=p>.</span><span class=na>isAlive</span><span class=p>())</span> <span class=p>{</span>
+            <span class=c1>// Iba pri prvom spustení musí prebehnúť inicializácia</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MainActivity extends AppCompatActivity</p> </blockquote> <div class=tabbed-set data-tabs=34:2> <input name=__tabbed_34 type=radio id=__tabbed_34_1 checked=checked><label for=__tabbed_34_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>            <span class=n>imageView</span><span class=p>.</span><span class=na>setImageBitmap</span><span class=p>(</span><span class=n>bitmap</span><span class=p>);</span>
+    <span class=p>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onDestroy</span><span class=p>()</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>.</span><span class=na>onDestroy</span><span class=p>();</span>
+<span class=hll>
+</span>    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div></div> <input name=__tabbed_34 type=radio id=__tabbed_34_2><label for=__tabbed_34_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>            <span class=n>imageView</span><span class=p>.</span><span class=na>setImageBitmap</span><span class=p>(</span><span class=n>bitmap</span><span class=p>);</span>
+    <span class=p>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onDestroy</span><span class=p>()</span> <span class=p>{</span>
+        <span class=kd>super</span><span class=p>.</span><span class=na>onDestroy</span><span class=p>();</span>
+        <span class=n>myHandlerThread</span><span class=p>.</span><span class=na>onDestroy</span><span class=p>();</span>
+
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div></div> </div> <blockquote> <p><strong><a href=https://github.com/hudikm/HandlerThreadCvicenie/blob/194619708e3bd14f62d08a6436d4907e3f9b450b/app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java>🖹</a> app/src/main/java/sk/uniza/handlerthreadcvicenie/MyHandlerThread.java</strong></p> <p>import android.widget.ImageView;</p> </blockquote> <div class=tabbed-set data-tabs=35:2> <input name=__tabbed_35 type=radio id=__tabbed_35_1 checked=checked><label for=__tabbed_35_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>import</span> <span class=nn>androidx.annotation.NonNull</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>androidx.collection.LruCache</span><span class=p>;</span>
+<span class=hll><span class=kn>import</span> <span class=nn>androidx.lifecycle.Lifecycle</span><span class=p>;</span>
+</span><span class=hll><span class=kn>import</span> <span class=nn>androidx.lifecycle.LifecycleObserver</span><span class=p>;</span>
+</span><span class=hll><span class=kn>import</span> <span class=nn>androidx.lifecycle.OnLifecycleEvent</span><span class=p>;</span>
+</span>
+<span class=kn>import</span> <span class=nn>java.io.IOException</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>java.io.InputStream</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>java.net.HttpURLConnection</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>java.net.URL</span><span class=p>;</span>
+
+<span class=hll><span class=kd>public</span> <span class=kd>class</span> <span class=nc>MyHandlerThread</span> <span class=kd>extends</span> <span class=n>HandlerThread</span> <span class=kd>implements</span>
+</span><span class=hll>        <span class=n>LifecycleObserver</span> <span class=p>{</span>
+</span>
+    <span class=c1>// Referencia na vytvorenú štanciu MyHandlerThread</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=n>MyHandlerThread</span> <span class=n>instance</span> <span class=o>=</span> <span class=kc>null</span><span class=p>;</span>
+</code></pre></div></div> <input name=__tabbed_35 type=radio id=__tabbed_35_2><label for=__tabbed_35_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code><span class=kn>import</span> <span class=nn>androidx.annotation.NonNull</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>androidx.collection.LruCache</span><span class=p>;</span>
+
+<span class=kn>import</span> <span class=nn>java.io.IOException</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>java.io.InputStream</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>java.net.HttpURLConnection</span><span class=p>;</span>
+<span class=kn>import</span> <span class=nn>java.net.URL</span><span class=p>;</span>
+
+<span class=hll><span class=kd>public</span> <span class=kd>class</span> <span class=nc>MyHandlerThread</span> <span class=kd>extends</span> <span class=n>HandlerThread</span> <span class=p>{</span>
+</span>
+    <span class=c1>// Referencia na vytvorenú štanciu MyHandlerThread</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=n>MyHandlerThread</span> <span class=n>instance</span> <span class=o>=</span> <span class=kc>null</span><span class=p>;</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=36:2> <input name=__tabbed_36 type=radio id=__tabbed_36_1 checked=checked><label for=__tabbed_36_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=p>}</span>
+
+    <span class=kd>public</span> <span class=kd>static</span> <span class=n>MyHandlerThread</span> <span class=nf>getInstance</span><span class=p>(</span><span class=nd>@NonNull</span> <span class=n>Handler</span> <span class=n>responseHandler</span><span class=p>,</span>
+<span class=hll>                                              <span class=nd>@NonNull</span> <span class=n>Callback</span> <span class=n>callback</span><span class=p>,</span>
+</span><span class=hll>                                              <span class=nd>@NonNull</span> <span class=n>Lifecycle</span> <span class=n>lifecycle</span><span class=p>)</span> <span class=p>{</span>
+</span>
+        <span class=k>if</span> <span class=p>(</span><span class=n>instance</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>||</span> <span class=o>!</span><span class=n>instance</span><span class=p>.</span><span class=na>isAlive</span><span class=p>())</span> <span class=p>{</span>
+            <span class=n>instance</span> <span class=o>=</span> <span class=k>new</span> <span class=n>MyHandlerThread</span><span class=p>();</span>
+</code></pre></div></div> <input name=__tabbed_36 type=radio id=__tabbed_36_2><label for=__tabbed_36_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=p>}</span>
+
+    <span class=kd>public</span> <span class=kd>static</span> <span class=n>MyHandlerThread</span> <span class=nf>getInstance</span><span class=p>(</span><span class=nd>@NonNull</span> <span class=n>Handler</span> <span class=n>responseHandler</span><span class=p>,</span>
+<span class=hll>                                              <span class=nd>@NonNull</span> <span class=n>Callback</span> <span class=n>callback</span><span class=p>)</span> <span class=p>{</span>
+</span>
+        <span class=k>if</span> <span class=p>(</span><span class=n>instance</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>||</span> <span class=o>!</span><span class=n>instance</span><span class=p>.</span><span class=na>isAlive</span><span class=p>())</span> <span class=p>{</span>
+            <span class=n>instance</span> <span class=o>=</span> <span class=k>new</span> <span class=n>MyHandlerThread</span><span class=p>();</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=37:2> <input name=__tabbed_37 type=radio id=__tabbed_37_1 checked=checked><label for=__tabbed_37_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=kd>synchronized</span> <span class=p>(</span><span class=n>instance</span><span class=p>.</span><span class=na>syncObj</span><span class=p>)</span> <span class=p>{</span>
+            <span class=n>instance</span><span class=p>.</span><span class=na>mResponseHandler</span> <span class=o>=</span> <span class=n>responseHandler</span><span class=p>;</span>
+            <span class=n>instance</span><span class=p>.</span><span class=na>mCallback</span> <span class=o>=</span> <span class=n>callback</span><span class=p>;</span>
+<span class=hll>            <span class=c1>// Zaregistrovanie LifeCycleObserver, ktorým je táto trieda</span>
+</span><span class=hll>            <span class=c1>// pripojená na životný cyklus nadradenej aktivity</span>
+</span><span class=hll>            <span class=n>lifecycle</span><span class=p>.</span><span class=na>addObserver</span><span class=p>(</span><span class=n>instance</span><span class=p>);</span>
+</span>        <span class=p>}</span>
+        <span class=k>return</span> <span class=n>instance</span><span class=p>;</span>
+    <span class=p>}</span>
+</code></pre></div></div> <input name=__tabbed_37 type=radio id=__tabbed_37_2><label for=__tabbed_37_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>        <span class=kd>synchronized</span> <span class=p>(</span><span class=n>instance</span><span class=p>.</span><span class=na>syncObj</span><span class=p>)</span> <span class=p>{</span>
+            <span class=n>instance</span><span class=p>.</span><span class=na>mResponseHandler</span> <span class=o>=</span> <span class=n>responseHandler</span><span class=p>;</span>
+            <span class=n>instance</span><span class=p>.</span><span class=na>mCallback</span> <span class=o>=</span> <span class=n>callback</span><span class=p>;</span>
+        <span class=p>}</span>
+        <span class=k>return</span> <span class=n>instance</span><span class=p>;</span>
+    <span class=p>}</span>
+</code></pre></div></div> </div> <blockquote> <p>public class MyHandlerThread extends HandlerThread {</p> </blockquote> <div class=tabbed-set data-tabs=38:2> <input name=__tabbed_38 type=radio id=__tabbed_38_1 checked=checked><label for=__tabbed_38_1>Nové</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=cm>/**</span>
+<span class=cm>     * Pomocná metóda, ktorá má byť spustená keď dôjde k reštartu aktivity</span>
+<span class=hll><span class=cm>     * Táto metóda je teraz pripojená na životný cyklus nadradenej aktivity</span>
+</span><span class=cm>     */</span>
+<span class=hll>    <span class=nd>@OnLifecycleEvent</span><span class=p>(</span><span class=n>Lifecycle</span><span class=p>.</span><span class=na>Event</span><span class=p>.</span><span class=na>ON_DESTROY</span><span class=p>)</span>
+</span>    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onDestroy</span><span class=p>()</span> <span class=p>{</span>
+        <span class=c1>// Odstránenie všetkých ešte nestiahnutých url adries so zásobníka</span>
+        <span class=n>mWorkerHandler</span><span class=p>.</span><span class=na>removeMessages</span><span class=p>(</span><span class=n>ImageUrl</span><span class=p>.</span><span class=na>WHAT</span><span class=p>);</span>
+</code></pre></div></div> <input name=__tabbed_38 type=radio id=__tabbed_38_2><label for=__tabbed_38_2>Pred úpravou</label><div class=tabbed-content><div class=highlight><pre><span></span><code>    <span class=cm>/**</span>
+<span class=cm>     * Pomocná metóda, ktorá má byť spustená keď dôjde k reštartu aktivity</span>
+<span class=cm>     */</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>onDestroy</span><span class=p>()</span> <span class=p>{</span>
+        <span class=c1>// Odstránenie všetkých ešte nestiahnutých url adries so zásobníka</span>
+        <span class=n>mWorkerHandler</span><span class=p>.</span><span class=na>removeMessages</span><span class=p>(</span><span class=n>ImageUrl</span><span class=p>.</span><span class=na>WHAT</span><span class=p>);</span>
+</code></pre></div></div> </div> <!--end--> </article> </div> </div> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-footer-copyright> <div class=md-footer-copyright__highlight> Copyright &copy; 2016 - 2020 Martin Húdik </div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-footer-social> <a href=https://github.com/squidfunk target=_blank rel=noopener title=github.com class=md-footer-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg> </a> </div> </div> </div> </footer> </div> <script src=assets/javascripts/vendor.36cbf620.min.js></script> <script src=assets/javascripts/bundle.00c583dd.min.js></script><script id=__lang type=application/json>{"clipboard.copy": "Kop\u00edrova\u0165 do schr\u00e1nky", "clipboard.copied": "Skop\u00edrovan\u00e9 do schr\u00e1nky", "search.config.lang": "", "search.config.pipeline": "", "search.config.separator": "", "search.result.placeholder": "Pre vyh\u013ead\u00e1vanie za\u010dni p\u00edsa\u0165", "search.result.none": "\u017diadne vyhovuj\u00face dokumenty", "search.result.one": "Vyhovuj\u00faci dokument: 1", "search.result.other": "Vyhovuj\u00face dokumenty: #"}</script> <script>
+        app = initialize({
+          base: ".",
+          features: ["tabs"],
+          search: Object.assign({
+            worker: "assets/javascripts/worker/search.7f7c8775.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script> </body> </html>

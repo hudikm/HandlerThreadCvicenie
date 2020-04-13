@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1925px" preserveAspectRatio="none" style="width:1024px;height:1925px;" version="1.1" viewBox="0 0 1024 1925" width="1024px" zoomAndPan="magnify"><defs/><g><rect fill="#DDDDDD" height="1910.2813" rx="2" ry="2" style="stroke: #A80036; stroke-width: 1.0;" width="454.5" x="4" y="4"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="98" x="182.25" y="19.1387">Hlavné vlákno</text><rect fill="#DDDDDD" height="1910.2813" rx="2" ry="2" style="stroke: #A80036; stroke-width: 1.0;" width="435.5" x="493.5" y="4"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="115" x="653.75" y="19.1387">Pracovné vlákno</text><rect fill="#66BCF0" height="1671.5313" style="stroke: #444444; stroke-width: 1.0;" width="10" x="108.5" y="179.8125"/><rect fill="#66BCF0" height="180.8438" style="stroke: #444444; stroke-width: 1.0;" width="10" x="360.5" y="962.0313"/><rect fill="#66BCF0" height="166.875" style="stroke: #444444; stroke-width: 1.0;" width="10" x="360.5" y="1261.7813"/><rect fill="#66BCF0" height="126.9063" style="stroke: #444444; stroke-width: 1.0;" width="10" x="360.5" y="1547.5625"/><rect fill="#66BCF0" height="41.9688" style="stroke: #444444; stroke-width: 1.0;" width="10" x="360.5" y="1793.375"/><rect fill="#66BCF0" height="1513.6875" style="stroke: #444444; stroke-width: 1.0;" width="10" x="606.5" y="337.6563"/><rect fill="#66BCF0" height="242.75" style="stroke: #444444; stroke-width: 1.0;" width="10" x="841.5" y="643.3438"/><rect fill="#66BCF0" height="187.8438" style="stroke: #444444; stroke-width: 1.0;" width="10" x="841.5" y="998"/><rect fill="#66BCF0" height="173.875" style="stroke: #444444; stroke-width: 1.0;" width="10" x="841.5" y="1297.75"/><rect fill="#66BCF0" height="133.9063" style="stroke: #444444; stroke-width: 1.0;" width="10" x="841.5" y="1583.5313"/><line style="stroke: #444444; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="113" x2="113" y1="131.375" y2="1860.3438"/><line style="stroke: #444444; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="365.5" x2="365.5" y1="80.9063" y2="1860.3438"/><line style="stroke: #444444; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="611.5" x2="611.5" y1="289.2188" y2="1860.3438"/><line style="stroke: #444444; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="846" x2="846" y1="228.2813" y2="1860.3438"/><rect fill="#66BCF0" height="49.9375" rx="2" ry="2" style="stroke: #444444; stroke-width: 3.0;" width="211" x="8" y="1859.3438"/><ellipse cx="25" cy="1876.3438" fill="#ADD1B2" rx="10" ry="10" style="stroke: #444444; stroke-width: 1.0;"/><path d="M26.8594,1873.0938 L26.9844,1873.1406 C27.1406,1872.9219 27.2813,1872.8438 27.4844,1872.8438 C27.7031,1872.8438 27.8906,1872.9531 28,1873.1406 C28.0781,1873.25 28.0938,1873.3438 28.0938,1873.6406 L28.0938,1874.6406 C28.0938,1874.9531 28.0625,1875.0781 27.9844,1875.1875 C27.8594,1875.3438 27.6875,1875.4375 27.4844,1875.4375 C27.3281,1875.4375 27.1563,1875.375 27.0625,1875.2656 C26.9688,1875.1719 26.9531,1875.0938 26.9063,1874.7969 C26.8438,1874.5156 26.7188,1874.3594 26.375,1874.1719 C26.0469,1873.9844 25.6094,1873.875 25.2031,1873.875 C23.9844,1873.875 23.0938,1874.7969 23.0938,1876.0625 L23.0938,1876.8281 C23.0938,1878.0313 24.0156,1878.8125 25.4531,1878.8125 C26,1878.8125 26.4844,1878.7188 26.7813,1878.5313 C26.9063,1878.4688 26.9063,1878.4688 27.2344,1878.125 C27.375,1878 27.5156,1877.9375 27.6719,1877.9375 C27.9844,1877.9375 28.2656,1878.2188 28.2656,1878.5313 C28.2656,1878.8125 28.0469,1879.125 27.625,1879.4063 C27.1094,1879.7969 26.2813,1880.0156 25.4219,1880.0156 C23.3906,1880.0156 21.8906,1878.6875 21.8906,1876.8594 L21.8906,1876.0625 C21.8906,1874.1406 23.3125,1872.6875 25.1563,1872.6875 C25.7813,1872.6875 26.2031,1872.7813 26.8594,1873.0938 Z "/><text fill="#444444" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="63" x="95" y="1881.4824">«Handler»</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="163" x="45" y="1895.4512">Handler pre hlavné vlákno</text><rect fill="#66BCF0" height="49.9375" rx="2" ry="2" style="stroke: #444444; stroke-width: 3.0;" width="178" x="276.5" y="29.9688"/><ellipse cx="293.5" cy="46.9688" fill="#ADD1B2" rx="10" ry="10" style="stroke: #444444; stroke-width: 1.0;"/><path d="M295.3594,43.7188 L295.4844,43.7656 C295.6406,43.5469 295.7813,43.4688 295.9844,43.4688 C296.2031,43.4688 296.3906,43.5781 296.5,43.7656 C296.5781,43.875 296.5938,43.9688 296.5938,44.2656 L296.5938,45.2656 C296.5938,45.5781 296.5625,45.7031 296.4844,45.8125 C296.3594,45.9688 296.1875,46.0625 295.9844,46.0625 C295.8281,46.0625 295.6563,46 295.5625,45.8906 C295.4688,45.7969 295.4531,45.7188 295.4063,45.4219 C295.3438,45.1406 295.2188,44.9844 294.875,44.7969 C294.5469,44.6094 294.1094,44.5 293.7031,44.5 C292.4844,44.5 291.5938,45.4219 291.5938,46.6875 L291.5938,47.4531 C291.5938,48.6563 292.5156,49.4375 293.9531,49.4375 C294.5,49.4375 294.9844,49.3438 295.2813,49.1563 C295.4063,49.0938 295.4063,49.0938 295.7344,48.75 C295.875,48.625 296.0156,48.5625 296.1719,48.5625 C296.4844,48.5625 296.7656,48.8438 296.7656,49.1563 C296.7656,49.4375 296.5469,49.75 296.125,50.0313 C295.6094,50.4219 294.7813,50.6406 293.9219,50.6406 C291.8906,50.6406 290.3906,49.3125 290.3906,47.4844 L290.3906,46.6875 C290.3906,44.7656 291.8125,43.3125 293.6563,43.3125 C294.2813,43.3125 294.7031,43.4063 295.3594,43.7188 Z "/><text fill="#444444" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="130" x="313.5" y="52.1074">«AppCompatActivity»</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="72" x="342.5" y="66.0762">MainActivity</text><rect fill="#66BCF0" height="49.9375" rx="2" ry="2" style="stroke: #444444; stroke-width: 3.0;" width="178" x="276.5" y="1859.3438"/><ellipse cx="293.5" cy="1876.3438" fill="#ADD1B2" rx="10" ry="10" style="stroke: #444444; stroke-width: 1.0;"/><path d="M295.3594,1873.0938 L295.4844,1873.1406 C295.6406,1872.9219 295.7813,1872.8438 295.9844,1872.8438 C296.2031,1872.8438 296.3906,1872.9531 296.5,1873.1406 C296.5781,1873.25 296.5938,1873.3438 296.5938,1873.6406 L296.5938,1874.6406 C296.5938,1874.9531 296.5625,1875.0781 296.4844,1875.1875 C296.3594,1875.3438 296.1875,1875.4375 295.9844,1875.4375 C295.8281,1875.4375 295.6563,1875.375 295.5625,1875.2656 C295.4688,1875.1719 295.4531,1875.0938 295.4063,1874.7969 C295.3438,1874.5156 295.2188,1874.3594 294.875,1874.1719 C294.5469,1873.9844 294.1094,1873.875 293.7031,1873.875 C292.4844,1873.875 291.5938,1874.7969 291.5938,1876.0625 L291.5938,1876.8281 C291.5938,1878.0313 292.5156,1878.8125 293.9531,1878.8125 C294.5,1878.8125 294.9844,1878.7188 295.2813,1878.5313 C295.4063,1878.4688 295.4063,1878.4688 295.7344,1878.125 C295.875,1878 296.0156,1877.9375 296.1719,1877.9375 C296.4844,1877.9375 296.7656,1878.2188 296.7656,1878.5313 C296.7656,1878.8125 296.5469,1879.125 296.125,1879.4063 C295.6094,1879.7969 294.7813,1880.0156 293.9219,1880.0156 C291.8906,1880.0156 290.3906,1878.6875 290.3906,1876.8594 L290.3906,1876.0625 C290.3906,1874.1406 291.8125,1872.6875 293.6563,1872.6875 C294.2813,1872.6875 294.7031,1872.7813 295.3594,1873.0938 Z "/><text fill="#444444" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="130" x="313.5" y="1881.4824">«AppCompatActivity»</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="72" x="342.5" y="1895.4512">MainActivity</text><rect fill="#66BCF0" height="49.9375" rx="2" ry="2" style="stroke: #444444; stroke-width: 3.0;" width="228" x="497.5" y="1859.3438"/><ellipse cx="514.5" cy="1876.3438" fill="#ADD1B2" rx="10" ry="10" style="stroke: #444444; stroke-width: 1.0;"/><path d="M516.3594,1873.0938 L516.4844,1873.1406 C516.6406,1872.9219 516.7813,1872.8438 516.9844,1872.8438 C517.2031,1872.8438 517.3906,1872.9531 517.5,1873.1406 C517.5781,1873.25 517.5938,1873.3438 517.5938,1873.6406 L517.5938,1874.6406 C517.5938,1874.9531 517.5625,1875.0781 517.4844,1875.1875 C517.3594,1875.3438 517.1875,1875.4375 516.9844,1875.4375 C516.8281,1875.4375 516.6563,1875.375 516.5625,1875.2656 C516.4688,1875.1719 516.4531,1875.0938 516.4063,1874.7969 C516.3438,1874.5156 516.2188,1874.3594 515.875,1874.1719 C515.5469,1873.9844 515.1094,1873.875 514.7031,1873.875 C513.4844,1873.875 512.5938,1874.7969 512.5938,1876.0625 L512.5938,1876.8281 C512.5938,1878.0313 513.5156,1878.8125 514.9531,1878.8125 C515.5,1878.8125 515.9844,1878.7188 516.2813,1878.5313 C516.4063,1878.4688 516.4063,1878.4688 516.7344,1878.125 C516.875,1878 517.0156,1877.9375 517.1719,1877.9375 C517.4844,1877.9375 517.7656,1878.2188 517.7656,1878.5313 C517.7656,1878.8125 517.5469,1879.125 517.125,1879.4063 C516.6094,1879.7969 515.7813,1880.0156 514.9219,1880.0156 C512.8906,1880.0156 511.3906,1878.6875 511.3906,1876.8594 L511.3906,1876.0625 C511.3906,1874.1406 512.8125,1872.6875 514.6563,1872.6875 C515.2813,1872.6875 515.7031,1872.7813 516.3594,1873.0938 Z "/><text fill="#444444" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="63" x="593" y="1881.4824">«Handler»</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="180" x="534.5" y="1895.4512">Handler pre pracovné vlákno</text><rect fill="#66BCF0" height="49.9375" rx="2" ry="2" style="stroke: #444444; stroke-width: 3.0;" width="157" x="768" y="1859.3438"/><ellipse cx="785" cy="1876.3438" fill="#ADD1B2" rx="10" ry="10" style="stroke: #444444; stroke-width: 1.0;"/><path d="M786.8594,1873.0938 L786.9844,1873.1406 C787.1406,1872.9219 787.2813,1872.8438 787.4844,1872.8438 C787.7031,1872.8438 787.8906,1872.9531 788,1873.1406 C788.0781,1873.25 788.0938,1873.3438 788.0938,1873.6406 L788.0938,1874.6406 C788.0938,1874.9531 788.0625,1875.0781 787.9844,1875.1875 C787.8594,1875.3438 787.6875,1875.4375 787.4844,1875.4375 C787.3281,1875.4375 787.1563,1875.375 787.0625,1875.2656 C786.9688,1875.1719 786.9531,1875.0938 786.9063,1874.7969 C786.8438,1874.5156 786.7188,1874.3594 786.375,1874.1719 C786.0469,1873.9844 785.6094,1873.875 785.2031,1873.875 C783.9844,1873.875 783.0938,1874.7969 783.0938,1876.0625 L783.0938,1876.8281 C783.0938,1878.0313 784.0156,1878.8125 785.4531,1878.8125 C786,1878.8125 786.4844,1878.7188 786.7813,1878.5313 C786.9063,1878.4688 786.9063,1878.4688 787.2344,1878.125 C787.375,1878 787.5156,1877.9375 787.6719,1877.9375 C787.9844,1877.9375 788.2656,1878.2188 788.2656,1878.5313 C788.2656,1878.8125 788.0469,1879.125 787.625,1879.4063 C787.1094,1879.7969 786.2813,1880.0156 785.4219,1880.0156 C783.3906,1880.0156 781.8906,1878.6875 781.8906,1876.8594 L781.8906,1876.0625 C781.8906,1874.1406 783.3125,1872.6875 785.1563,1872.6875 C785.7813,1872.6875 786.2031,1872.7813 786.8594,1873.0938 Z "/><text fill="#444444" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="107" x="806" y="1881.4824">«HandlerThread»</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="109" x="805" y="1895.4512">MyHandlerThread</text><rect fill="#66BCF0" height="1671.5313" style="stroke: #444444; stroke-width: 1.0;" width="10" x="108.5" y="179.8125"/><rect fill="#66BCF0" height="180.8438" style="stroke: #444444; stroke-width: 1.0;" width="10" x="360.5" y="962.0313"/><rect fill="#66BCF0" height="166.875" style="stroke: #444444; stroke-width: 1.0;" width="10" x="360.5" y="1261.7813"/><rect fill="#66BCF0" height="126.9063" style="stroke: #444444; stroke-width: 1.0;" width="10" x="360.5" y="1547.5625"/><rect fill="#66BCF0" height="41.9688" style="stroke: #444444; stroke-width: 1.0;" width="10" x="360.5" y="1793.375"/><rect fill="#66BCF0" height="1513.6875" style="stroke: #444444; stroke-width: 1.0;" width="10" x="606.5" y="337.6563"/><rect fill="#66BCF0" height="242.75" style="stroke: #444444; stroke-width: 1.0;" width="10" x="841.5" y="643.3438"/><rect fill="#66BCF0" height="187.8438" style="stroke: #444444; stroke-width: 1.0;" width="10" x="841.5" y="998"/><rect fill="#66BCF0" height="173.875" style="stroke: #444444; stroke-width: 1.0;" width="10" x="841.5" y="1297.75"/><rect fill="#66BCF0" height="133.9063" style="stroke: #444444; stroke-width: 1.0;" width="10" x="841.5" y="1583.5313"/><polygon fill="#444444" points="230,114.875,220,118.875,230,122.875,226,118.875" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="224" x2="364.5" y1="118.875" y2="118.875"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="100" x="240" y="110.0449">new Handler()</text><rect fill="#66BCF0" height="49.9375" rx="2" ry="2" style="stroke: #444444; stroke-width: 3.0;" width="211" x="8" y="90.9063"/><ellipse cx="25" cy="107.9063" fill="#ADD1B2" rx="10" ry="10" style="stroke: #444444; stroke-width: 1.0;"/><path d="M26.8594,104.6563 L26.9844,104.7031 C27.1406,104.4844 27.2813,104.4063 27.4844,104.4063 C27.7031,104.4063 27.8906,104.5156 28,104.7031 C28.0781,104.8125 28.0938,104.9063 28.0938,105.2031 L28.0938,106.2031 C28.0938,106.5156 28.0625,106.6406 27.9844,106.75 C27.8594,106.9063 27.6875,107 27.4844,107 C27.3281,107 27.1563,106.9375 27.0625,106.8281 C26.9688,106.7344 26.9531,106.6563 26.9063,106.3594 C26.8438,106.0781 26.7188,105.9219 26.375,105.7344 C26.0469,105.5469 25.6094,105.4375 25.2031,105.4375 C23.9844,105.4375 23.0938,106.3594 23.0938,107.625 L23.0938,108.3906 C23.0938,109.5938 24.0156,110.375 25.4531,110.375 C26,110.375 26.4844,110.2813 26.7813,110.0938 C26.9063,110.0313 26.9063,110.0313 27.2344,109.6875 C27.375,109.5625 27.5156,109.5 27.6719,109.5 C27.9844,109.5 28.2656,109.7813 28.2656,110.0938 C28.2656,110.375 28.0469,110.6875 27.625,110.9688 C27.1094,111.3594 26.2813,111.5781 25.4219,111.5781 C23.3906,111.5781 21.8906,110.25 21.8906,108.4219 L21.8906,107.625 C21.8906,105.7031 23.3125,104.25 25.1563,104.25 C25.7813,104.25 26.2031,104.3438 26.8594,104.6563 Z "/><text fill="#444444" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="63" x="95" y="113.0449">«Handler»</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="163" x="45" y="127.0137">Handler pre hlavné vlákno</text><polygon fill="#444444" points="129.5,175.8125,119.5,179.8125,129.5,183.8125,125.5,179.8125" style="stroke: #444444; stroke-width: 1.0;"/><polygon fill="#444444" points="353.5,175.8125,363.5,179.8125,353.5,183.8125,357.5,179.8125" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0; stroke-dasharray: 2.0,2.0;" x1="123.5" x2="359.5" y1="179.8125" y2="179.8125"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="46" x="139.5" y="170.9824">looper</text><polygon fill="#444444" points="756,211.7813,766,215.7813,756,219.7813,760,215.7813" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="365.5" x2="762" y1="215.7813" y2="215.7813"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="30" x="376.5" y="206.9512">new</text><rect fill="#66BCF0" height="49.9375" rx="2" ry="2" style="stroke: #444444; stroke-width: 3.0;" width="157" x="768" y="187.8125"/><ellipse cx="785" cy="204.8125" fill="#ADD1B2" rx="10" ry="10" style="stroke: #444444; stroke-width: 1.0;"/><path d="M786.8594,201.5625 L786.9844,201.6094 C787.1406,201.3906 787.2813,201.3125 787.4844,201.3125 C787.7031,201.3125 787.8906,201.4219 788,201.6094 C788.0781,201.7188 788.0938,201.8125 788.0938,202.1094 L788.0938,203.1094 C788.0938,203.4219 788.0625,203.5469 787.9844,203.6563 C787.8594,203.8125 787.6875,203.9063 787.4844,203.9063 C787.3281,203.9063 787.1563,203.8438 787.0625,203.7344 C786.9688,203.6406 786.9531,203.5625 786.9063,203.2656 C786.8438,202.9844 786.7188,202.8281 786.375,202.6406 C786.0469,202.4531 785.6094,202.3438 785.2031,202.3438 C783.9844,202.3438 783.0938,203.2656 783.0938,204.5313 L783.0938,205.2969 C783.0938,206.5 784.0156,207.2813 785.4531,207.2813 C786,207.2813 786.4844,207.1875 786.7813,207 C786.9063,206.9375 786.9063,206.9375 787.2344,206.5938 C787.375,206.4688 787.5156,206.4063 787.6719,206.4063 C787.9844,206.4063 788.2656,206.6875 788.2656,207 C788.2656,207.2813 788.0469,207.5938 787.625,207.875 C787.1094,208.2656 786.2813,208.4844 785.4219,208.4844 C783.3906,208.4844 781.8906,207.1563 781.8906,205.3281 L781.8906,204.5313 C781.8906,202.6094 783.3125,201.1563 785.1563,201.1563 C785.7813,201.1563 786.2031,201.25 786.8594,201.5625 Z "/><text fill="#444444" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="107" x="806" y="209.9512">«HandlerThread»</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="109" x="805" y="223.9199">MyHandlerThread</text><polygon fill="#444444" points="485.5,272.7188,495.5,276.7188,485.5,280.7188,489.5,276.7188" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="365.5" x2="491.5" y1="276.7188" y2="276.7188"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="100" x="376.5" y="267.8887">new Handler()</text><rect fill="#66BCF0" height="49.9375" rx="2" ry="2" style="stroke: #444444; stroke-width: 3.0;" width="228" x="497.5" y="248.75"/><ellipse cx="514.5" cy="265.75" fill="#ADD1B2" rx="10" ry="10" style="stroke: #444444; stroke-width: 1.0;"/><path d="M516.3594,262.5 L516.4844,262.5469 C516.6406,262.3281 516.7813,262.25 516.9844,262.25 C517.2031,262.25 517.3906,262.3594 517.5,262.5469 C517.5781,262.6563 517.5938,262.75 517.5938,263.0469 L517.5938,264.0469 C517.5938,264.3594 517.5625,264.4844 517.4844,264.5938 C517.3594,264.75 517.1875,264.8438 516.9844,264.8438 C516.8281,264.8438 516.6563,264.7813 516.5625,264.6719 C516.4688,264.5781 516.4531,264.5 516.4063,264.2031 C516.3438,263.9219 516.2188,263.7656 515.875,263.5781 C515.5469,263.3906 515.1094,263.2813 514.7031,263.2813 C513.4844,263.2813 512.5938,264.2031 512.5938,265.4688 L512.5938,266.2344 C512.5938,267.4375 513.5156,268.2188 514.9531,268.2188 C515.5,268.2188 515.9844,268.125 516.2813,267.9375 C516.4063,267.875 516.4063,267.875 516.7344,267.5313 C516.875,267.4063 517.0156,267.3438 517.1719,267.3438 C517.4844,267.3438 517.7656,267.625 517.7656,267.9375 C517.7656,268.2188 517.5469,268.5313 517.125,268.8125 C516.6094,269.2031 515.7813,269.4219 514.9219,269.4219 C512.8906,269.4219 511.3906,268.0938 511.3906,266.2656 L511.3906,265.4688 C511.3906,263.5469 512.8125,262.0938 514.6563,262.0938 C515.2813,262.0938 515.7031,262.1875 516.3594,262.5 Z "/><text fill="#444444" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="63" x="593" y="270.8887">«Handler»</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="180" x="534.5" y="284.8574">Handler pre pracovné vlákno</text><polygon fill="#444444" points="627.5,333.6563,617.5,337.6563,627.5,341.6563,623.5,337.6563" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="621.5" x2="845.5" y1="337.6563" y2="337.6563"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="84" x="637.5" y="328.8262">getLooper()</text><polygon fill="#444444" points="594.5,369.625,604.5,373.625,594.5,377.625,598.5,373.625" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="365.5" x2="600.5" y1="373.625" y2="373.625"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="129" x="376.5" y="364.7949">post("ImageUrl 1")</text><polygon fill="#FBFB77" points="572,386.625,651,386.625,661,400.625,651,415.625,572,415.625,562,400.625,572,386.625" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="405.7637">ImageUrl 1</text><polygon fill="#444444" points="594.5,445.5625,604.5,449.5625,594.5,453.5625,598.5,449.5625" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="365.5" x2="600.5" y1="449.5625" y2="449.5625"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="129" x="376.5" y="440.7324">post("ImageUrl 2")</text><polygon fill="#FBFB77" points="572,462.5625,651,462.5625,661,483.5625,651,505.5625,572,505.5625,562,483.5625,572,462.5625" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="481.7012">ImageUrl 1</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="495.6699">ImageUrl 2</text><polygon fill="#444444" points="594.5,535.4688,604.5,539.4688,594.5,543.4688,598.5,539.4688" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="365.5" x2="600.5" y1="539.4688" y2="539.4688"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="129" x="376.5" y="530.6387">post("ImageUrl 3")</text><polygon fill="#FBFB77" points="572,552.4688,651,552.4688,661,580.4688,651,609.4688,572,609.4688,562,580.4688,572,552.4688" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="571.6074">ImageUrl 1</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="585.5762">ImageUrl 2</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="599.5449">ImageUrl 3</text><polygon fill="#444444" points="829.5,639.3438,839.5,643.3438,829.5,647.3438,833.5,643.3438" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="616.5" x2="835.5" y1="643.3438" y2="643.3438"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="198" x="627.5" y="634.5137">handleMessage(ImageUrl 1)</text><polygon fill="#FBFB77" points="572,656.3438,651,656.3438,661,677.3438,651,699.3438,572,699.3438,562,677.3438,572,656.3438" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="675.4824">ImageUrl 2</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="689.4512">ImageUrl 3</text><line style="stroke: #444444; stroke-width: 3.0;" x1="851.5" x2="893.5" y1="733.25" y2="733.25"/><line style="stroke: #444444; stroke-width: 3.0;" x1="893.5" x2="893.5" y1="733.25" y2="746.25"/><line style="stroke: #444444; stroke-width: 3.0;" x1="852.5" x2="893.5" y1="746.25" y2="746.25"/><polygon fill="#444444" points="862.5,742.25,852.5,746.25,862.5,750.25,858.5,746.25" style="stroke: #444444; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="150" x="862.5" y="724.4199">Download ImageUrl 1</text><polygon fill="#444444" points="594.5,778.2188,604.5,782.2188,594.5,786.2188,598.5,782.2188" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="365.5" x2="600.5" y1="782.2188" y2="782.2188"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="129" x="376.5" y="773.3887">post("ImageUrl 4")</text><polygon fill="#FBFB77" points="572,795.2188,651,795.2188,661,823.2188,651,852.2188,572,852.2188,562,823.2188,572,795.2188" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="814.3574">ImageUrl 2</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="828.3262">ImageUrl 3</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="842.2949">ImageUrl 4</text><polygon fill="#444444" points="129.5,882.0938,119.5,886.0938,129.5,890.0938,125.5,886.0938" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="123.5" x2="845.5" y1="886.0938" y2="886.0938"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="109" x="139.5" y="877.2637">post(Runnable)</text><polygon fill="#FBFB77" points="82,899.0938,144,899.0938,154,913.0938,144,928.0938,82,928.0938,72,913.0938,82,899.0938" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="50" x="88" y="918.2324">Image 1</text><polygon fill="#444444" points="348.5,958.0313,358.5,962.0313,348.5,966.0313,352.5,962.0313" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="118.5" x2="354.5" y1="962.0313" y2="962.0313"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="215" x="129.5" y="953.2012">onImageDownloaded(Image 1)</text><polygon fill="#444444" points="829.5,994,839.5,998,829.5,1002,833.5,998" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="616.5" x2="835.5" y1="998" y2="998"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="198" x="627.5" y="989.1699">handleMessage(ImageUrl 2)</text><polygon fill="#FBFB77" points="572,1011,651,1011,661,1032,651,1054,572,1054,562,1032,572,1011" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="1030.1387">ImageUrl 3</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="1044.1074">ImageUrl 4</text><line style="stroke: #444444; stroke-width: 3.0;" x1="851.5" x2="893.5" y1="1087.9063" y2="1087.9063"/><line style="stroke: #444444; stroke-width: 3.0;" x1="893.5" x2="893.5" y1="1087.9063" y2="1100.9063"/><line style="stroke: #444444; stroke-width: 3.0;" x1="852.5" x2="893.5" y1="1100.9063" y2="1100.9063"/><polygon fill="#444444" points="862.5,1096.9063,852.5,1100.9063,862.5,1104.9063,858.5,1100.9063" style="stroke: #444444; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="150" x="862.5" y="1079.0762">Download ImageUrl 2</text><line style="stroke: #444444; stroke-width: 3.0;" x1="370.5" x2="412.5" y1="1141.875" y2="1141.875"/><line style="stroke: #444444; stroke-width: 3.0;" x1="412.5" x2="412.5" y1="1141.875" y2="1154.875"/><line style="stroke: #444444; stroke-width: 3.0;" x1="365.5" x2="412.5" y1="1154.875" y2="1154.875"/><polygon fill="#444444" points="375.5,1150.875,365.5,1154.875,375.5,1158.875,371.5,1154.875" style="stroke: #444444; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="82" x="381.5" y="1133.0449">ShowImage</text><polygon fill="#444444" points="129.5,1181.8438,119.5,1185.8438,129.5,1189.8438,125.5,1185.8438" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="123.5" x2="845.5" y1="1185.8438" y2="1185.8438"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="109" x="139.5" y="1177.0137">post(Runnable)</text><polygon fill="#FBFB77" points="82,1198.8438,144,1198.8438,154,1212.8438,144,1227.8438,82,1227.8438,72,1212.8438,82,1198.8438" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="50" x="88" y="1217.9824">Image 2</text><polygon fill="#444444" points="348.5,1257.7813,358.5,1261.7813,348.5,1265.7813,352.5,1261.7813" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="118.5" x2="354.5" y1="1261.7813" y2="1261.7813"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="215" x="129.5" y="1252.9512">onImageDownloaded(Image 2)</text><polygon fill="#444444" points="829.5,1293.75,839.5,1297.75,829.5,1301.75,833.5,1297.75" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="616.5" x2="835.5" y1="1297.75" y2="1297.75"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="198" x="627.5" y="1288.9199">handleMessage(ImageUrl 3)</text><polygon fill="#FBFB77" points="572,1310.75,651,1310.75,661,1324.75,651,1339.75,572,1339.75,562,1324.75,572,1310.75" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="578" y="1329.8887">ImageUrl 4</text><line style="stroke: #444444; stroke-width: 3.0;" x1="851.5" x2="893.5" y1="1373.6875" y2="1373.6875"/><line style="stroke: #444444; stroke-width: 3.0;" x1="893.5" x2="893.5" y1="1373.6875" y2="1386.6875"/><line style="stroke: #444444; stroke-width: 3.0;" x1="852.5" x2="893.5" y1="1386.6875" y2="1386.6875"/><polygon fill="#444444" points="862.5,1382.6875,852.5,1386.6875,862.5,1390.6875,858.5,1386.6875" style="stroke: #444444; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="150" x="862.5" y="1364.8574">Download ImageUrl 3</text><line style="stroke: #444444; stroke-width: 3.0;" x1="370.5" x2="412.5" y1="1427.6563" y2="1427.6563"/><line style="stroke: #444444; stroke-width: 3.0;" x1="412.5" x2="412.5" y1="1427.6563" y2="1440.6563"/><line style="stroke: #444444; stroke-width: 3.0;" x1="365.5" x2="412.5" y1="1440.6563" y2="1440.6563"/><polygon fill="#444444" points="375.5,1436.6563,365.5,1440.6563,375.5,1444.6563,371.5,1440.6563" style="stroke: #444444; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="82" x="381.5" y="1418.8262">ShowImage</text><polygon fill="#444444" points="129.5,1467.625,119.5,1471.625,129.5,1475.625,125.5,1471.625" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="123.5" x2="845.5" y1="1471.625" y2="1471.625"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="109" x="139.5" y="1462.7949">post(Runnable)</text><polygon fill="#FBFB77" points="82,1484.625,144,1484.625,154,1498.625,144,1513.625,82,1513.625,72,1498.625,82,1484.625" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="50" x="88" y="1503.7637">Image 3</text><polygon fill="#444444" points="348.5,1543.5625,358.5,1547.5625,348.5,1551.5625,352.5,1547.5625" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="118.5" x2="354.5" y1="1547.5625" y2="1547.5625"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="215" x="129.5" y="1538.7324">onImageDownloaded(Image 3)</text><polygon fill="#444444" points="829.5,1579.5313,839.5,1583.5313,829.5,1587.5313,833.5,1583.5313" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="616.5" x2="835.5" y1="1583.5313" y2="1583.5313"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="198" x="627.5" y="1574.7012">handleMessage(ImageUrl 4)</text><line style="stroke: #444444; stroke-width: 3.0;" x1="851.5" x2="893.5" y1="1619.5" y2="1619.5"/><line style="stroke: #444444; stroke-width: 3.0;" x1="893.5" x2="893.5" y1="1619.5" y2="1632.5"/><line style="stroke: #444444; stroke-width: 3.0;" x1="852.5" x2="893.5" y1="1632.5" y2="1632.5"/><polygon fill="#444444" points="862.5,1628.5,852.5,1632.5,862.5,1636.5,858.5,1632.5" style="stroke: #444444; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="150" x="862.5" y="1610.6699">Download ImageUrl 4</text><line style="stroke: #444444; stroke-width: 3.0;" x1="370.5" x2="412.5" y1="1673.4688" y2="1673.4688"/><line style="stroke: #444444; stroke-width: 3.0;" x1="412.5" x2="412.5" y1="1673.4688" y2="1686.4688"/><line style="stroke: #444444; stroke-width: 3.0;" x1="365.5" x2="412.5" y1="1686.4688" y2="1686.4688"/><polygon fill="#444444" points="375.5,1682.4688,365.5,1686.4688,375.5,1690.4688,371.5,1686.4688" style="stroke: #444444; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="82" x="381.5" y="1664.6387">ShowImage</text><polygon fill="#444444" points="129.5,1713.4375,119.5,1717.4375,129.5,1721.4375,125.5,1717.4375" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="123.5" x2="845.5" y1="1717.4375" y2="1717.4375"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="109" x="139.5" y="1708.6074">post(Runnable)</text><polygon fill="#FBFB77" points="82,1730.4375,144,1730.4375,154,1744.4375,144,1759.4375,82,1759.4375,72,1744.4375,82,1730.4375" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="50" x="88" y="1749.5762">Image 4</text><polygon fill="#444444" points="348.5,1789.375,358.5,1793.375,348.5,1797.375,352.5,1793.375" style="stroke: #444444; stroke-width: 1.0;"/><line style="stroke: #444444; stroke-width: 3.0;" x1="118.5" x2="354.5" y1="1793.375" y2="1793.375"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="215" x="129.5" y="1784.5449">onImageDownloaded(Image 4)</text><line style="stroke: #444444; stroke-width: 3.0;" x1="370.5" x2="412.5" y1="1834.3438" y2="1834.3438"/><line style="stroke: #444444; stroke-width: 3.0;" x1="412.5" x2="412.5" y1="1834.3438" y2="1847.3438"/><line style="stroke: #444444; stroke-width: 3.0;" x1="365.5" x2="412.5" y1="1847.3438" y2="1847.3438"/><polygon fill="#444444" points="375.5,1843.3438,365.5,1847.3438,375.5,1851.3438,371.5,1847.3438" style="stroke: #444444; stroke-width: 1.0;"/><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="82" x="381.5" y="1825.5137">ShowImage</text><!--MD5=[4dc5de0f443bd37149176140f3cd8627]
+@startuml
+
+
+
+skinparam Padding 4
+skinparam RoundCorner 4
+skinparam Shadowing false
+
+skinparam Default {
+  FontColor #444444
+  FontSize 12
+}
+
+skinparam Arrow {
+  Color #444444
+  FontColor #444444
+  FontStyle Bold
+}
+
+skinparam activityDiamond {
+  BackgroundColor #66BCF0
+  BorderColor #444444
+  FontColor #444444
+}
+
+skinparam activity {
+  BackgroundColor #66BCF0
+  BorderColor #444444
+  FontColor #444444
+}
+
+skinparam package {
+  FontColor #444444
+  BackgroundColor #66BCF0
+  BorderColor #444444
+}
+skinparam node {
+  FontColor #444444
+  BackgroundColor #eeb291
+  BorderColor #444444
+}
+skinparam component {
+  BackgroundColor #66BCF0
+  BorderColor #444444
+  FontColor #444444
+  Style uml2
+}
+
+skinparam database {
+  BackgroundColor #66BCF0
+  BorderColor #444444
+  FontColor #444444
+}
+
+skinparam cloud {
+  BackgroundColor #66BCF0
+  BorderColor #444444
+  FontColor #444444
+}
+
+skinparam collections {
+  BackgroundColor #66BCF0
+  BorderColor #444444
+  FontColor #444444
+}
+skinparam Control {
+  BackgroundColor #66BCF0
+  BorderColor #444444
+  FontColor #444444
+}
+skinparam Boundary {
+  BackgroundColor #66BCF0
+  BorderColor #444444
+  FontColor #444444
+}
+skinparam Entity {
+  BackgroundColor #66BCF0
+  BorderColor #444444
+  FontColor #444444
+}
+skinparam interface {
+  BackgroundColor #66BCF0
+  BorderColor #444444
+  FontColor #444444
+}
+skinparam SequenceParticipantBorderThickness 3
+skinparam sequence {
+  ParticipantBackgroundColor #66BCF0
+  ParticipantBorderColor #444444
+  ParticipantFontStyle normal
+  ParticipantFontColor #444444
+  LifeLineBorderColor #444444
+  LifeLineBackgroundColor #66BCF0
+  ArrowColor #444444
+  ArrowBorderColor #444444
+  ArrowFontColor #444444
+  ArrowThickness 3
+  ActorBackgroundColor #66BCF0
+  ActorBorderColor #444444
+  ActorFontColor #444444
+}
+
+
+skinparam rectangle<<person>> {
+  StereotypeFontColor #444444
+  FontColor #444444
+  BackgroundColor #66BCF0
+  BorderColor #444444
+  BorderThickness 3
+}
+
+skinparam rectangle<<external_person>> {
+  StereotypeFontColor #444444
+  FontColor #444444
+  BackgroundColor #B4BCBE
+  BorderColor #444444
+  BorderThickness 3
+}
+
+skinparam rectangle<<system>> {
+  StereotypeFontColor #444444
+  FontColor #444444
+  BackgroundColor #66BCF0
+  BorderColor #444444
+  BorderThickness 3
+}
+
+skinparam rectangle<<external_system>> {
+  StereotypeFontColor #444444
+  FontColor #444444
+  BackgroundColor #B4BCBE
+  BorderColor #444444
+  BorderThickness 3
+}
+
+skinparam database<<system>> {
+  StereotypeFontColor #444444
+  FontColor #444444
+  BackgroundColor #66BCF0
+  BorderColor #444444
+  BorderThickness 3
+}
+
+skinparam database<<external_system>> {
+  StereotypeFontColor #444444
+  FontColor #444444
+  BackgroundColor #B4BCBE
+  BorderColor #444444
+  BorderThickness 3
+}
+
+skinparam rectangle<<boundary>> {
+  Shadowing false
+  StereotypeFontSize 0
+  BackgroundColor #eeb291
+  StereotypeFontColor #444444
+  FontColor #444444
+  BorderColor #444444
+  BorderStyle dashed
+  BorderThickness 3
+}
+skinparam rectangle<<container>> {
+  Shadowing false
+  StereotypeFontSize 14
+  BackgroundColor #66BCF0
+  StereotypeFontColor #444444
+  FontColor #444444
+  BorderColor #444444
+  BorderThickness 3
+}
+box "Hlavné vlákno"
+participant "MainActivity" as UI << (C,#ADD1B2) AppCompatActivity >> order 2
+create "Handler pre hlavné vlákno" as HAN1 << (C,#ADD1B2) Handler >> order 1
+end box
+UI->HAN1: new Handler() 
+UI<- ->HAN1 ++: looper
+box "Pracovné vlákno"
+create "MyHandlerThread" as HT << (C,#ADD1B2) HandlerThread >> order 4
+UI->HT: new 
+create "Handler pre pracovné vlákno" as HAN2 << (C,#ADD1B2) Handler >> order 3
+UI->HAN2: new Handler() 
+end box
+HT->HAN2 ++: getLooper()
+
+UI->HAN2:post("ImageUrl 1")
+hnote over HAN2: ImageUrl 1
+UI->HAN2:post("ImageUrl 2")
+hnote over HAN2: ImageUrl 1\nImageUrl 2
+UI->HAN2:post("ImageUrl 3")
+hnote over HAN2: ImageUrl 1\nImageUrl 2\nImageUrl 3
+HAN2->HT++:handleMessage(ImageUrl 1)
+hnote over HAN2: ImageUrl 2\nImageUrl 3
+HT->HT:Download ImageUrl 1
+UI->HAN2:post("ImageUrl 4")
+hnote over HAN2: ImageUrl 2\nImageUrl 3\nImageUrl 4
+HT->HAN1- -:post(Runnable)
+hnote over HAN1: Image 1
+HAN1->UI++: onImageDownloaded(Image 1)
+HAN2->HT++:handleMessage(ImageUrl 2)
+hnote over HAN2: ImageUrl 3\nImageUrl 4
+HT->HT:Download ImageUrl 2
+UI -> UI- -:ShowImage 
+HT->HAN1- -:post(Runnable)
+hnote over HAN1: Image 2
+HAN1->UI++: onImageDownloaded(Image 2)
+HAN2->HT++:handleMessage(ImageUrl 3)
+hnote over HAN2: ImageUrl 4
+HT->HT:Download ImageUrl 3
+UI -> UI- -:ShowImage 
+HT->HAN1- -:post(Runnable)
+hnote over HAN1: Image 3
+HAN1->UI++: onImageDownloaded(Image 3)
+HAN2->HT++:handleMessage(ImageUrl 4)
+HT->HT:Download ImageUrl 4
+UI -> UI- -:ShowImage 
+
+HT->HAN1- -:post(Runnable)
+hnote over HAN1: Image 4
+HAN1->UI++: onImageDownloaded(Image 4)
+UI -> UI- -:ShowImage
+@enduml
+
+PlantUML version 1.2020.07beta9(Unknown compile time)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Java Version: 1.7.0_25-b15
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
